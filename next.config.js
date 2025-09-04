@@ -6,18 +6,13 @@ const nextConfig = {
   basePath: config.base_path !== "/" ? config.base_path : "",
   trailingSlash: config.site.trailing_slash,
   transpilePackages: ["next-mdx-remote"],
+  output: "standalone",
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.shopify.com", pathname: "/**" },
     ],
-    formats: ['image/webp', 'image/avif'],
   },
   eslint: { ignoreDuringBuilds: true },
-  // Enable compression
-  compress: true,
-  // Optimize for Vercel
-  poweredByHeader: false,
-  generateEtags: false,
 };
 
 module.exports = nextConfig;

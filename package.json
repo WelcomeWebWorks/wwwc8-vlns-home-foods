@@ -1,5 +1,5 @@
 {
-  "name": "vlns-home-foods",
+  "name": "VLNS Home Foods",
   "version": "1.0.0",
   "description": "VLNS Home Foods - Authentic Andhra Pradesh flavors. Homemade sweets, savory snacks, and spicy pickles crafted with love and tradition.",
   "author": "VLNS Home Foods",
@@ -12,9 +12,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier -w ./src",
-    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format",
-    "vercel-build": "npm run build",
-    "vercel-dev": "npm run dev"
+    "remove-darkmode": "node scripts/removeDarkmode.js && yarn format"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -41,7 +39,6 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.3",
     "@tailwindcss/typography": "^0.5.16",
-    "autoprefixer": "^10.4.20",
     "@types/js-cookie": "^3.0.6",
     "@types/marked": "^5.0.2",
     "@types/node": "^22.14.1",
