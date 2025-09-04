@@ -1,0 +1,52 @@
+{
+  "site": {
+    "title": "VLNS Home Foods",
+    "base_url": "https://vlnshomefoods.com/",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "/images/logo.png",
+    "logo_darkmode": "/images/logo-darkmode.png",
+    "logo_width": "150",
+    "logo_height": "40",
+    "logo_text": "VLNS Home Foods"
+  },
+
+  "settings": {
+    "search": true,
+    "account": true,
+    "sticky_header": true,
+    "theme_switcher": false,
+    "default_theme": "light",
+    "pagination_card": 9,
+    "pagination_list": 4,
+    "summary_length": 200,
+    "blog_folder": "blog"
+  },
+
+  "params": {
+    "contact_form_action": "#",
+    "copyright": "© 2025 VLNS Home Foods. All rights reserved. Authentic Andhra Pradesh flavors delivered to your doorstep."
+  },
+
+  "navigation_button": {
+    "enable": false,
+    "label": "Get Started",
+    "link": "https://vlnshomefoods.com"
+  },
+
+  "metadata": {
+    "meta_author": "VLNS Home Foods",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Authentic Andhra Pradesh flavors - homemade sweets, savory snacks, and spicy pickles. Experience the true essence of traditional Indian cooking with VLNS Home Foods."
+  },
+
+  "shopify": {
+    "currencySymbol": "₹",
+    "currencyCode": "INR",
+    "collections": {
+      "hero_slider": "Pickles",
+      "featured_products": "Sweets"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://vlnshomefoods.com
+
+# Sitemaps
+Sitemap: https://vlnshomefoods.com/sitemap.xml
