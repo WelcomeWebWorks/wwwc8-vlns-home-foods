@@ -2,7 +2,7 @@
   "site": {
     "title": "VLNS Home Foods",
     "base_url": "https://vlnshomefoods.com",
-    "base_path": "",
+    "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
     "logo": "/images/logo.png",
