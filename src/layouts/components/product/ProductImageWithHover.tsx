@@ -22,11 +22,20 @@ const ProductImageWithHover = ({
   fallbackSrc = "/images/product_image404.jpg"
 }: ProductImageWithHoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Get the primary image (first image) and secondary image (second image if available)
-  const primaryImage = images[0];
-  const secondaryImage = images[1];
+  // Filter out images with empty, null, or invalid URLs
+  const validImages = images?.filter(img => 
+    img && 
+    img.url && 
+    typeof img.url === 'string' && 
+    img.url.trim() !== "" &&
+    img.url !== "null" &&
+    img.url !== "undefined"
+  ) || [];
+  
+  // Get the primary image (first valid image) and secondary image (second valid image if available)
+  const primaryImage = validImages[0];
+  const secondaryImage = validImages[1];
   
   // Determine which image to show
   const currentImage = isHovered && secondaryImage ? secondaryImage : primaryImage;
@@ -41,8 +50,8 @@ const ProductImageWithHover = ({
     setIsHovered(false);
   };
 
-  // If no images available, show fallback
-  if (!images || images.length === 0 || !primaryImage) {
+  // If no valid images available, show fallback
+  if (!validImages || validImages.length === 0 || !primaryImage) {
     return (
       <ImageFallback
         src={fallbackSrc}
@@ -50,6 +59,7 @@ const ProductImageWithHover = ({
         height={height}
         alt={alt}
         className={className}
+        fallback={fallbackSrc}
       />
     );
   }
@@ -69,6 +79,7 @@ const ProductImageWithHover = ({
         className={`${className} transition-opacity duration-500 ease-in-out ${
           isHovered && secondaryImage ? 'opacity-0' : 'opacity-100'
         }`}
+        fallback={fallbackSrc}
       />
       
       {/* Secondary Image (shown on hover) */}
@@ -82,6 +93,7 @@ const ProductImageWithHover = ({
             className={`${className} transition-opacity duration-500 ease-in-out ${
               isHovered ? 'opacity-100' : 'opacity-0'
             }`}
+            fallback={fallbackSrc}
           />
         </div>
       )}
