@@ -1,8 +1,8 @@
 {
   "site": {
     "title": "VLNS Home Foods",
-    "base_url": "https://wwwc8-vlns-home-foods.vercel.app/",
-    "base_path": "/",
+    "base_url": "https://vlnshomefoods.com",
+    "base_path": "",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
     "logo": "/images/logo.png",
