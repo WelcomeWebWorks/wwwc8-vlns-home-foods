@@ -18,7 +18,7 @@ export default function RootLayout({
   const sf = theme.fonts.font_family.secondary;
 
   return (
-    <html suppressHydrationWarning={true} lang="en">
+    <html suppressHydrationWarning={true} lang="en" className="light">
       <head>
         {/* responsive meta */}
         <meta
@@ -33,13 +33,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
         <meta
           name="theme-color"
-          media="(prefers-color-scheme: light)"
           content="#fff"
-        />
-        <meta
-          name="theme-color"
-          media="(prefers-color-scheme: dark)"
-          content="#000"
         />
 
         {/* google font css */}
