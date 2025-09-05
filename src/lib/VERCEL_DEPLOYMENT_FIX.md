@@ -57,6 +57,7 @@ export const getListPage = (filePath: string) => {
 - `about/_index.md` → About page content
 - `contact/_index.md` → Contact page content
 - `sections/call-to-action.md` → Call-to-action section
+- `sections/payments-and-delivery.md` → Payments & delivery information
 - `pages/privacy-policy.md` → Privacy policy page
 - `pages/terms-services.md` → Terms of service page
 

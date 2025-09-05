@@ -205,6 +205,65 @@ These Terms of Service govern your use of VLNS Home Foods website and services.
 ## Acceptance of Terms
 
 By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.
+`,
+
+    "sections/payments-and-delivery.md": `---
+title: "Payments & Delivery"
+description: "Payment and delivery information for VLNS Home Foods"
+---
+
+# Payments & Delivery
+
+## Payment Methods
+
+We accept the following payment methods:
+
+- **Credit/Debit Cards**: Visa, Mastercard, American Express
+- **Digital Wallets**: Paytm, PhonePe, Google Pay
+- **Net Banking**: All major banks
+- **UPI**: Instant payments through UPI
+- **Cash on Delivery**: Available for select locations
+
+## Delivery Information
+
+### **Delivery Areas**
+- **Free Delivery**: Within 10km radius of our location
+- **Standard Delivery**: Across Andhra Pradesh
+- **Express Delivery**: Same day delivery for orders placed before 2 PM
+
+### **Delivery Charges**
+- **Free Delivery**: Orders above ₹500
+- **Standard Delivery**: ₹50 for orders below ₹500
+- **Express Delivery**: ₹100 additional charge
+
+### **Delivery Time**
+- **Standard Delivery**: 2-3 business days
+- **Express Delivery**: Same day (if ordered before 2 PM)
+- **Rural Areas**: 3-5 business days
+
+### **Order Tracking**
+- You will receive SMS updates on your order status
+- Track your order using the order number
+- Contact us for any delivery-related queries
+
+## Return & Refund Policy
+
+### **Returns**
+- **Fresh Products**: No returns due to perishable nature
+- **Packaged Products**: 7-day return policy
+- **Damaged Products**: Immediate replacement or refund
+
+### **Refunds**
+- **Processing Time**: 3-5 business days
+- **Refund Method**: Same as payment method
+- **Contact**: For refund queries, call 9581154327
+
+## Contact Information
+
+For any payment or delivery related queries:
+- **Phone**: 9581154327
+- **Email**: info@vlnshomefoods.com
+- **Address**: D.NO:1/44, OPP.RTC BUS STAND, PEDANANDIPADU, GUNTUR ROAD, AP-522235
 `
   };
 
