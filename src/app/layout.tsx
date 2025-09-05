@@ -52,7 +52,6 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <TwSizeIndicator />
         <Providers>
-          <h1>VLNS Home Foods</h1>
           <Header>
             <OpenCart />
             <Cart />
