@@ -87,13 +87,13 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
     if (values.length <= 1) return null; // Don't show if only one option
 
     if (values.length <= 3) {
-      // Render as buttons for 2-3 options
+      // Render as buttons for 2-3 options - Mobile/Tablet optimized
       return (
-        <div className="mb-2">
-          <label className="block text-xs font-medium text-text-light dark:text-darkmode-text-light mb-1">
+        <div className="mb-3 lg:mb-2">
+          <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-2 lg:mb-1">
             {optionName}:
           </label>
-          <div className="flex gap-1 flex-wrap">
+          <div className="flex gap-2 lg:gap-1 flex-wrap justify-center lg:justify-start">
             {values.map((value) => (
               <button
                 key={value}
@@ -101,7 +101,7 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
                   e.stopPropagation();
                   handleOptionChange(optionName, value);
                 }}
-                className={`px-2 py-1 text-xs rounded border transition-colors ${
+                className={`px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs rounded border transition-colors min-w-[60px] lg:min-w-0 ${
                   currentValue === value
                     ? "bg-primary text-white border-primary"
                     : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -114,10 +114,10 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
         </div>
       );
     } else {
-      // Render as dropdown for 4+ options
+      // Render as dropdown for 4+ options - Mobile/Tablet optimized
       return (
-        <div className="mb-2">
-          <label className="block text-xs font-medium text-text-light dark:text-darkmode-text-light mb-1">
+        <div className="mb-3 lg:mb-2">
+          <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-2 lg:mb-1">
             {optionName}:
           </label>
           <select
@@ -128,7 +128,7 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
             }}
             onClick={handleDropdownClick}
             onMouseDown={handleDropdownMouseDown}
-            className="w-full px-2 py-1 text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {values.map((value) => (
               <option key={value} value={value}>
@@ -145,29 +145,35 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
 
   return (
     <div className={`text-center group relative z-10 ${className}`}>
-      <div className="md:relative overflow-hidden">
+      {/* Image Container - Desktop hover effect, Mobile static */}
+      <div className="lg:relative overflow-hidden">
         <ProductImageWithHover
           images={product.images}
           width={312}
           height={269}
           alt={product.title}
-          className="w-full h-[200px] sm:w-[312px] md:h-[269px] object-cover rounded-md border mx-auto"
+          className="w-full h-[200px] sm:h-[220px] md:h-[240px] lg:h-[269px] object-cover rounded-md border mx-auto"
           fallbackSrc="/images/product_image404.jpg"
         />
 
-        <Suspense>
-          <AddToCart
-            variants={product.variants}
-            availableForSale={product.availableForSale}
-            handle={product.handle}
-            defaultVariantId={defaultVariantId}
-            stylesClass="btn btn-primary max-md:btn-sm z-10 absolute bottom-24 md:bottom-0 left-1/2 transform -translate-x-1/2 md:translate-y-full md:group-hover:-translate-y-6 duration-300 ease-in-out whitespace-nowrap drop-shadow-md"
-          />
-        </Suspense>
+        {/* Add to Cart Button - Desktop only (hover effect) */}
+        <div className="hidden lg:block">
+          <Suspense>
+            <AddToCart
+              variants={product.variants}
+              availableForSale={product.availableForSale}
+              handle={product.handle}
+              defaultVariantId={defaultVariantId}
+              stylesClass="btn btn-primary z-10 absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:-translate-y-6 duration-300 ease-in-out whitespace-nowrap drop-shadow-md"
+            />
+          </Suspense>
+        </div>
       </div>
 
-      <div className="py-2 md:py-4 text-center z-10">
-        <h2 className="font-medium text-base md:text-xl mb-2">
+      {/* Content Container */}
+      <div className="py-3 lg:py-4 text-center z-10">
+        {/* Product Title */}
+        <h2 className="font-medium text-base sm:text-lg lg:text-xl mb-3 lg:mb-2">
           <Link
             className="after:absolute after:inset-0"
             href={`/products/${product.handle}`}
@@ -176,9 +182,9 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
           </Link>
         </h2>
 
-        {/* Customization Options */}
+        {/* Customization Options - Mobile/Tablet Optimized */}
         {product.options && product.options.length > 0 && (
-          <div className="mb-3 px-2 relative z-10" onClick={handleDropdownClick}>
+          <div className="mb-4 lg:mb-3 px-3 lg:px-2 relative z-10" onClick={handleDropdownClick}>
             {product.options.map((option) => (
               <div key={option.id}>
                 {renderOptionSelector(option.name)}
@@ -187,16 +193,29 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
           </div>
         )}
 
-        {/* Dynamic Price Display */}
-        <div className="flex flex-wrap justify-center items-center gap-x-2 mt-2 md:mt-4">
-          <span className="text-base md:text-xl font-bold text-text-dark dark:text-darkmode-text-dark">
+        {/* Price Display */}
+        <div className="flex flex-wrap justify-center items-center gap-x-2 mb-4 lg:mb-0 lg:mt-2">
+          <span className="text-lg sm:text-xl lg:text-xl font-bold text-text-dark dark:text-darkmode-text-dark">
             {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
           </span>
           {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-            <s className="text-text-light dark:text-darkmode-text-light text-xs md:text-base font-medium">
+            <s className="text-text-light dark:text-darkmode-text-light text-sm sm:text-base lg:text-base font-medium">
               {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
             </s>
           )}
+        </div>
+
+        {/* Add to Cart Button - Mobile/Tablet only */}
+        <div className="lg:hidden">
+          <Suspense>
+            <AddToCart
+              variants={product.variants}
+              availableForSale={product.availableForSale}
+              handle={product.handle}
+              defaultVariantId={defaultVariantId}
+              stylesClass="btn btn-primary w-full sm:w-auto sm:px-6 py-3 text-sm sm:text-base font-medium z-10"
+            />
+          </Suspense>
         </div>
       </div>
     </div>

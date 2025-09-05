@@ -87,20 +87,20 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
     if (values.length <= 1) return null; // Don't show if only one option
 
     return (
-      <div className="mb-2">
-        <label className="block text-xs font-medium text-text-light dark:text-darkmode-text-light mb-1">
+      <div className="mb-2 lg:mb-1">
+        <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-1">
           {optionName}:
         </label>
-                  <select
-            value={currentValue}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleOptionChange(optionName, e.target.value);
-            }}
-            onClick={handleDropdownClick}
-            onMouseDown={handleDropdownMouseDown}
-            className="px-2 py-1 text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary min-w-[120px]"
-          >
+        <select
+          value={currentValue}
+          onChange={(e) => {
+            e.stopPropagation();
+            handleOptionChange(optionName, e.target.value);
+          }}
+          onClick={handleDropdownClick}
+          onMouseDown={handleDropdownMouseDown}
+          className="px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary min-w-[140px] sm:min-w-[160px] lg:min-w-[120px]"
+        >
           {values.map((value) => (
             <option key={value} value={value}>
               {value}
@@ -122,19 +122,19 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
             width={312}
             height={269}
             alt={product.title}
-            className="w-[312px] h-[150px] md:h-[269px] object-cover border border-border dark:border-darkmode-border rounded-md"
+            className="w-full h-[120px] sm:h-[140px] md:h-[160px] lg:h-[269px] object-cover border border-border dark:border-darkmode-border rounded-md"
             fallbackSrc="/images/product_image404.jpg"
           />
         </div>
 
         <div className="col-8 py-3 max-md:pt-4">
-          <h2 className="font-bold md:font-normal h4 mb-2">
+          <h2 className="font-bold md:font-normal text-base sm:text-lg lg:h4 mb-2">
             <Link href={`/products/${product.handle}`}>{product.title}</Link>
           </h2>
 
-          {/* Customization Options */}
+          {/* Customization Options - Mobile/Tablet Optimized */}
           {product.options && product.options.length > 0 && (
-            <div className="mb-3 flex flex-wrap gap-3 relative z-10" onClick={handleDropdownClick}>
+            <div className="mb-3 lg:mb-3 flex flex-wrap gap-2 lg:gap-3 relative z-10" onClick={handleDropdownClick}>
               {product.options.map((option) => (
                 <div key={option.id}>
                   {renderOptionSelector(option.name)}
@@ -144,12 +144,12 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
           )}
 
           {/* Dynamic Price Display */}
-          <div className="flex items-center gap-x-2 mt-2 mb-4">
-            <span className="text-text-light dark:text-darkmode-text-light text-xs md:text-lg font-bold">
+          <div className="flex items-center gap-x-2 mt-2 mb-3 lg:mb-4">
+            <span className="text-text-light dark:text-darkmode-text-light text-sm sm:text-base lg:text-lg font-bold">
               {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
             </span>
             {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-              <s className="text-text-light dark:text-darkmode-text-light text-xs md:text-base font-medium">
+              <s className="text-text-light dark:text-darkmode-text-light text-xs sm:text-sm lg:text-base font-medium">
                 {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
               </s>
             )}
