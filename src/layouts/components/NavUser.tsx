@@ -56,10 +56,10 @@ const NavUser = () => {
       {user ? (
         <button
           onClick={toggleDropdown}
-          className="relative cursor-pointer text-left sm:text-xs flex items-center justify-center"
+          className="relative cursor-pointer flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg px-3 py-2 transition-all duration-200 shadow-sm"
         >
-          <div className="flex items-center gap-x-1">
-            <div className="h-6 w-6 border border-darkmode-border dark:border-border rounded-full">
+          <div className="flex items-center gap-x-2">
+            <div className="h-8 w-8 border-2 border-[#800020] rounded-full overflow-hidden">
               <Gravatar
                 email={user?.email}
                 style={{ borderRadius: "50px" }}
@@ -68,11 +68,11 @@ const NavUser = () => {
             </div>
             <div className="leading-none max-md:hidden">
               <div className="flex items-center">
-                <p className="block text-text-dark dark:text-darkmode-text-dark text-base truncate">
+                <p className="block text-gray-800 text-sm font-medium truncate">
                   {user?.firstName?.split(" ")[0]}
                 </p>
                 <svg
-                  className={`w-5 text-text-dark dark:text-darkmode-text-dark dark:hover:text-darkmode-text-primary`}
+                  className="w-4 text-gray-600 ml-1"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   aria-hidden="true"
@@ -89,17 +89,20 @@ const NavUser = () => {
         </button>
       ) : (
         <a
-          className="text-xl text-text-dark hover:text-text-primary dark:border-darkmode-border dark:text-white flex items-center"
-          href="/login"
-          aria-label="login"
+          className="text-2xl text-gray-700 hover:text-[#800020] flex items-center bg-gray-100 hover:bg-gray-200 rounded-lg p-2 transition-all duration-200 shadow-sm"
+          href="/sign-up"
+          aria-label="create account"
         >
-          <BsPerson className="dark:hover:text-darkmode-primary" />
+          <BsPerson />
         </a>
       )}
 
       {dropdownOpen && (
-        <div className="z-20 text-center absolute w-full right-8 bg-transparent shadow-md rounded mt-2">
-          <button onClick={handleLogout} className="btn btn-primary max-md:btn-sm mt-2">
+        <div className="z-20 text-center absolute w-full right-0 bg-white shadow-lg rounded-lg mt-2 border border-gray-200">
+          <button 
+            onClick={handleLogout} 
+            className="w-full bg-[#800020] hover:bg-[#600018] text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+          >
             Logout
           </button>
         </div>

@@ -1,15 +1,19 @@
 export const dynamic = "force-dynamic";
 
-import CollectionsSlider from "@/components/CollectionsSlider";
-import HeroSlider from "@/components/HeroSlider";
-import SkeletonCategory from "@/components/loadings/skeleton/SkeletonCategory";
-import SkeletonFeaturedProducts from "@/components/loadings/skeleton/SkeletonFeaturedProducts";
+import CollectionsGrid from "@/layouts/components/CollectionsGrid";
+import HeroSlider from "@/layouts/components/HeroSlider";
+import SkeletonCategory from "@/layouts/components/loadings/skeleton/SkeletonCategory";
+import SkeletonFeaturedProducts from "@/layouts/components/loadings/skeleton/SkeletonFeaturedProducts";
 import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser";
 import { getCollectionProducts, getCollections } from "@/lib/shopify";
-import CallToAction from "@/partials/CallToAction";
-import FeaturedProducts from "@/partials/FeaturedProducts";
-import SeoMeta from "@/partials/SeoMeta";
+import AboutSection from "@/layouts/partials/AboutSection";
+import CallToAction from "@/layouts/partials/CallToAction";
+import FeaturedProductsGrid from "@/layouts/components/FeaturedProductsGrid";
+import BlogSection from "@/layouts/components/BlogSection";
+import ProfessionalBanner from "@/layouts/components/ProfessionalBanner";
+import FeaturesBanner from "@/layouts/components/FeaturesBanner";
+import SeoMeta from "@/layouts/partials/SeoMeta";
 import { Suspense } from "react";
 
 const { collections } = config.shopify;
@@ -24,7 +28,7 @@ const ShowHeroSlider = async () => {
 
 const ShowCollections = async () => {
   const collections = await getCollections();
-  return <CollectionsSlider collections={collections} />;
+  return <CollectionsGrid collections={collections} />;
 };
 
 const ShowFeaturedProducts = async () => {
@@ -32,7 +36,7 @@ const ShowFeaturedProducts = async () => {
     collection: collections.featured_products,
     reverse: false,
   });
-  return <FeaturedProducts products={products} />;
+  return <FeaturedProductsGrid products={products} />;
 };
 
 const Home = () => {
@@ -41,22 +45,26 @@ const Home = () => {
   return (
     <>
       <SeoMeta />
-      <section>
-        <div className="container">
-          <div className="bg-gradient py-10 rounded-md">
-            <Suspense>
-              <ShowHeroSlider />
-            </Suspense>
-          </div>
-        </div>
+      {/* Full-width Hero Section */}
+      <section className="hero-section">
+        <Suspense>
+          <ShowHeroSlider />
+        </Suspense>
       </section>
 
-      {/* category section  */}
-      <section className="section">
+      {/* About Section */}
+      <AboutSection />
+
+      {/* Collections section  */}
+      <section className="section bg-light dark:bg-darkmode-light" style={{ backgroundColor: '#fffef7' }}>
         <div className="container">
-          <div className="text-center mb-6 md:mb-14">
-            <h2>Our Authentic Collections</h2>
-            <p className="md:h5">Discover the rich flavors of Andhra Pradesh</p>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="h2 mb-4 text-text-dark dark:text-darkmode-text-dark">
+              Our Authentic Collections
+            </h2>
+            <p className="text-lg md:text-xl text-text-light dark:text-darkmode-text-light max-w-3xl mx-auto">
+              Discover the rich heritage and authentic flavors of Andhra Pradesh through our carefully curated collections
+            </p>
           </div>
           <Suspense fallback={<SkeletonCategory />}>
             <ShowCollections />
@@ -65,17 +73,30 @@ const Home = () => {
       </section>
 
       {/* Featured Products section  */}
-      <section>
+      <section className="section bg-light dark:bg-darkmode-light" style={{ backgroundColor: '#fffef7' }}>
         <div className="container">
-          <div className="text-center mb-6 md:mb-14">
-            <h2 className="mb-2">Featured Products</h2>
-            <p className="md:h5">Handpicked traditional delicacies made with love</p>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="h2 mb-4 text-text-dark dark:text-darkmode-text-dark">
+              Featured Products
+            </h2>
+            <p className="text-lg md:text-xl text-text-light dark:text-darkmode-text-light max-w-3xl mx-auto">
+              Handpicked traditional delicacies made with love and authentic recipes
+            </p>
           </div>
           <Suspense fallback={<SkeletonFeaturedProducts />}>
             <ShowFeaturedProducts />
           </Suspense>
         </div>
       </section>
+
+      {/* Blog Section */}
+      <BlogSection />
+
+      {/* Professional Banner */}
+      <ProfessionalBanner />
+
+      {/* Features Banner */}
+      <FeaturesBanner />
 
       <CallToAction data={callToAction} />
     </>

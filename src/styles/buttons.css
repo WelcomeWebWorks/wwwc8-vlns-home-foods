@@ -1,11 +1,23 @@
 .btn {
-  @apply inline-block rounded-md border border-transparent px-5 py-2 font-semibold capitalize transition cursor-pointer;
+  @apply inline-block rounded-lg border border-transparent px-6 py-3 font-semibold capitalize transition-all duration-300 cursor-pointer;
 }
 
 .btn-primary {
-  @apply border-primary bg-primary text-white dark:border-darkmode-primary dark:bg-white dark:text-text-dark text-center;
+  @apply border-primary bg-primary text-white hover:bg-[#600018] hover:border-[#600018] text-center shadow-sm;
 }
 
 .btn-outline-primary {
-  @apply border-dark bg-transparent text-text-dark hover:bg-dark hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-text-dark;
+  @apply border-primary bg-transparent text-primary hover:bg-primary hover:text-white;
+}
+
+.btn-secondary {
+  @apply border-dark bg-dark text-white hover:bg-[#404040] hover:border-[#404040];
+}
+
+.btn-outline-secondary {
+  @apply border-dark bg-transparent text-dark hover:bg-dark hover:text-white;
+}
+
+.btn-accent {
+  @apply border-[#ffd700] bg-[#ffd700] text-dark hover:bg-[#e6c200] hover:border-[#e6c200];
 }

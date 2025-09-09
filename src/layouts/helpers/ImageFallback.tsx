@@ -43,6 +43,8 @@ const ImageFallback = ({ src, fallback, alt, ...rest }: ImageFallbackProps) => {
         src={fallback || defaultFallback}
         alt={alt || "Image not available"}
         onError={handleSrcError}
+        priority={false}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     );
   }
@@ -53,6 +55,8 @@ const ImageFallback = ({ src, fallback, alt, ...rest }: ImageFallbackProps) => {
       src={imgSrc}
       alt={alt || "Product image"}
       onError={handleSrcError}
+      priority={false}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   );
 };

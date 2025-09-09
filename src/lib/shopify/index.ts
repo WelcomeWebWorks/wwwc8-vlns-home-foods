@@ -29,6 +29,7 @@ import {
 import { getMenuQuery } from "./queries/menu";
 import { getPageQuery, getPagesQuery } from "./queries/page";
 import {
+  getAllTagsQuery,
   getHighestProductPriceQuery,
   getProductQuery,
   getProductRecommendationsQuery,
@@ -91,6 +92,10 @@ export async function shopifyFetch<T>({
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
   try {
+    // Create an AbortController for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     const result = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -103,8 +108,21 @@ export async function shopifyFetch<T>({
         ...(variables && { variables }),
       }),
       cache,
+      signal: controller.signal,
       ...(tags && { next: { tags } }),
     });
+
+    clearTimeout(timeoutId);
+
+    // Check if the response is ok
+    if (!result.ok) {
+      throw new Error(`HTTP error! status: ${result.status}`);
+    }
+
+    // Ensure we have a response body
+    if (!result.body) {
+      throw new Error("No response body received");
+    }
 
     const body = await result.json();
 
@@ -114,6 +132,14 @@ export async function shopifyFetch<T>({
 
     return { status: result.status, body };
   } catch (e) {
+    // Handle AbortError specifically
+    if (e instanceof Error && e.name === 'AbortError') {
+      throw {
+        error: new Error('Request timeout'),
+        query,
+      };
+    }
+
     if (isShopifyError(e)) {
       throw {
         cause: e.cause?.toString() || "unknown",
@@ -122,6 +148,13 @@ export async function shopifyFetch<T>({
         query,
       };
     }
+
+    // Enhanced error logging
+    console.error("Shopify fetch error:", {
+      error: e,
+      query: query.substring(0, 100) + "...", // Log first 100 chars of query
+      variables,
+    });
 
     throw { error: e, query };
   }
@@ -516,6 +549,32 @@ export async function getTags({
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+
+export async function getAllTags(): Promise<string[]> {
+  try {
+    const res = await shopifyFetch<any>({
+      query: getAllTagsQuery,
+      tags: [TAGS.products],
+    });
+
+    const allTags = new Set<string>();
+    
+    res.body.data.products.edges.forEach((edge: any) => {
+      if (edge.node.tags && Array.isArray(edge.node.tags)) {
+        edge.node.tags.forEach((tag: string) => {
+          if (tag && tag.trim() !== "") {
+            allTags.add(tag);
+          }
+        });
+      }
+    });
+
+    return Array.from(allTags).sort();
+  } catch (error) {
+    console.error("Error fetching all tags:", error);
+    return [];
+  }
 }
 
 export async function getProducts({

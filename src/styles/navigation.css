@@ -1,5 +1,6 @@
 .header {
-  @apply bg-body py-6 dark:bg-darkmode-body relative z-50;
+  @apply py-6 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
+  background-color: #fffef7;
 }
 
 /* navbar items */
@@ -19,7 +20,7 @@
 }
 
 .nav-link {
-  @apply block p-3 font-bold text-2xl transition text-text-light hover:text-text-dark dark:!text-darkmode-text dark:hover:!text-darkmode-primary lg:px-2 lg:py-3 cursor-pointer;
+  @apply block p-3 font-bold text-2xl transition-all duration-300 text-text-light hover:text-text-dark dark:text-darkmode-text dark:hover:text-darkmode-primary lg:px-2 lg:py-3 cursor-pointer;
 }
 
 /* Desktop horizontal navigation */
@@ -102,5 +103,5 @@
 
 /* footer items */
 .footer-link {
-  @apply text-sm md:text-base font-medium transition text-text-light hover:text-text-dark dark:text-darkmode-text dark:hover:text-darkmode-primary;
+  @apply text-sm md:text-base font-medium transition-all duration-300 text-text-light hover:text-text-dark dark:text-darkmode-text dark:hover:text-darkmode-primary;
 }

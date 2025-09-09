@@ -25,20 +25,35 @@ const ShowTags: React.FC<ShowTagsProps> = ({ tags }) => {
     router.push(createUrl("/products", newParams), { scroll: false });
   };
 
+  // Debug logging for tags
+  console.log("ShowTags received tags:", tags);
+  console.log("ShowTags number of tags:", tags.length);
+
+  // Filter out empty or invalid tags
+  const validTags = tags.filter(tag => tag && tag.trim() !== "");
+
   return (
-    <button className="flex flex-wrap gap-3">
-      {tags.map((tag: string) => (
-        <p
-          key={tag}
-          className={`cursor-pointer px-2 py-1 rounded-md border border-border dark:border-border/40 text-text-light dark:text-darkmode-text-light ${selectedTag === slugify(tag.toLowerCase()) &&
-            "bg-light dark:bg-dark"
-            } `}
-          onClick={() => handleTagClick(tag)}
-        >
-          {tag}
+    <div className="flex flex-wrap gap-3">
+      {validTags.length > 0 ? (
+        validTags.map((tag: string) => (
+          <span
+            key={tag}
+            className={`cursor-pointer px-3 py-2 rounded-lg border-2 transition-all duration-200 font-medium text-sm ${
+              selectedTag === slugify(tag.toLowerCase())
+                ? "bg-primary text-white border-primary"
+                : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:border-primary hover:text-primary"
+            }`}
+            onClick={() => handleTagClick(tag)}
+          >
+            {tag}
+          </span>
+        ))
+      ) : (
+        <p className="text-text-light dark:text-darkmode-text-light text-sm">
+          No tags available
         </p>
-      ))}
-    </button>
+      )}
+    </div>
   );
 };
 

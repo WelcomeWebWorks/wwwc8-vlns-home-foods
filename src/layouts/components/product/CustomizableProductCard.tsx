@@ -87,13 +87,13 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
     if (values.length <= 1) return null; // Don't show if only one option
 
     if (values.length <= 3) {
-      // Render as buttons for 2-3 options - Mobile/Tablet optimized
+      // Render as buttons for 2-3 options - Professional styling
       return (
-        <div className="mb-3 lg:mb-2">
-          <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-2 lg:mb-1">
+        <div className="mb-3">
+          <label className="block text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-2">
             {optionName}:
           </label>
-          <div className="flex gap-2 lg:gap-1 flex-wrap justify-center lg:justify-start">
+          <div className="flex gap-2 flex-wrap justify-center">
             {values.map((value) => (
               <button
                 key={value}
@@ -101,10 +101,10 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
                   e.stopPropagation();
                   handleOptionChange(optionName, value);
                 }}
-                className={`px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs rounded border transition-colors min-w-[60px] lg:min-w-0 ${
+                className={`px-4 py-2 text-sm rounded-lg border-2 transition-all duration-200 font-medium min-w-[70px] ${
                   currentValue === value
-                    ? "bg-primary text-white border-primary"
-                    : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:bg-gray-50 dark:hover:bg-gray-700"
+                    ? "bg-primary text-white border-primary shadow-md"
+                    : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:border-primary hover:text-primary"
                 }`}
               >
                 {value}
@@ -114,10 +114,10 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
         </div>
       );
     } else {
-      // Render as dropdown for 4+ options - Mobile/Tablet optimized
+      // Render as dropdown for 4+ options - Professional styling
       return (
-        <div className="mb-3 lg:mb-2">
-          <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-2 lg:mb-1">
+        <div className="mb-3">
+          <label className="block text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-2">
             {optionName}:
           </label>
           <select
@@ -128,7 +128,7 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
             }}
             onClick={handleDropdownClick}
             onMouseDown={handleDropdownMouseDown}
-            className="w-full px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full px-4 py-2 text-sm border-2 border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
           >
             {values.map((value) => (
               <option key={value} value={value}>
@@ -144,47 +144,41 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
   const defaultVariantId = currentVariant?.id || product.variants[0]?.id;
 
   return (
-    <div className={`text-center group relative z-10 ${className}`}>
-      {/* Image Container - Desktop hover effect, Mobile static */}
-      <div className="lg:relative overflow-hidden">
+    <div className={`group relative z-10 bg-white dark:bg-darkmode-body rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden ${className}`}>
+      {/* Image Container - Professional styling */}
+      <div className="relative overflow-hidden aspect-[4/3]">
         <ProductImageWithHover
           images={product.images}
-          width={312}
-          height={269}
+          width={400}
+          height={300}
           alt={product.title}
-          className="w-full h-[200px] sm:h-[220px] md:h-[240px] lg:h-[269px] object-cover rounded-md border mx-auto"
+          className="w-full h-full object-cover rounded-t-2xl"
           fallbackSrc="/images/product_image404.jpg"
         />
 
-        {/* Add to Cart Button - Desktop only (hover effect) */}
-        <div className="hidden lg:block">
-          <Suspense>
-            <AddToCart
-              variants={product.variants}
-              availableForSale={product.availableForSale}
-              handle={product.handle}
-              defaultVariantId={defaultVariantId}
-              stylesClass="btn btn-primary z-10 absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:-translate-y-6 duration-300 ease-in-out whitespace-nowrap drop-shadow-md"
-            />
-          </Suspense>
-        </div>
+        {/* Professional badge for sale items */}
+        {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
+          <div className="absolute top-3 left-3 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
+            Sale
+          </div>
+        )}
       </div>
 
-      {/* Content Container */}
-      <div className="py-3 lg:py-4 text-center z-10">
+      {/* Content Container - Professional styling */}
+      <div className="p-4 lg:p-6">
         {/* Product Title */}
-        <h2 className="font-medium text-base sm:text-lg lg:text-xl mb-3 lg:mb-2">
+        <h2 className="font-bold text-lg sm:text-xl lg:text-xl mb-3 text-text-dark dark:text-darkmode-text-dark line-clamp-2">
           <Link
-            className="after:absolute after:inset-0"
+            className="hover:text-primary transition-colors duration-200 after:absolute after:inset-0"
             href={`/products/${product.handle}`}
           >
             {product.title}
           </Link>
         </h2>
 
-        {/* Customization Options - Mobile/Tablet Optimized */}
+        {/* Customization Options - Professional styling */}
         {product.options && product.options.length > 0 && (
-          <div className="mb-4 lg:mb-3 px-3 lg:px-2 relative z-10" onClick={handleDropdownClick}>
+          <div className="mb-4 relative z-10" onClick={handleDropdownClick}>
             {product.options.map((option) => (
               <div key={option.id}>
                 {renderOptionSelector(option.name)}
@@ -193,27 +187,27 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
           </div>
         )}
 
-        {/* Price Display */}
-        <div className="flex flex-wrap justify-center items-center gap-x-2 mb-4 lg:mb-0 lg:mt-2">
-          <span className="text-lg sm:text-xl lg:text-xl font-bold text-text-dark dark:text-darkmode-text-dark">
+        {/* Price Display - Professional styling */}
+        <div className="flex flex-wrap justify-center items-center gap-x-3 mb-4">
+          <span className="text-xl sm:text-2xl lg:text-2xl font-bold text-primary">
             {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
           </span>
           {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-            <s className="text-text-light dark:text-darkmode-text-light text-sm sm:text-base lg:text-base font-medium">
+            <s className="text-text-light dark:text-darkmode-text-light text-base sm:text-lg lg:text-lg font-medium">
               {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
             </s>
           )}
         </div>
 
-        {/* Add to Cart Button - Mobile/Tablet only */}
-        <div className="lg:hidden">
+        {/* Add to Cart Button - All devices - Professional styling */}
+        <div className="mt-4">
           <Suspense>
             <AddToCart
               variants={product.variants}
               availableForSale={product.availableForSale}
               handle={product.handle}
               defaultVariantId={defaultVariantId}
-              stylesClass="btn btn-primary w-full sm:w-auto sm:px-6 py-3 text-sm sm:text-base font-medium z-10"
+              stylesClass="w-full bg-primary hover:bg-[#600018] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
             />
           </Suspense>
         </div>

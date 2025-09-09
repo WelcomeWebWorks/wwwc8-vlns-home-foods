@@ -64,15 +64,15 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className={`border border-border dark:border-darkmode-border rounded-full flex bg-light/90 dark:bg-dark/10 pl-4 relative`}
+      className="border-2 border-gray-300 hover:border-[#800020] focus-within:border-[#800020] rounded-xl flex bg-white shadow-lg transition-all duration-300 pl-4 relative"
     >
       <input
         id="searchInput"
-        className="bg-transparent border-none search-input focus:ring-transparent p-2 w-full"
+        className="bg-transparent border-none search-input focus:ring-transparent p-3 w-full text-gray-800 placeholder-gray-500"
         key={searchParams?.get("q")}
         type="search"
         name="search"
-        placeholder="Search for products"
+        placeholder="Search for products..."
         autoComplete="off"
         value={inputValue}
         onChange={handleChange}
@@ -80,14 +80,14 @@ const SearchBar = () => {
       {inputValue && (
         <button
           type="button"
-          className="p-2 m-1 rounded-full"
+          className="p-2 m-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
           onClick={handleClear}
         >
-          <IoClose size={20} />
+          <IoClose size={20} className="text-gray-500" />
         </button>
       )}
-      <button className="search-icon p-2 m-1 rounded-full">
-        <IoSearch size={20} />
+      <button className="search-icon p-2 m-1 rounded-full bg-[#800020] hover:bg-[#600018] transition-colors duration-200">
+        <IoSearch size={20} className="text-white" />
       </button>
     </form>
   );

@@ -38,6 +38,18 @@ export const getProductsQuery = /* GraphQL */ `
   ${productFragment}
 `;
 
+export const getAllTagsQuery = /* GraphQL */ `
+  query getAllTags {
+    products(first: 250) {
+      edges {
+        node {
+          tags
+        }
+      }
+    }
+  }
+`;
+
 export const getProductRecommendationsQuery = /* GraphQL */ `
   query getProductRecommendations($productId: ID!) {
     productRecommendations(productId: $productId) {

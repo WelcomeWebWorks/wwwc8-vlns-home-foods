@@ -2,7 +2,6 @@
 
 import ImageFallback from "@/helpers/ImageFallback";
 import { Image } from "@/lib/shopify/types";
-import { useState } from "react";
 
 interface ProductImageWithHoverProps {
   images: Image[];
@@ -21,8 +20,6 @@ const ProductImageWithHover = ({
   className = "",
   fallbackSrc = "/images/product_image404.jpg"
 }: ProductImageWithHoverProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   // Filter out images with empty, null, or invalid URLs
   const validImages = images?.filter(img => 
     img && 
@@ -33,22 +30,8 @@ const ProductImageWithHover = ({
     img.url !== "undefined"
   ) || [];
   
-  // Get the primary image (first valid image) and secondary image (second valid image if available)
+  // Get the primary image (first valid image)
   const primaryImage = validImages[0];
-  const secondaryImage = validImages[1];
-  
-  // Determine which image to show
-  const currentImage = isHovered && secondaryImage ? secondaryImage : primaryImage;
-
-  const handleMouseEnter = () => {
-    if (secondaryImage) {
-      setIsHovered(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   // If no valid images available, show fallback
   if (!validImages || validImages.length === 0 || !primaryImage) {
@@ -65,38 +48,16 @@ const ProductImageWithHover = ({
   }
 
   return (
-    <div
-      className="relative overflow-hidden"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="relative overflow-hidden w-full h-full">
       {/* Primary Image */}
       <ImageFallback
         src={primaryImage.url}
         width={width}
         height={height}
         alt={primaryImage.altText || alt}
-        className={`${className} transition-opacity duration-500 ease-in-out ${
-          isHovered && secondaryImage ? 'opacity-0' : 'opacity-100'
-        }`}
+        className={className}
         fallback={fallbackSrc}
       />
-      
-      {/* Secondary Image (shown on hover) */}
-      {secondaryImage && (
-        <div className="absolute inset-0">
-          <ImageFallback
-            src={secondaryImage.url}
-            width={width}
-            height={height}
-            alt={secondaryImage.altText || alt}
-            className={`${className} transition-opacity duration-500 ease-in-out ${
-              isHovered ? 'opacity-100' : 'opacity-0'
-            }`}
-            fallback={fallbackSrc}
-          />
-        </div>
-      )}
     </div>
   );
 };

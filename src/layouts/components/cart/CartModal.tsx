@@ -19,9 +19,21 @@ type MerchandiseSearchParams = {
 
 export default function CartModal({ cart }: { cart: Cart | undefined }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const quantityRef = useRef(cart?.totalQuantity);
-  const openCart = () => setIsOpen(true);
-  const closeCart = () => setIsOpen(false);
+  
+  const openCart = () => {
+    setIsOpen(true);
+    setIsAnimating(true);
+  };
+  
+  const closeCart = () => {
+    setIsAnimating(false);
+    // Delay the actual close to allow exit animation to complete
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 300); // Match the CSS transition duration
+  };
 
   useEffect(() => {
     // Open cart modal when quantity changes.
@@ -36,6 +48,25 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
 
+  // Handle body scroll lock when cart is open
+  useEffect(() => {
+    if (isAnimating) {
+      // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '0px';
+    } else {
+      // Restore background scrolling
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
+    }
+
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
+    };
+  }, [isAnimating]);
+
   return (
     <>
       <div className="cursor-pointer" aria-label="Open cart" onClick={openCart}>
@@ -43,13 +74,19 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black opacity-50" onClick={closeCart}></div>
+        <div 
+          className={`cart-modal-overlay ${isAnimating ? "opacity-50" : "opacity-0"}`} 
+          onClick={closeCart}
+        ></div>
       )}
-
+      
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-full md:w-[390px] transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`cart-modal-slide ${
+          isAnimating ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ visibility: isOpen ? "visible" : "hidden" }}
       >
-        <div className="h-fit flex flex-col border-l border-b drop-shadow-lg rounded-bl-md border-neutral-200 bg-body p-6 text-black dark:border-neutral-700 dark:bg-darkmode-body dark:text-white">
+        <div className="h-full flex flex-col border-l border-b drop-shadow-lg rounded-bl-md border-neutral-200 bg-body p-6 text-black dark:border-neutral-700 dark:bg-darkmode-body dark:text-white">
           <div className="flex items-center justify-between">
             <p className="text-lg font-semibold">Your Cart</p>
             <button aria-label="Close cart" onClick={closeCart}>

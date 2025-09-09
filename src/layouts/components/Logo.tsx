@@ -28,11 +28,9 @@ const Logo = ({ src }: { src?: string }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const resolvedLogo =
-    mounted && (theme === "dark" || resolvedTheme === "dark")
-      ? logo_darkmode
-      : logo;
-  const logoPath = src ? src : resolvedLogo;
+  // Always use light logo to prevent hydration mismatch
+  // Since theme switcher is disabled, we always use light mode
+  const logoPath = src ? src : logo;
 
   // Desktop logo size (larger)
   const desktopLogoHeight = parseInt(logo_height.replace("px", "")) * 0.5; // 60px for desktop

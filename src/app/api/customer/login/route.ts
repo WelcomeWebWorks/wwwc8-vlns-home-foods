@@ -6,12 +6,14 @@ export async function POST(req: NextRequest) {
   try {
     const input = await req.json();
     const { token, customerLoginErrors } = await getCustomerAccessToken(input);
-    if (customerLoginErrors.length > 0) {
+    
+    if (customerLoginErrors && customerLoginErrors.length > 0) {
       return NextResponse.json(
         { errors: customerLoginErrors },
         { status: 400 },
       );
     }
+    
     const cookieStore = await cookies();
     cookieStore.set("token", token);
 
@@ -19,10 +21,21 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ...customer, token });
   } catch (error: any) {
-    const { message, status } = error.error;
+    console.error("Login API error:", error);
+    
+    // Handle different error types
+    if (error.error && error.error.message && error.error.status) {
+      const { message, status } = error.error;
+      return NextResponse.json(
+        { errors: [{ code: "INTERNAL_ERROR", message }] },
+        { status },
+      );
+    }
+    
+    // Generic error response
     return NextResponse.json(
-      { errors: [{ code: "INTERNAL_ERROR", message }] },
-      { status },
+      { errors: [{ code: "INTERNAL_ERROR", message: "An unexpected error occurred" }] },
+      { status: 500 },
     );
   }
 }

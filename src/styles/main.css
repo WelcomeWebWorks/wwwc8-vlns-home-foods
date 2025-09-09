@@ -42,3 +42,13 @@ input:-webkit-autofill:active {
 .dark input:-webkit-autofill {
   -webkit-text-fill-color: #ddd;
 }
+
+/* Footer Background */
+.footer-bg {
+  background-color: #fffef7;
+}
+
+/* Login Background */
+.login-bg {
+  background-color: #fffef7;
+}

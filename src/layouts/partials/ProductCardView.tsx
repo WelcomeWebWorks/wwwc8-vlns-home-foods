@@ -55,7 +55,6 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
           let queryString = "";
           let filterCategoryProduct = [];
 
-
           if (searchValue) {
             queryString += ` ${searchValue}`;
           }
@@ -111,18 +110,31 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
           productsData = await getProducts({ sortKey, reverse, cursor });
         }
 
+        // Debug logging (commented out to reduce console noise)
+        // console.log("Products data received:", {
+        //   productsCount: productsData?.products?.length || 0,
+        //   hasPageInfo: !!productsData?.pageInfo,
+        //   searchParams: { searchValue, brand, category, tag, cursor }
+        // });
+
         setData({
-          products: productsData.products,
-          pageInfo: productsData.pageInfo!,
+          products: productsData.products || [],
+          pageInfo: productsData.pageInfo || { endCursor: "", hasNextPage: false, hasPreviousPage: false },
         });
       } catch (error) {
         console.error("Error fetching products:", error);
+        setData({
+          products: [],
+          pageInfo: { endCursor: "", hasNextPage: false, hasPreviousPage: false },
+        });
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData();
+    // Add a small delay to prevent too many rapid requests
+    const timeoutId = setTimeout(fetchData, 100);
+    return () => clearTimeout(timeoutId);
   }, [
     cursor,
     sortKey,
@@ -166,7 +178,22 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
   };
 
   if (isLoading) {
-    return <SkeletonCards />;
+    return (
+      <div className="row gap-y-6 md:gap-y-8">
+        {[...Array(6)].map((_, index) => (
+          <div key={index} className="col-12 sm:col-6 md:col-4">
+            <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg overflow-hidden animate-pulse">
+              <div className="w-full aspect-[4/3] bg-gray-200 dark:bg-gray-700"></div>
+              <div className="p-4 lg:p-6">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+                <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   const resultsText = products.length > 1 ? "results" : "result";
@@ -174,32 +201,40 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
   return (
     <div ref={targetElementRef} className="row">
       {searchValue ? (
-        <p className="mb-4">
-          {products.length === 0
-            ? "There are no products that match "
-            : `Showing ${products.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
+        <div className="col-12 mb-6">
+          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 lg:p-6">
+            <p className="text-text-dark dark:text-darkmode-text-dark text-lg">
+              {products.length === 0
+                ? "There are no products that match "
+                : `Showing ${products.length} ${resultsText} for `}
+              <span className="font-bold text-primary">&quot;{searchValue}&quot;</span>
+            </p>
+          </div>
+        </div>
       ) : null}
 
       {products?.length === 0 && (
-        <div className="mx-auto pt-5 text-center">
-          <ImageFallback
-            className="mx-auto mb-6 w-[211px] h-[184px]"
-            src="/images/no-search-found.png"
-            alt="no-search-found"
-            width={211}
-            height={184}
-            priority={true}
-          />
-          <h1 className="h2 mb-4">No Product Found!</h1>
-          <p>
-            We couldn&apos;t find what you filtered for. Try filtering again.
-          </p>
+        <div className="col-12">
+          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-8 lg:p-12 text-center">
+            <ImageFallback
+              className="mx-auto mb-6 w-[211px] h-[184px]"
+              src="/images/no-search-found.png"
+              alt="no-search-found"
+              width={211}
+              height={184}
+              priority={true}
+            />
+            <h1 className="text-2xl lg:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
+              No Product Found!
+            </h1>
+            <p className="text-text-light dark:text-darkmode-text-light text-lg">
+              We couldn&apos;t find what you filtered for. Try filtering again.
+            </p>
+          </div>
         </div>
       )}
 
-      <div className="row gap-y-8 md:gap-y-14">
+      <div className="row gap-y-6 md:gap-y-8">
         {products.map((product, index) => (
           <div key={index} className="col-12 sm:col-6 md:col-4">
             <CustomizableProductCard product={product} />
@@ -207,15 +242,19 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
         ))}
       </div>
 
-      <p
-        className={
-          hasNextPage || isLoading
-            ? "opacity-100 flex justify-center"
-            : "opacity-0 hidden"
-        }
-      >
-        <BiLoaderAlt className={`animate-spin`} size={30} />
-      </p>
+      <div className="col-12 mt-8">
+        <div
+          className={
+            hasNextPage || isLoading
+              ? "opacity-100 flex justify-center"
+              : "opacity-0 hidden"
+          }
+        >
+          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-6">
+            <BiLoaderAlt className="animate-spin text-primary" size={30} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

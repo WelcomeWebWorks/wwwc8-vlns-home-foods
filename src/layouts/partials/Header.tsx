@@ -51,19 +51,32 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
       className={`header z-50 ${settings.sticky_header && "sticky top-0"} ${navbarShadow ? "shadow-sm" : "shadow-none"}`}
     >
       <nav className="navbar container">
-        {/* Top row: Logo, Cart, Account, Mobile Menu (Desktop) */}
+        {/* Top row: Logo, Navigation Menu (Desktop), Cart, Account, Mobile Menu */}
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-4">
             <Logo />
           </div>
 
-          {/* Desktop Search Bar - Hidden on mobile/tablet */}
-          <div className="flex-1 max-w-md mx-4 hidden lg:block">
-            {settings.search && (
-              <Suspense>
-                <SearchBar />
-              </Suspense>
-            )}
+          {/* Desktop Navigation Menu - Hidden on mobile/tablet */}
+          <div className="hidden lg:block flex-1">
+            <div className="flex justify-center">
+              <ul className="flex space-x-8">
+                {main.map((menu, i) => (
+                  <li key={`menu-${i}`}>
+                    <Link
+                      href={menu.url}
+                      className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+                        isMenuItemActive(menu, pathname)
+                          ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
+                          : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+                      }`}
+                    >
+                      {menu.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -103,32 +116,28 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
           </div>
         </div>
 
-        {/* Mobile/Tablet Search Bar - Full width below 720px */}
-        <div className="w-full mt-4 block lg:hidden">
-          {settings.search && (
-            <Suspense>
-              <SearchBar />
-            </Suspense>
-          )}
-        </div>
+        {/* Search Bar - Responsive positioning */}
+        {settings.search && (
+          <>
+            {/* Mobile/Tablet Search Bar - Full width below 1024px */}
+            <div className="w-full mt-4 block lg:hidden">
+              <Suspense>
+                <SearchBar />
+              </Suspense>
+            </div>
 
-        {/* Bottom row: Horizontal Navigation (Desktop only) */}
-        <div className="hidden lg:block w-full mt-4">
-          <div className="flex justify-center">
-            <ul className="flex space-x-8">
-              {main.map((menu, i) => (
-                <li key={`menu-${i}`}>
-                  <Link
-                    href={menu.url}
-                    className={`nav-link text-lg font-medium hover:text-primary transition-colors ${isMenuItemActive(menu, pathname)}`}
-                  >
-                    {menu.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            {/* Desktop Search Bar - Only visible on desktop */}
+            <div className="hidden lg:block w-full mt-4">
+              <div className="flex justify-center">
+                <div className="w-full max-w-md">
+                  <Suspense>
+                    <SearchBar />
+                  </Suspense>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Mobile sidebar overlay */}
         <div
@@ -138,7 +147,8 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
 
         {/* Modern Mobile sidebar */}
         <div
-          className={`fixed top-0 left-0 h-full bg-white dark:bg-darkmode-body overflow-y-auto w-full sm:w-80 p-6 z-50 transition-transform duration-300 ease-in-out ${showSidebar ? "translate-x-0" : "-translate-x-full"}`}
+          className={`fixed top-0 left-0 h-full dark:bg-darkmode-body overflow-y-auto w-full sm:w-80 p-6 z-50 transition-transform duration-300 ease-in-out ${showSidebar ? "translate-x-0" : "-translate-x-full"}`}
+          style={{ backgroundColor: '#fffef7' }}
         >
           <div className="flex justify-between items-center mb-8 pb-4 border-b border-border dark:border-darkmode-border">
             <Logo />
@@ -158,10 +168,10 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
               <Link
                 key={`mobile-menu-${i}`}
                 href={menu.url}
-                className={`block px-4 py-3 text-lg font-medium rounded-lg transition-colors duration-200 ${
+                className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
                   isMenuItemActive(menu, pathname) 
-                    ? 'bg-primary text-white' 
-                    : 'text-text-dark dark:text-darkmode-text-dark hover:bg-gray-100 dark:hover:bg-darkmode-light'
+                    ? 'bg-[#800020] text-white font-bold shadow-md' 
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
                 }`}
                 onClick={handleToggleSidebar}
               >

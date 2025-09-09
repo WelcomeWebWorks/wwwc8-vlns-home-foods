@@ -87,8 +87,8 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
     if (values.length <= 1) return null; // Don't show if only one option
 
     return (
-      <div className="mb-2 lg:mb-1">
-        <label className="block text-sm sm:text-base lg:text-xs font-medium text-text-light dark:text-darkmode-text-light mb-1">
+      <div className="mb-2">
+        <label className="block text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-1">
           {optionName}:
         </label>
         <select
@@ -99,7 +99,7 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
           }}
           onClick={handleDropdownClick}
           onMouseDown={handleDropdownMouseDown}
-          className="px-3 py-2 lg:px-2 lg:py-1 text-sm sm:text-base lg:text-xs border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary min-w-[140px] sm:min-w-[160px] lg:min-w-[120px]"
+          className="px-3 py-2 text-sm border-2 border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 min-w-[140px] sm:min-w-[160px] lg:min-w-[120px]"
         >
           {values.map((value) => (
             <option key={value} value={value}>
@@ -114,27 +114,41 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
   const defaultVariantId = currentVariant?.id || product.variants[0]?.id;
 
   return (
-    <div className={`col-12 relative z-10 ${className}`}>
+    <div className={`col-12 relative z-10 bg-white dark:bg-darkmode-body rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden ${className}`}>
       <div className="row">
         <div className="col-4">
-          <ProductImageWithHover
-            images={product.images}
-            width={312}
-            height={269}
-            alt={product.title}
-            className="w-full h-[120px] sm:h-[140px] md:h-[160px] lg:h-[269px] object-cover border border-border dark:border-darkmode-border rounded-md"
-            fallbackSrc="/images/product_image404.jpg"
-          />
+          <div className="relative overflow-hidden aspect-[4/3]">
+            <ProductImageWithHover
+              images={product.images}
+              width={400}
+              height={300}
+              alt={product.title}
+              className="w-full h-full object-cover rounded-l-2xl"
+              fallbackSrc="/images/product_image404.jpg"
+            />
+            
+            {/* Professional badge for sale items */}
+            {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
+              <div className="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded-full text-xs font-semibold shadow-md">
+                Sale
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="col-8 py-3 max-md:pt-4">
-          <h2 className="font-bold md:font-normal text-base sm:text-lg lg:h4 mb-2">
-            <Link href={`/products/${product.handle}`}>{product.title}</Link>
+        <div className="col-8 p-4 lg:p-6">
+          <h2 className="font-bold text-lg sm:text-xl lg:text-2xl mb-3 text-text-dark dark:text-darkmode-text-dark">
+            <Link 
+              href={`/products/${product.handle}`}
+              className="hover:text-primary transition-colors duration-200"
+            >
+              {product.title}
+            </Link>
           </h2>
 
-          {/* Customization Options - Mobile/Tablet Optimized */}
+          {/* Customization Options - Professional styling */}
           {product.options && product.options.length > 0 && (
-            <div className="mb-3 lg:mb-3 flex flex-wrap gap-2 lg:gap-3 relative z-10" onClick={handleDropdownClick}>
+            <div className="mb-4 flex flex-wrap gap-3 relative z-10" onClick={handleDropdownClick}>
               {product.options.map((option) => (
                 <div key={option.id}>
                   {renderOptionSelector(option.name)}
@@ -143,19 +157,19 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
             </div>
           )}
 
-          {/* Dynamic Price Display */}
-          <div className="flex items-center gap-x-2 mt-2 mb-3 lg:mb-4">
-            <span className="text-text-light dark:text-darkmode-text-light text-sm sm:text-base lg:text-lg font-bold">
+          {/* Dynamic Price Display - Professional styling */}
+          <div className="flex items-center gap-x-3 mb-4">
+            <span className="text-xl sm:text-2xl lg:text-2xl font-bold text-primary">
               {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
             </span>
             {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-              <s className="text-text-light dark:text-darkmode-text-light text-xs sm:text-sm lg:text-base font-medium">
+              <s className="text-text-light dark:text-darkmode-text-light text-base sm:text-lg lg:text-lg font-medium">
                 {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
               </s>
             )}
           </div>
 
-          <p className="max-md:text-xs text-text-light dark:text-darkmode-text-light my-4 md:mb-8 line-clamp-1 md:line-clamp-3">
+          <p className="text-text-light dark:text-darkmode-text-light mb-6 line-clamp-2 md:line-clamp-3 leading-relaxed">
             {product.description}
           </p>
 
@@ -165,7 +179,7 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
               availableForSale={product.availableForSale}
               handle={product.handle}
               defaultVariantId={defaultVariantId}
-              stylesClass="btn btn-outline-primary max-md:btn-sm drop-shadow-md"
+              stylesClass="bg-primary hover:bg-[#600018] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
             />
           </Suspense>
         </div>
