@@ -22,7 +22,7 @@ const Footer = () => {
     <footer className="bg-light dark:bg-darkmode-light footer-bg">
       {/* Main Footer Content */}
       <div className="container">
-        <div className="py-12 md:py-16">
+        <div className="py-16 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             
             {/* Company Info */}
@@ -30,39 +30,39 @@ const Footer = () => {
               <div className="mb-6">
           <Logo />
               </div>
-              <p className="text-text-light dark:text-darkmode-text-light text-sm md:text-base leading-relaxed mb-6">
+              <p className="text-text-light dark:text-darkmode-text-light text-base md:text-lg leading-relaxed mb-6">
                 VLNS Home Foods brings you the authentic taste of Andhra Pradesh with traditional recipes, 
                 premium ingredients, and generations of culinary heritage.
               </p>
               
               {/* Contact Info */}
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-center text-text-light dark:text-darkmode-text-light">
-                  <FaPhone className="w-4 h-4 mr-3 text-primary" />
-                  <span className="text-sm">+91 98765 43210</span>
+                  <FaPhone className="w-5 h-5 mr-3 text-primary" />
+                  <span className="text-base md:text-lg font-medium">+91 9581154327</span>
                 </div>
                 <div className="flex items-center text-text-light dark:text-darkmode-text-light">
-                  <FaEnvelope className="w-4 h-4 mr-3 text-primary" />
-                  <span className="text-sm">info@vlnshomefoods.com</span>
+                  <FaEnvelope className="w-5 h-5 mr-3 text-primary" />
+                  <span className="text-base md:text-lg font-medium">info@vlnshomefoods.com</span>
                 </div>
                 <div className="flex items-start text-text-light dark:text-darkmode-text-light">
-                  <FaMapMarkerAlt className="w-4 h-4 mr-3 mt-1 text-primary flex-shrink-0" />
-                  <span className="text-sm">Andhra Pradesh, India</span>
+                  <FaMapMarkerAlt className="w-5 h-5 mr-3 mt-1 text-primary flex-shrink-0" />
+                  <span className="text-base md:text-lg font-medium">Andhra Pradesh, India</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Quick Links
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
             {menu.footer.map((menu) => (
                   <li key={menu.name}>
                     <Link 
                       href={menu.url}
-                      className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base"
+                      className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium"
                     >
                       {menu.name}
                     </Link>
@@ -73,32 +73,32 @@ const Footer = () => {
 
             {/* Products */}
             <div>
-              <h3 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Our Products
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 <li>
-                  <Link href="/products?c=sweets" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/products?c=sweets" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Traditional Sweets
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=pickles" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/products?c=pickles" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Spicy Pickles
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=snacks" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/products?c=snacks" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Savory Snacks
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=masala-and-mixes" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/products?c=masala-and-mixes" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Masala & Mixes
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/products" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     View All Products
                   </Link>
                 </li>
@@ -107,32 +107,32 @@ const Footer = () => {
 
             {/* Customer Service */}
             <div>
-              <h3 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Customer Service
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 <li>
-                  <Link href="/contact" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/contact" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Contact Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/about" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/shipping" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/shipping" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Shipping Info
                   </Link>
                 </li>
                 <li>
-                  <Link href="/returns" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/returns" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     Returns & Exchanges
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-sm md:text-base">
+                  <Link href="/faq" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
                     FAQ
                   </Link>
                 </li>
@@ -142,41 +142,41 @@ const Footer = () => {
         </div>
 
         {/* Features Section */}
-        <div className="py-8 border-t border-border dark:border-darkmode-border">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="py-10 border-t border-border dark:border-darkmode-border">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center">
-                <FaTruck className="w-5 h-5 text-primary mr-3" />
+                <FaTruck className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-sm font-semibold text-text-dark dark:text-darkmode-text-dark">Free Shipping</div>
-                  <div className="text-xs text-text-light dark:text-darkmode-text-light">All India Delivery</div>
+                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Free Shipping</div>
+                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">All India Delivery</div>
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center">
-                <FaShieldAlt className="w-5 h-5 text-primary mr-3" />
+                <FaShieldAlt className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-sm font-semibold text-text-dark dark:text-darkmode-text-dark">Secure Payment</div>
-                  <div className="text-xs text-text-light dark:text-darkmode-text-light">100% Safe</div>
+                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Secure Payment</div>
+                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">100% Safe</div>
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center">
-                <FaHeadset className="w-5 h-5 text-primary mr-3" />
+                <FaHeadset className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-sm font-semibold text-text-dark dark:text-darkmode-text-dark">24/7 Support</div>
-                  <div className="text-xs text-text-light dark:text-darkmode-text-light">Always Here</div>
+                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">24/7 Support</div>
+                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">Always Here</div>
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-center md:justify-start">
               <div className="flex items-center">
-                <FaAward className="w-5 h-5 text-primary mr-3" />
+                <FaAward className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-sm font-semibold text-text-dark dark:text-darkmode-text-dark">Premium Quality</div>
-                  <div className="text-xs text-text-light dark:text-darkmode-text-light">Authentic Taste</div>
+                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Premium Quality</div>
+                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">Authentic Taste</div>
                 </div>
               </div>
             </div>
@@ -184,14 +184,14 @@ const Footer = () => {
         </div>
 
         {/* Social Media & Newsletter */}
-        <div className="py-8 border-t border-border dark:border-darkmode-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="py-10 border-t border-border dark:border-darkmode-border">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             {/* Social Media */}
             <div className="flex flex-col items-center md:items-start">
-              <h4 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark mb-4">
+              <h4 className="text-xl md:text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Follow Us
               </h4>
-              <ul className="flex gap-4">
+              <ul className="flex gap-6">
             {social?.main.map((social: ISocial) => (
               <li key={social.name}>
                 <a
@@ -199,9 +199,9 @@ const Footer = () => {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                      className="w-10 h-10 bg-primary hover:bg-[#600018] text-white rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110"
+                      className="w-12 h-12 bg-primary hover:bg-[#600018] text-white rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110"
                 >
-                      <DynamicIcon className="w-5 h-5" icon={social.icon} />
+                      <DynamicIcon className="w-6 h-6" icon={social.icon} />
                 </a>
               </li>
             ))}
@@ -210,16 +210,16 @@ const Footer = () => {
 
             {/* Newsletter Signup */}
             <div className="flex flex-col items-center md:items-end">
-              <h4 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark mb-4">
+              <h4 className="text-xl md:text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Stay Updated
               </h4>
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="px-4 py-2 border border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="px-6 py-3 border border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base md:text-lg min-w-[250px]"
                 />
-                <button className="bg-primary hover:bg-[#600018] text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-300">
+                <button className="bg-primary hover:bg-[#600018] text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 text-base md:text-lg">
                   Subscribe
                 </button>
               </div>
@@ -228,21 +228,21 @@ const Footer = () => {
         </div>
 
         {/* Copyright Section */}
-        <div className="border-t border-border py-6 dark:border-darkmode-border">
-          <div className="flex flex-col md:flex-row gap-y-4 justify-between items-center text-text-light dark:text-darkmode-text-light">
-            <div className="flex flex-col sm:flex-row gap-4 text-sm">
+        <div className="border-t border-border py-8 dark:border-darkmode-border">
+          <div className="flex flex-col md:flex-row gap-y-6 justify-between items-center text-text-light dark:text-darkmode-text-light">
+            <div className="flex flex-col sm:flex-row gap-6 text-base">
               {menu.footerCopyright.map((menu) => (
                 <Link 
                   key={menu.name}
                   href={menu.url}
-                  className="hover:text-primary transition-colors duration-300"
+                  className="hover:text-primary transition-colors duration-300 font-medium"
                 >
                   {menu.name}
                 </Link>
               ))}
             </div>
             <p
-              className="text-sm font-light text-center md:text-right"
+              className="text-base font-medium text-center md:text-right"
               dangerouslySetInnerHTML={markdownify(copyright)}
             />
           </div>

@@ -7,7 +7,7 @@ import { updateCartNoteAction } from "@/lib/utils/cartActions";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { FaShoppingCart, FaArrowLeft, FaEdit, FaSave, FaTimes } from "react-icons/fa";
+import { FaShoppingCart, FaArrowLeft, FaEdit, FaSave, FaTimes, FaWhatsapp } from "react-icons/fa";
 import Price from "../Price";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
@@ -31,6 +31,43 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
   const handleNoteCancel = () => {
     setNote(cart?.note || "");
     setIsEditingNote(false);
+  };
+
+  const generateWhatsAppMessage = () => {
+    if (!cart || cart.lines.length === 0) return "";
+    
+    const phoneNumber = "+919581154327"; // Your WhatsApp number
+    let message = `Hi! I'm interested in placing an order. Here are the items in my cart:\n\n`;
+    
+    cart.lines.forEach((item, index) => {
+      const productTitle = item.merchandise.product.title;
+      const variant = item.merchandise.title !== DEFAULT_OPTION ? ` (${item.merchandise.title})` : "";
+      const quantity = item.quantity;
+      const price = item.cost.totalAmount.amount;
+      const currency = item.cost.totalAmount.currencyCode;
+      
+      message += `${index + 1}. ${productTitle}${variant}\n`;
+      message += `   Quantity: ${quantity}\n`;
+      message += `   Price: ${currency} ${price}\n\n`;
+    });
+    
+    message += `Total Amount: ${cart.cost.totalAmount.currencyCode} ${cart.cost.totalAmount.amount}\n`;
+    message += `Total Items: ${cart.totalQuantity}\n\n`;
+    
+    if (note) {
+      message += `Special Instructions: ${note}\n\n`;
+    }
+    
+    message += `Please let me know about availability and delivery options. Thank you!`;
+    
+    return encodeURIComponent(message);
+  };
+
+  const handleWhatsAppContact = () => {
+    const phoneNumber = "+919581154327";
+    const message = generateWhatsAppMessage();
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -283,12 +320,23 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                   </div>
                 </div>
 
-                <a
-                  href={cart.checkoutUrl}
-                  className="block w-full mt-6 bg-primary hover:bg-[#600018] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
-                >
-                  Proceed to Checkout
-                </a>
+                <div className="mt-6 space-y-3">
+                  <a
+                    href={cart.checkoutUrl}
+                    className="block w-full bg-primary hover:bg-[#600018] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
+                  >
+                    Proceed to Checkout
+                  </a>
+                  
+                  {/* WhatsApp Contact Button */}
+                  <button
+                    onClick={handleWhatsAppContact}
+                    className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-3"
+                  >
+                    <FaWhatsapp className="w-5 h-5" />
+                    <span>Contact Us with Cart</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -144,30 +144,38 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
   const defaultVariantId = currentVariant?.id || product.variants[0]?.id;
 
   return (
-    <div className={`group relative z-10 bg-white dark:bg-darkmode-body rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden ${className}`}>
-      {/* Image Container - Professional styling */}
+    <div className={`group relative z-10 bg-white dark:bg-darkmode-body rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden border border-border dark:border-darkmode-border hover:border-primary/30 ${className}`}>
+      {/* Image Container - Enhanced Professional styling */}
       <div className="relative overflow-hidden aspect-[4/3]">
         <ProductImageWithHover
           images={product.images}
           width={400}
           height={300}
           alt={product.title}
-          className="w-full h-full object-cover rounded-t-2xl"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           fallbackSrc="/images/product_image404.jpg"
         />
 
-        {/* Professional badge for sale items */}
+        {/* Enhanced badge for sale items */}
         {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-          <div className="absolute top-3 left-3 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
-            Sale
+          <div className="absolute top-4 left-4 bg-gradient-to-r from-primary to-[#600018] text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg animate-pulse">
+            <span className="flex items-center space-x-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+              </svg>
+              <span>Sale</span>
+            </span>
           </div>
         )}
+
+        {/* Hover overlay effect */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
 
-      {/* Content Container - Professional styling */}
-      <div className="p-4 lg:p-6">
+      {/* Enhanced Content Container */}
+      <div className="p-5 lg:p-7">
         {/* Product Title */}
-        <h2 className="font-bold text-lg sm:text-xl lg:text-xl mb-3 text-text-dark dark:text-darkmode-text-dark line-clamp-2">
+        <h2 className="font-bold text-lg sm:text-xl lg:text-xl mb-4 text-text-dark dark:text-darkmode-text-dark line-clamp-2 group-hover:text-primary transition-colors duration-300">
           <Link
             className="hover:text-primary transition-colors duration-200 after:absolute after:inset-0"
             href={`/products/${product.handle}`}
@@ -176,9 +184,9 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
           </Link>
         </h2>
 
-        {/* Customization Options - Professional styling */}
+        {/* Enhanced Customization Options */}
         {product.options && product.options.length > 0 && (
-          <div className="mb-4 relative z-10" onClick={handleDropdownClick}>
+          <div className="mb-5 relative z-10" onClick={handleDropdownClick}>
             {product.options.map((option) => (
               <div key={option.id}>
                 {renderOptionSelector(option.name)}
@@ -187,27 +195,37 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
           </div>
         )}
 
-        {/* Price Display - Professional styling */}
-        <div className="flex flex-wrap justify-center items-center gap-x-3 mb-4">
-          <span className="text-xl sm:text-2xl lg:text-2xl font-bold text-primary">
-            {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
-          </span>
+        {/* Enhanced Price Display */}
+        <div className="flex flex-wrap justify-center items-center gap-x-3 mb-5">
+          <div className="flex flex-col items-center">
+            <span className="text-xl sm:text-2xl lg:text-2xl font-bold text-primary bg-gradient-to-r from-primary to-[#600018] bg-clip-text text-transparent">
+              {currencySymbol} {currentPrice?.amount}
+            </span>
+            <span className="text-xs text-text-light dark:text-darkmode-text-light font-medium">
+              {currentPrice?.currencyCode}
+            </span>
+          </div>
           {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-            <s className="text-text-light dark:text-darkmode-text-light text-base sm:text-lg lg:text-lg font-medium">
-              {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
-            </s>
+            <div className="flex flex-col items-center">
+              <s className="text-text-light dark:text-darkmode-text-light text-base sm:text-lg lg:text-lg font-medium">
+                {currencySymbol} {currentCompareAtPrice.amount}
+              </s>
+              <span className="text-xs text-green-600 dark:text-green-400 font-semibold">
+                Save {currencySymbol}{(parseFloat(currentCompareAtPrice.amount) - parseFloat(currentPrice?.amount || "0")).toFixed(2)}
+              </span>
+            </div>
           )}
         </div>
 
-        {/* Add to Cart Button - All devices - Professional styling */}
-        <div className="mt-4">
+        {/* Enhanced Add to Cart Button */}
+        <div className="mt-5">
           <Suspense>
             <AddToCart
               variants={product.variants}
               availableForSale={product.availableForSale}
               handle={product.handle}
               defaultVariantId={defaultVariantId}
-              stylesClass="w-full bg-primary hover:bg-[#600018] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+              stylesClass="w-full bg-gradient-to-r from-primary to-[#600018] hover:from-[#600018] hover:to-primary text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
             />
           </Suspense>
         </div>
