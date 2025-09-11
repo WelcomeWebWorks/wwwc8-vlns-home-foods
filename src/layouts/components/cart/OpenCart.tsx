@@ -1,4 +1,5 @@
 import { BsCart3 } from "react-icons/bs";
+import Link from "next/link";
 
 export default function OpenCart({
   className,
@@ -8,7 +9,11 @@ export default function OpenCart({
   quantity?: number;
 }) {
   return (
-    <div className="relative text-3xl text-yellow-500 hover:text-yellow-600 transition-colors duration-200">
+    <Link 
+      href="/cart" 
+      className="relative text-3xl text-yellow-500 hover:text-yellow-600 transition-colors duration-200"
+      aria-label="View cart"
+    >
       <BsCart3
         className={`${className || ''}`}
       />
@@ -18,6 +23,6 @@ export default function OpenCart({
           {quantity > 99 ? '99+' : quantity}
         </div>
       ) : null}
-    </div>
+    </Link>
   );
 }

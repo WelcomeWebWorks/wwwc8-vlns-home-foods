@@ -7,14 +7,14 @@ import {
   getCart,
   removeFromCart,
   updateCart,
+  updateCartNote,
 } from "@/lib/shopify";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export async function addItem(
-  prevState: any,
-  selectedVariantId: string | undefined,
-) {
+export async function addItem(prevState: any, formData: FormData) {
+  const selectedVariantId = formData.get("selectedVariantId") as string;
+  
   let cartId = (await cookies()).get("cartId")?.value;
   let cart;
 
@@ -42,11 +42,16 @@ export async function addItem(
   }
 }
 
-export async function removeItem(prevState: any, lineId: string) {
+export async function removeItem(prevState: any, formData: FormData) {
+  const lineId = formData.get("lineId") as string;
   const cartId = (await cookies()).get("cartId")?.value;
 
   if (!cartId) {
     return "Missing cart ID";
+  }
+
+  if (!lineId) {
+    return "Missing line ID";
   }
 
   try {
@@ -59,15 +64,20 @@ export async function removeItem(prevState: any, lineId: string) {
 
 export async function updateItemQuantity(
   prevState: any,
-  payload: { lineId: string; variantId: string; quantity: number },
+  formData: FormData,
 ) {
   const cartId = (await cookies()).get("cartId")?.value;
+  const lineId = formData.get("lineId") as string;
+  const variantId = formData.get("variantId") as string;
+  const quantity = parseInt(formData.get("quantity") as string);
 
   if (!cartId) {
     return "Missing cart ID";
   }
 
-  const { lineId, variantId, quantity } = payload;
+  if (!lineId || !variantId || isNaN(quantity)) {
+    return "Missing required fields";
+  }
 
   try {
     if (quantity === 0) {
@@ -82,5 +92,20 @@ export async function updateItemQuantity(
     revalidateTag(TAGS.cart);
   } catch (e) {
     return "Error updating item quantity";
+  }
+}
+
+export async function updateCartNoteAction(prevState: any, note: string) {
+  const cartId = (await cookies()).get("cartId")?.value;
+
+  if (!cartId) {
+    return "Missing cart ID";
+  }
+
+  try {
+    await updateCartNote(cartId, note);
+    revalidateTag(TAGS.cart);
+  } catch (e) {
+    return "Error updating cart note";
   }
 }

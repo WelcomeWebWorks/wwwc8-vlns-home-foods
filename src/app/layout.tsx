@@ -1,5 +1,4 @@
 import Cart from "@/components/cart/Cart";
-import OpenCart from "@/components/cart/OpenCart";
 import config from "@/config/config.json";
 import theme from "@/config/theme.json";
 import TwSizeIndicator from "@/helpers/TwSizeIndicator";
@@ -53,7 +52,7 @@ export default function RootLayout({
         <TwSizeIndicator />
         <Providers>
           <Header>
-            <OpenCart />
+            <div className="w-8 h-8" />
             <Cart />
           </Header>
           <main className="relative z-10">{children}</main>

@@ -155,6 +155,7 @@ export type SEO = {
 export type ShopifyCart = {
   id: string;
   checkoutUrl: string;
+  note?: string;
   cost: {
     subtotalAmount: Money;
     totalAmount: Money;
@@ -207,6 +208,18 @@ export type ShopifyCartOperation = {
   };
   variables: {
     cartId: string;
+  };
+};
+
+export type ShopifyCartNoteUpdateOperation = {
+  data: {
+    cartNoteUpdate: {
+      cart: ShopifyCart;
+    };
+  };
+  variables: {
+    cartId: string;
+    note: string;
   };
 };
 

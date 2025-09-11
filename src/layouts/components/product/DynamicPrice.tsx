@@ -45,14 +45,24 @@ export function DynamicPrice({ variants, defaultVariantId, className = "" }: Dyn
   const compareAtPrice = selectedVariant.compareAtPrice;
 
   return (
-    <div className={`flex gap-2 items-center ${className}`}>
-      <h4 className="text-text-light dark:text-darkmode-text-light max-md:h2">
-        {currencySymbol} {price.amount} {price.currencyCode}
-      </h4>
+    <div className={`flex gap-3 items-center ${className}`}>
+      <div className="flex items-center space-x-2">
+        <span className="text-3xl md:text-4xl font-bold text-primary">
+          {currencySymbol}{price.amount}
+        </span>
+        <span className="text-lg text-text-light dark:text-darkmode-text-light">
+          {price.currencyCode}
+        </span>
+      </div>
       {compareAtPrice && parseFloat(compareAtPrice.amount) > 0 && (
-        <s className="text-text-light max-md:h3 dark:text-darkmode-text-light">
-          {currencySymbol} {compareAtPrice.amount} {compareAtPrice.currencyCode}
-        </s>
+        <div className="flex flex-col">
+          <s className="text-lg text-text-light dark:text-darkmode-text-light">
+            {currencySymbol}{compareAtPrice.amount}
+          </s>
+          <span className="text-sm text-green-600 dark:text-green-400 font-semibold">
+            Save {currencySymbol}{(parseFloat(compareAtPrice.amount) - parseFloat(price.amount)).toFixed(2)}
+          </span>
+        </div>
       )}
     </div>
   );

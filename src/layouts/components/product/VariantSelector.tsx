@@ -100,7 +100,12 @@ export function VariantSelector({
       {/* Render button options (Color, Oil Type, etc.) */}
       {buttonOptions.map((option) => (
         <div className="mb-6" key={option.id}>
-          <h5 className="mb-2 max-md:text-base">{option.name}</h5>
+          <h5 className="mb-3 text-lg font-semibold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-2">
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            <span>{option.name}</span>
+          </h5>
           <div className="flex flex-wrap gap-3">
             {option.values.map((value) => {
               const optionNameLowerCase = option.name.toLowerCase();
@@ -142,36 +147,45 @@ export function VariantSelector({
                     }}
                     title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""
                       }`}
-                    className={`flex min-w-[48px] items-center justify-center rounded-md border border-border text-sm cursor-pointer ${isActive && option.name !== "Color"
-                      ? "cursor-default ring-2 ring-dark dark:ring-darkmode-dark"
-                      : ""
-                      } ${!isActive && isAvailableForSale && option.name !== "Color"
-                        ? "ring-1 ring-transparent transition duration-300 ease-in-out hover:scale-110 hover:ring-dark hover:dark:ring-darkmode-dark"
+                    className={`flex min-w-[48px] items-center justify-center rounded-lg border-2 text-sm font-medium transition-all duration-300 ease-in-out ${
+                      isActive && option.name !== "Color"
+                        ? "border-primary bg-primary text-white shadow-lg transform scale-105"
                         : ""
-                      } ${!isAvailableForSale
-                        ? "relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400"
-                        : ""
+                      } ${
+                        !isActive && isAvailableForSale && option.name !== "Color"
+                          ? "border-border dark:border-darkmode-border bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark hover:border-primary hover:bg-primary/5 hover:scale-105 hover:shadow-md"
+                          : ""
+                      } ${
+                        !isAvailableForSale
+                          ? "border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50"
+                          : "cursor-pointer"
                       }`}
                   >
                     {/* Render the color image for the current value */}
                     {option.name === "Color" ? (
                       <div
                         key={value}
-                        className={`relative rounded-md overflow-hidden ${isActive &&
-                          "outline-1 outline-dark dark:outline-darkmode-dark"
-                          }`}
+                        className={`relative rounded-lg overflow-hidden border-2 transition-all duration-300 ease-in-out ${
+                          isActive
+                            ? "border-primary shadow-lg transform scale-110"
+                            : "border-border dark:border-darkmode-border hover:border-primary hover:scale-105"
+                        }`}
                       >
                         <Image
                           src={imageMap[value]}
                           alt={value}
-                          width={50}
-                          height={50}
-                          className={`${isActive && "opacity-80"}`}
+                          width={60}
+                          height={60}
+                          className={`transition-opacity duration-300 ${
+                            isActive ? "opacity-90" : "opacity-100"
+                          }`}
                         />
                         {isActive && (
-                          <span className="text-inherit h-full opacity-100 absolute top-2 right-2">
-                            <BsCheckLg size={35} />
-                          </span>
+                          <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                            <div className="bg-primary text-white rounded-full p-1">
+                              <BsCheckLg size={20} />
+                            </div>
+                          </div>
                         )}
                       </div>
                     ) : (
@@ -188,7 +202,12 @@ export function VariantSelector({
       {/* Render dropdown options (Size, Weight, etc.) */}
       {dropdownOptions.map((option) => (
         <div className="mb-8 mt-8" key={option.id}>
-          <h5 className="mb-2 max-md:text-base">{option.name}</h5>
+          <h5 className="mb-3 text-lg font-semibold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-2">
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            <span>{option.name}</span>
+          </h5>
           <Suspense>
             <VariantDropDown sizeOption={option} options={options} />
           </Suspense>

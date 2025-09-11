@@ -28,7 +28,7 @@ const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <div className="mb-6">
-                <Logo />
+          <Logo />
               </div>
               <p className="text-text-light dark:text-darkmode-text-light text-sm md:text-base leading-relaxed mb-6">
                 VLNS Home Foods brings you the authentic taste of Andhra Pradesh with traditional recipes, 
@@ -58,7 +58,7 @@ const Footer = () => {
                 Quick Links
               </h3>
               <ul className="space-y-3">
-                {menu.footer.map((menu) => (
+            {menu.footer.map((menu) => (
                   <li key={menu.name}>
                     <Link 
                       href={menu.url}
@@ -66,9 +66,9 @@ const Footer = () => {
                     >
                       {menu.name}
                     </Link>
-                  </li>
-                ))}
-              </ul>
+              </li>
+            ))}
+          </ul>
             </div>
 
             {/* Products */}
@@ -192,21 +192,21 @@ const Footer = () => {
                 Follow Us
               </h4>
               <ul className="flex gap-4">
-                {social?.main.map((social: ISocial) => (
-                  <li key={social.name}>
-                    <a
-                      aria-label={social.name}
-                      href={social.link}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
+            {social?.main.map((social: ISocial) => (
+              <li key={social.name}>
+                <a
+                  aria-label={social.name}
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
                       className="w-10 h-10 bg-primary hover:bg-[#600018] text-white rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110"
-                    >
+                >
                       <DynamicIcon className="w-5 h-5" icon={social.icon} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
             {/* Newsletter Signup */}
             <div className="flex flex-col items-center md:items-end">

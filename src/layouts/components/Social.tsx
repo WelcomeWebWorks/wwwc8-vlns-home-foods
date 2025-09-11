@@ -43,9 +43,10 @@ const Social: React.FC<{ socialName: string; className: string }> = ({
           href={`https://www.facebook.com/sharer/sharer.php?u=${baseUrl}${pathname}`}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
         >
           <span className="sr-only">{socialName}</span>
-          <DynamicIcon className="inline-block" icon={"FaFacebookF"} />
+          <DynamicIcon className="w-5 h-5" icon={"FaFacebookF"} />
         </a>
       </li>
 
@@ -55,9 +56,10 @@ const Social: React.FC<{ socialName: string; className: string }> = ({
           href={`https://twitter.com/intent/tweet?text=${baseUrl}${pathname}`}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          className="flex items-center justify-center w-10 h-10 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
         >
           <span className="sr-only">{socialName}</span>
-          <DynamicIcon className="inline-block" icon={"FaXTwitter"} />
+          <DynamicIcon className="w-5 h-5" icon={"FaXTwitter"} />
         </a>
       </li>
 
@@ -67,29 +69,30 @@ const Social: React.FC<{ socialName: string; className: string }> = ({
           href={`https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}${pathname}`}
           target="_blank"
           rel="noopener noreferrer nofollow"
+          className="flex items-center justify-center w-10 h-10 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
         >
           <span className="sr-only">{socialName}</span>
-          <DynamicIcon className="inline-block" icon={"FaLinkedinIn"} />
+          <DynamicIcon className="w-5 h-5" icon={"FaLinkedinIn"} />
         </a>
       </li>
 
       <li>
         <a
-          className="cursor-pointer relative"
+          className="cursor-pointer relative flex items-center justify-center w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
           onClick={handleCopyLink}
           aria-label="Copy Link"
         >
           <span className="sr-only">Copy Link</span>
           {isTooltipVisible && (
-            <span className="text-xs absolute -right-16 text-text dark:text-darkmode-text whitespace-nowrap">
+            <span className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-10">
               <DynamicIcon
-                className="inline-block text-green-500"
+                className="inline-block text-green-400 mr-1"
                 icon={"FaLink"}
-              />{" "}
+              />
               copied!
             </span>
           )}
-          <DynamicIcon className="inline-block" icon={"FaRegCopy"} />
+          <DynamicIcon className="w-5 h-5" icon={"FaRegCopy"} />
         </a>
       </li>
     </ul>

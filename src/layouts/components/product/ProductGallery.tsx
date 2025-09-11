@@ -229,9 +229,9 @@ const ProductGallery = ({ images }: ProductGalleryProps): JSX.Element => {
   }
 
   return (
-    <>
+    <div className="space-y-4">
       <div
-        className="relative"
+        className="relative group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -248,7 +248,7 @@ const ProductGallery = ({ images }: ProductGalleryProps): JSX.Element => {
         >
           {filteredImages.map((item: ImageItem) => (
             <SwiperSlide key={item.url}>
-              <div className="mb-6 border border-border dark:border-border/40 rounded-md max-h-[623px] overflow-hidden">
+              <div className="mb-6 border-2 border-border dark:border-darkmode-border rounded-xl max-h-[623px] overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                 <CustomZoomImage
                   src={item.url}
                   alt={item.altText}
@@ -259,56 +259,71 @@ const ProductGallery = ({ images }: ProductGalleryProps): JSX.Element => {
             </SwiperSlide>
           ))}
           <div
-            className={`hidden lg:block w-full absolute top-1/2 -translate-y-1/2 z-10 px-6 text-text-dark ${isHovered
-              ? "opacity-100 transition-opacity duration-300 ease-in-out"
-              : "opacity-0 transition-opacity duration-300 ease-in-out"
-              }`}
+            className={`hidden lg:block w-full absolute top-1/2 -translate-y-1/2 z-10 px-6 text-text-dark ${
+              isHovered
+                ? "opacity-100 transition-opacity duration-300 ease-in-out"
+                : "opacity-0 transition-opacity duration-300 ease-in-out"
+            }`}
           >
             <div
               ref={prevRef}
-              className="p-2 lg:p-4 rounded-md bg-body cursor-pointer shadow-sm absolute left-4"
+              className="p-3 lg:p-4 rounded-full bg-white dark:bg-darkmode-body cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 absolute left-4 border border-border dark:border-darkmode-border"
             >
-              <HiOutlineArrowNarrowLeft size={24} />
+              <HiOutlineArrowNarrowLeft size={24} className="text-primary" />
             </div>
             <div
               ref={nextRef}
-              className="p-2 lg:p-4 rounded-md bg-body cursor-pointer shadow-sm absolute right-4"
+              className="p-3 lg:p-4 rounded-full bg-white dark:bg-darkmode-body cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 absolute right-4 border border-border dark:border-darkmode-border"
             >
-              <HiOutlineArrowNarrowRight size={24} />
+              <HiOutlineArrowNarrowRight size={24} className="text-primary" />
             </div>
           </div>
         </Swiper>
       </div>
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={isTouchDevice ? 3.5 : 4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-      >
-        {filteredImages.map((item: ImageItem) => (
-          <SwiperSlide key={item.url}>
-            <div
-              onClick={() => handleThumbSlideClick(item.url)}
-              className={`rounded-md cursor-pointer overflow-hidden ${picUrl === item.url
-                ? "border border-darkmode-border dark:border-yellow-500"
-                : "border border-border dark:border-border/40"
+      
+      {/* Thumbnail Gallery */}
+      <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={12}
+          slidesPerView={isTouchDevice ? 3.5 : 4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+        >
+          {filteredImages.map((item: ImageItem) => (
+            <SwiperSlide key={item.url}>
+              <div
+                onClick={() => handleThumbSlideClick(item.url)}
+                className={`rounded-lg cursor-pointer overflow-hidden transition-all duration-300 transform hover:scale-105 ${
+                  picUrl === item.url
+                    ? "border-2 border-primary shadow-lg ring-2 ring-primary/20"
+                    : "border-2 border-border dark:border-darkmode-border hover:border-primary/50"
                 }`}
-            >
-              <Image
-                src={item.url}
-                alt={item.altText}
-                width={168}
-                height={146}
-                className="max-h-[146px]"
-                draggable={false}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </>
+              >
+                <Image
+                  src={item.url}
+                  alt={item.altText}
+                  width={168}
+                  height={146}
+                  className="max-h-[146px] w-full object-cover"
+                  draggable={false}
+                />
+                {picUrl === item.url && (
+                  <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+                    <div className="bg-primary text-white rounded-full p-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
   );
 };
 

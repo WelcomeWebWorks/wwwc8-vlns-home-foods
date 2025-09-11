@@ -42,15 +42,13 @@ export function EditItemQuantityButton({
   type: "plus" | "minus";
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);
-  const payload = {
-    lineId: item.id,
-    variantId: item.merchandise.id,
-    quantity: type === "plus" ? item.quantity + 1 : item.quantity - 1,
-  };
-  const actionWithVariant = formAction.bind(null, payload);
+  const newQuantity = type === "plus" ? item.quantity + 1 : item.quantity - 1;
 
   return (
-    <form action={actionWithVariant}>
+    <form action={formAction}>
+      <input type="hidden" name="lineId" value={item.id} />
+      <input type="hidden" name="variantId" value={item.merchandise.id} />
+      <input type="hidden" name="quantity" value={newQuantity} />
       <SubmitButton type={type} />
       <p aria-live="polite" className="sr-only" role="status">
         {message}
@@ -58,3 +56,4 @@ export function EditItemQuantityButton({
     </form>
   );
 }
+

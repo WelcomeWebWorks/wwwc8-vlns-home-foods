@@ -65,8 +65,8 @@ const About = () => {
               about_us.map((section: AboutUsItem, index: number) => (
               <div
                 className={`max-w-6xl mx-auto ${index % 2 === 0 ? 'lg:flex lg:items-center lg:gap-12' : 'lg:flex lg:flex-row-reverse lg:items-center lg:gap-12'}`}
-                key={section?.title}
-              >
+              key={section?.title}
+            >
                 <div className={`${index % 2 === 0 ? 'lg:w-1/2' : 'lg:w-1/2'} mb-8 lg:mb-0`}>
                   <ImageFallback
                     className="rounded-2xl shadow-lg w-full h-auto"
@@ -82,7 +82,7 @@ const About = () => {
                       <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                    </div>
+                  </div>
                     <h2 className="text-2xl md:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark">
                       {section?.title}
                     </h2>
@@ -100,16 +100,16 @@ const About = () => {
                   About us content is being updated. Please check back soon.
                 </p>
               </div>
-            )}
-          </div>
+              )}
+            </div>
 
           {/* Testimonials Section */}
-          {testimonials_section_enable && (
+      {testimonials_section_enable && (
             <div className="mb-16">
-              <Testimonials
-                title={testimonials_section_title!}
-                testimonials={testimonials!}
-              />
+        <Testimonials
+          title={testimonials_section_title!}
+          testimonials={testimonials!}
+        />
             </div>
           )}
 
@@ -163,7 +163,7 @@ const About = () => {
                     <p className="text-text-light dark:text-darkmode-text-light">
                       Team information is being updated. Please check back soon.
                     </p>
-                  </div>
+            </div>
                 )}
               </div>
             </div>
@@ -225,12 +225,12 @@ const About = () => {
                     Quality Guaranteed
                   </h3>
                   <p className="text-text-light dark:text-darkmode-text-light leading-relaxed">
-                    If your product are not perfect, return them for a full refund
-                  </p>
-                </div>
+                  If your product are not perfect, return them for a full refund
+                </p>
               </div>
             </div>
           </div>
+        </div>
 
           {/* FAQ Section */}
           <div className="mb-16">
@@ -250,22 +250,22 @@ const About = () => {
                   <div
                     className="text-text-light dark:text-darkmode-text-light leading-relaxed text-base md:text-lg"
                     dangerouslySetInnerHTML={markdownify(faq_section_subtitle || "")}
-                  />
+                />
 
-                  {button?.enable && (
+                {button?.enable && (
                     <div className="pt-4">
-                      <Link
+                  <Link
                         className="inline-flex items-center bg-primary hover:bg-[#600018] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                        href={button.link}
-                      >
+                    href={button.link}
+                  >
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
-                        {button.label}
-                      </Link>
+                    {button.label}
+                  </Link>
                     </div>
-                  )}
-                </div>
+                )}
+              </div>
 
                 <div className="space-y-4">
                   {faqs && faqs.length > 0 ? (

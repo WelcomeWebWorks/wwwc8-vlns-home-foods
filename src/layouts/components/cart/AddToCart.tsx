@@ -1,73 +1,47 @@
 "use client";
 
-import { ProductVariant } from "@/lib/shopify/types";
 import { addItem } from "@/lib/utils/cartActions";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React, { useActionState } from "react";
+import { ProductVariant } from "@/lib/shopify/types";
+import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { BiLoaderAlt } from "react-icons/bi";
+
+interface AddToCartProps {
+  variants: ProductVariant[];
+  availableForSale: boolean;
+  stylesClass?: string;
+  handle?: string | null;
+  defaultVariantId?: string;
+}
 
 function SubmitButton({
   availableForSale,
   selectedVariantId,
   stylesClass,
-  handle,
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
-  stylesClass: string;
-  handle: string | null;
+  stylesClass?: string;
 }) {
   const { pending } = useFormStatus();
-  const buttonClasses = stylesClass;
-  const disabledClasses = "cursor-not-allowed flex";
-
-  const DynamicTag = handle === null ? "button" : Link;
-
-  if (!availableForSale) {
-    return (
-      <button
-        disabled
-        aria-disabled
-        className={`${buttonClasses} ${disabledClasses}`}
-      >
-        Out Of Stock
-      </button>
-    );
-  }
-
-  if (!selectedVariantId) {
-    return (
-      <DynamicTag
-        href={`/products/${handle}`}
-        aria-label="Please select an option"
-        aria-disabled
-        className={`${buttonClasses} ${
-          DynamicTag === "button" && disabledClasses
-        }`}
-      >
-        Select Variant
-      </DynamicTag>
-    );
-  }
 
   return (
     <button
-      onClick={(e: React.FormEvent<HTMLButtonElement>) => {
-        if (pending) e.preventDefault();
-      }}
-      aria-label="Add to cart"
-      aria-disabled={pending ? "true" : "false"}
-      className={`${buttonClasses}`}
+      type="submit"
+      disabled={!availableForSale || !selectedVariantId || pending}
+      className={`${stylesClass || "btn btn-primary"} ${
+        !availableForSale || !selectedVariantId || pending
+          ? "opacity-50 cursor-not-allowed"
+          : "hover:scale-105 transform transition-all duration-200"
+      }`}
     >
       {pending ? (
-        <BiLoaderAlt
-          className={`animate-spin w-[70px] md:w-[85px]`}
-          size={26}
-        />
+        <>
+          <BiLoaderAlt className="animate-spin w-4 h-4 mr-2" />
+          Adding...
+        </>
       ) : (
-        "Add To Cart"
+        "Add to Cart"
       )}
     </button>
   );
@@ -79,42 +53,21 @@ export function AddToCart({
   stylesClass,
   handle,
   defaultVariantId,
-}: {
-  variants: ProductVariant[];
-  availableForSale: boolean;
-  stylesClass: string;
-  handle: string | null;
-  defaultVariantId: string | undefined;
-}) {
+}: AddToCartProps) {
   const [message, formAction] = useActionState(addItem, null);
-  const searchParams = useSearchParams();
-
-  // Find the variant based on selected options
-  const selectedOptions = Array.from(searchParams.entries());
-  const variant = variants.find((variant: ProductVariant) =>
-    selectedOptions.every(([key, value]) =>
-      variant.selectedOptions.some(
-        (option) => option.name.toLowerCase() === key && option.value === value,
-      ),
-    ),
-  );
-
-  // Use the default variant ID if no variant is found
-  const selectedVariantId = variant?.id || defaultVariantId;
-
-  const actionWithVariant = formAction.bind(null, selectedVariantId);
+  const selectedVariantId = defaultVariantId || variants[0]?.id;
 
   return (
-    <form action={actionWithVariant}>
+    <form action={formAction}>
+      <input type="hidden" name="selectedVariantId" value={selectedVariantId} />
       <SubmitButton
         availableForSale={availableForSale}
         selectedVariantId={selectedVariantId}
         stylesClass={stylesClass}
-        handle={handle}
       />
-      <p aria-live="polite" className="sr-only" role="status">
-        {message}
-      </p>
+      {message && (
+        <p className="text-sm text-red-600 dark:text-red-400 mt-2">{message}</p>
+      )}
     </form>
   );
 }

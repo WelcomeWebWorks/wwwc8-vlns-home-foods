@@ -14,6 +14,7 @@ import {
   createCartMutation,
   editCartItemsMutation,
   removeFromCartMutation,
+  updateCartNoteMutation,
 } from "./mutations/cart";
 import {
   createCustomerMutation,
@@ -49,6 +50,7 @@ import {
   ShopifyAddToCartOperation,
   ShopifyCart,
   ShopifyCartOperation,
+  ShopifyCartNoteUpdateOperation,
   ShopifyCollection,
   ShopifyCollectionOperation,
   ShopifyCollectionProductsOperation,
@@ -291,6 +293,16 @@ export async function updateCart(
   });
 
   return reshapeCart(res.body.data.cartLinesUpdate.cart);
+}
+
+export async function updateCartNote(cartId: string, note: string): Promise<Cart> {
+  const res = await shopifyFetch<ShopifyCartNoteUpdateOperation>({
+    query: updateCartNoteMutation,
+    variables: { cartId, note },
+    cache: "no-store",
+  });
+
+  return reshapeCart(res.body.data.cartNoteUpdate.cart);
 }
 
 export async function getCart(cartId: string): Promise<Cart | undefined> {
