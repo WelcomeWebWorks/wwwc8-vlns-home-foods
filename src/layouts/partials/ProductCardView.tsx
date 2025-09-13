@@ -179,9 +179,9 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
 
   if (isLoading) {
     return (
-      <div className="row gap-y-6 md:gap-y-8">
+      <div className="product-grid-responsive">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="col-12 sm:col-6 md:col-4">
+          <div key={index} className="w-full product-card-mobile">
             <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg overflow-hidden animate-pulse">
               <div className="w-full aspect-[4/3] bg-gray-200 dark:bg-gray-700"></div>
               <div className="p-4 lg:p-6">
@@ -199,11 +199,11 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
   const resultsText = products.length > 1 ? "results" : "result";
 
   return (
-    <div ref={targetElementRef} className="row">
+    <div ref={targetElementRef} className="w-full">
       {searchValue ? (
-        <div className="col-12 mb-6">
-          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 lg:p-6">
-            <p className="text-text-dark dark:text-darkmode-text-dark text-lg">
+        <div className="w-full mb-6">
+          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 lg:p-6 mx-auto">
+            <p className="text-text-dark dark:text-darkmode-text-dark text-lg text-center">
               {products.length === 0
                 ? "There are no products that match "
                 : `Showing ${products.length} ${resultsText} for `}
@@ -214,8 +214,8 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
       ) : null}
 
       {products?.length === 0 && (
-        <div className="col-12">
-          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-8 lg:p-12 text-center">
+        <div className="w-full">
+          <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-8 lg:p-12 text-center mx-auto max-w-md">
             <ImageFallback
               className="mx-auto mb-6 w-[211px] h-[184px]"
               src="/images/no-search-found.png"
@@ -234,15 +234,15 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
         </div>
       )}
 
-      <div className="row gap-y-6 md:gap-y-8">
+      <div className="product-grid-responsive">
         {products.map((product, index) => (
-          <div key={index} className="col-12 sm:col-6 md:col-4">
+          <div key={index} className="w-full product-card-mobile">
             <CustomizableProductCard product={product} />
           </div>
         ))}
       </div>
 
-      <div className="col-12 mt-8">
+      <div className="w-full mt-8">
         <div
           className={
             hasNextPage || isLoading

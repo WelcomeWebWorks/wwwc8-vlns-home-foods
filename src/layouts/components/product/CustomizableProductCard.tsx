@@ -86,14 +86,14 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
 
     if (values.length <= 1) return null; // Don't show if only one option
 
-    if (values.length <= 3) {
-      // Render as buttons for 2-3 options - Professional styling
+    if (values.length <= 3 || optionName.toLowerCase() === "weight") {
+      // Render as buttons for 2-3 options or Weight - Professional styling
       return (
-        <div className="mb-3">
-          <label className="block text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-2">
+        <div className="mb-0">
+          <label className="block text-xs font-semibold text-text-dark dark:text-darkmode-text-dark mb-1 text-center">
             {optionName}:
           </label>
-          <div className="flex gap-2 flex-wrap justify-center">
+          <div className="flex gap-1 flex-wrap justify-center">
             {values.map((value) => (
               <button
                 key={value}
@@ -101,7 +101,7 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
                   e.stopPropagation();
                   handleOptionChange(optionName, value);
                 }}
-                className={`px-4 py-2 text-sm rounded-lg border-2 transition-all duration-200 font-medium min-w-[70px] ${
+                className={`px-2 py-1 text-xs rounded border-2 transition-all duration-200 font-medium min-w-[45px] ${
                   currentValue === value
                     ? "bg-primary text-white border-primary shadow-md"
                     : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:border-primary hover:text-primary"
@@ -114,10 +114,10 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
         </div>
       );
     } else {
-      // Render as dropdown for 4+ options - Professional styling
+      // Render as dropdown for 4+ options (except Weight) - Professional styling
       return (
-        <div className="mb-3">
-          <label className="block text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-2">
+        <div className="mb-0">
+          <label className="block text-xs font-semibold text-text-dark dark:text-darkmode-text-dark mb-1 text-center">
             {optionName}:
           </label>
           <select
@@ -128,7 +128,7 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
             }}
             onClick={handleDropdownClick}
             onMouseDown={handleDropdownMouseDown}
-            className="w-full px-4 py-2 text-sm border-2 border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
+            className="w-full px-2 py-1 text-xs border-2 border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all duration-200"
           >
             {values.map((value) => (
               <option key={value} value={value}>
@@ -144,17 +144,24 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
   const defaultVariantId = currentVariant?.id || product.variants[0]?.id;
 
   return (
-    <div className={`group relative z-10 bg-white dark:bg-darkmode-body rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden border border-border dark:border-darkmode-border hover:border-primary/30 ${className}`}>
+    <div className={`group relative z-10 bg-white dark:bg-darkmode-body rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden border border-border dark:border-darkmode-border hover:border-primary/30 w-full mx-auto ${className}`}>
       {/* Image Container - Enhanced Professional styling */}
       <div className="relative overflow-hidden aspect-[4/3]">
-        <ProductImageWithHover
-          images={product.images}
-          width={400}
-          height={300}
-          alt={product.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          fallbackSrc="/images/product_image404.jpg"
-        />
+        {/* Clickable Image Area */}
+        <Link
+          href={`/products/${product.handle}`}
+          className="block w-full h-full cursor-pointer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <ProductImageWithHover
+            images={product.images}
+            width={400}
+            height={300}
+            alt={product.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            fallbackSrc="/images/product_image404.jpg"
+          />
+        </Link>
 
         {/* Enhanced badge for sale items */}
         {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
@@ -170,6 +177,33 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
 
         {/* Hover overlay effect */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        {/* Eye Icon Overlay - Always Visible */}
+        <Link
+          href={`/products/${product.handle}`}
+          className="absolute top-4 right-4 z-30 bg-white/90 dark:bg-darkmode-body/90 backdrop-blur-sm rounded-full p-2 opacity-100 transition-all duration-300 hover:bg-primary hover:text-white shadow-lg hover:shadow-xl hover:scale-110"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <svg
+            className="w-5 h-5 text-text-dark dark:text-darkmode-text-dark hover:text-white transition-colors duration-200"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+            />
+          </svg>
+        </Link>
       </div>
 
       {/* Enhanced Content Container */}
@@ -177,21 +211,33 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
         {/* Product Title */}
         <h2 className="font-bold text-lg sm:text-xl lg:text-xl mb-4 text-text-dark dark:text-darkmode-text-dark line-clamp-2 group-hover:text-primary transition-colors duration-300">
           <Link
-            className="hover:text-primary transition-colors duration-200 after:absolute after:inset-0"
+            className="hover:text-primary transition-colors duration-200"
             href={`/products/${product.handle}`}
           >
             {product.title}
           </Link>
         </h2>
 
-        {/* Enhanced Customization Options */}
+        {/* Enhanced Customization Options - Vertical Layout */}
         {product.options && product.options.length > 0 && (
-          <div className="mb-5 relative z-10" onClick={handleDropdownClick}>
-            {product.options.map((option) => (
-              <div key={option.id}>
-                {renderOptionSelector(option.name)}
-              </div>
-            ))}
+          <div
+            className="mb-5 relative z-20"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDropdownClick(e);
+            }}
+          >
+            <div className="flex flex-col gap-4 items-center">
+              {product.options.map((option) => {
+                const optionSelector = renderOptionSelector(option.name);
+                // Only render if the option selector returns content (has multiple values)
+                return optionSelector ? (
+                  <div key={option.id} className="w-full max-w-xs">
+                    {optionSelector}
+                  </div>
+                ) : null;
+              })}
+            </div>
           </div>
         )}
 
@@ -218,7 +264,11 @@ const CustomizableProductCard = ({ product, className = "" }: CustomizableProduc
         </div>
 
         {/* Enhanced Add to Cart Button */}
-        <div className="mt-5">
+        <div
+          className="mt-5 relative z-20"
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <Suspense>
             <AddToCart
               variants={product.variants}

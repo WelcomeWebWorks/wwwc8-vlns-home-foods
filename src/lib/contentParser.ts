@@ -227,14 +227,14 @@ We accept the following payment methods:
 ## Delivery Information
 
 ### **Delivery Areas**
-- **Free Delivery**: Within 10km radius of our location
-- **Standard Delivery**: Across Andhra Pradesh
-- **Express Delivery**: Same day delivery for orders placed before 2 PM
+- **Free Delivery**: Across India for all orders
+- **International Delivery**: Worldwide shipping available
+- **Express Delivery**: Same day delivery for orders placed before 2 PM (select locations in India)
 
 ### **Delivery Charges**
-- **Free Delivery**: Orders above ₹500
-- **Standard Delivery**: ₹50 for orders below ₹500
-- **Express Delivery**: ₹100 additional charge
+- **Free Delivery**: All orders across India
+- **International Delivery**: Shipping charges apply based on destination
+- **Express Delivery**: ₹100 additional charge (select locations in India only)
 
 ### **Delivery Time**
 - **Standard Delivery**: 2-3 business days
@@ -246,17 +246,18 @@ We accept the following payment methods:
 - Track your order using the order number
 - Contact us for any delivery-related queries
 
-## Return & Refund Policy
+## No-Return Policy
 
-### **Returns**
-- **Fresh Products**: No returns due to perishable nature
-- **Packaged Products**: 7-day return policy
-- **Damaged Products**: Immediate replacement or refund
+### **Important Notice**
+- **All Sales Final**: No returns accepted once purchase is completed
+- **Fresh Products**: Due to the perishable nature of our food products, all sales are final
+- **Quality Assurance**: We ensure all products are fresh and properly packaged before dispatch
+- **Damaged Products**: Contact us immediately upon delivery for damaged items only
 
-### **Refunds**
-- **Processing Time**: 3-5 business days
-- **Refund Method**: Same as payment method
-- **Contact**: For refund queries, call 9581154327
+### **Contact for Issues**
+- **Phone**: 9581154327
+- **Email**: info@vlnshomefoods.com
+- **Note**: We only address damaged or incorrect products upon delivery
 
 ## Contact Information
 

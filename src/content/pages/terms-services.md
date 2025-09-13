@@ -11,9 +11,9 @@ draft: false
 
 VLNS Home Foods is committed to providing you with authentic Andhra Pradesh flavors and excellent customer service. We comply with Indian consumer protection laws and e-commerce regulations. Our Terms and Conditions do not affect your statutory rights as a consumer.
 
-We aim to provide reliable service - you'll get your items delivered fresh and we'll resolve any issues you may have. You have the right to cancel an order and return any goods within 7 days of receipt if they don't meet your expectations.
+We aim to provide reliable service - you'll get your items delivered fresh and we'll resolve any issues you may have. Please note that all sales are final and no returns are accepted once purchase is completed due to the perishable nature of our food products.
 
-##### Contact us for returns: info@vlnshomefoods.com or +91 9581154327
+##### Contact us for damaged items only: info@vlnshomefoods.com or +91 9581154327
 
 <br/>
 
@@ -73,20 +73,21 @@ We take online security seriously and use industry-standard encryption to protec
 
 #### Delivery Terms
 
-- We deliver across India within 2-5 business days
-- Delivery charges vary by location and will be calculated at checkout
+- We provide free delivery across India within 2-5 business days
+- International delivery available worldwide with applicable shipping charges
+- No delivery charges for any location within India
 - We will notify you if there are any delays in delivery
 - You must be available to receive the order at the specified address
 - Title and risk of goods pass to you upon delivery
 <br/>
 
-#### Returns and Refunds
+#### No-Return Policy
 
-- You may return unused products within 7 days of delivery
-- Products must be in original packaging and condition
-- We will provide a full refund for defective or incorrect products
-- Return shipping costs are borne by the customer unless the return is due to our error
-- Refunds will be processed within 5-7 business days after we receive the returned items
+- All sales are final - no returns accepted once purchase is completed
+- Due to the perishable nature of our food products, we cannot accept returns
+- We ensure all products are fresh and properly packaged before dispatch
+- Contact us immediately upon delivery only for damaged or incorrect products
+- Quality issues will be addressed on a case-by-case basis
 
 #### Contact Information
 

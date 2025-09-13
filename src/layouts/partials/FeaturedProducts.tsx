@@ -9,7 +9,7 @@ const FeaturedProducts = ({ products }: { products: Product[] }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
         {products.map((product: Product) => (
           <div key={product.id} className="transform transition-all duration-300 hover:scale-105">
             <CustomizableProductCard product={product} />

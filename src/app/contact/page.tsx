@@ -8,6 +8,7 @@ import { ContactUsItem, RegularPage } from "@/types";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
+import { FaFacebook, FaWhatsapp, FaInstagram } from "react-icons/fa";
 
 const Contact = () => {
   const data: RegularPage = getListPage("contact/_index.md");
@@ -71,9 +72,9 @@ const Contact = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Back to Home Link */}
           <div className="mb-8">
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-primary hover:text-[#600018] transition-colors duration-300"
+            <Link
+              href="/"
+              className="inline-flex items-center bg-primary hover:bg-[#600018] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -137,6 +138,76 @@ const Contact = () => {
                   />
                 </div>
               ))}
+          </div>
+
+          {/* Social Media Links Section */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-8">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
+                  Connect with Us
+                </h2>
+                <p className="text-text-light dark:text-darkmode-text-light">
+                  Follow us on social media for updates, recipes, and more!
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Facebook */}
+                <a
+                  href="https://facebook.com/vlnshomefoods"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105 group"
+                >
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-700 transition-colors duration-300">
+                    <FaFacebook className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
+                    Facebook
+                  </h3>
+                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                    Like our page for updates and authentic recipes
+                  </p>
+                </a>
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/919581154327"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105 group"
+                >
+                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-600 transition-colors duration-300">
+                    <FaWhatsapp className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-green-800 dark:text-green-200 mb-2">
+                    WhatsApp
+                  </h3>
+                  <p className="text-sm text-green-600 dark:text-green-400">
+                    Chat with us directly for quick support
+                  </p>
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://instagram.com/vlnshomefoods"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-pink-50 dark:bg-pink-900/20 border border-pink-200 dark:border-pink-800 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105 group"
+                >
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:from-purple-600 group-hover:to-pink-600 transition-all duration-300">
+                    <FaInstagram className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-pink-800 dark:text-pink-200 mb-2">
+                    Instagram
+                  </h3>
+                  <p className="text-sm text-pink-600 dark:text-pink-400">
+                    See our delicious food photos and stories
+                  </p>
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Contact Form */}

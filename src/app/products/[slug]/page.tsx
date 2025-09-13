@@ -1,33 +1,32 @@
-import Social from "@/components/Social";
-import { AddToCart } from "@/components/cart/AddToCart";
 import LoadingProductGallery from "@/components/loadings/skeleton/SkeletonProductGallery";
 import ProductGallery from "@/components/product/ProductGallery";
 import ShowTags from "@/components/product/ShowTags";
 import Tabs from "@/components/product/Tabs";
-import { VariantSelector } from "@/components/product/VariantSelector";
 import { DynamicPrice } from "@/components/product/DynamicPrice";
+import { EnhancedVariantSelector } from "@/layouts/components/product/EnhancedVariantSelector";
+import WishlistButton from "@/layouts/components/product/WishlistButton";
+import EnhancedRelatedProducts from "@/layouts/components/product/EnhancedRelatedProducts";
+import EnhancedCartButtons from "@/layouts/components/cart/EnhancedCartButtons";
+import ProductDetailContent from "@/layouts/components/product/ProductDetailContent";
 import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser";
 import { getProduct, getProductRecommendations, getProducts } from "@/lib/shopify";
-import LatestProducts from "@/partials/FeaturedProducts";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { 
-  FiTruck, 
-  FiShield, 
-  FiHeart, 
-  FiShare2, 
-  FiCheckCircle, 
+import {
+  FiTruck,
+  FiShield,
+  FiShare2,
+  FiCheckCircle,
   FiStar,
-  FiClock,
   FiAward,
-  FiRefreshCw,
   FiHome,
   FiPackage,
   FiCreditCard,
   FiTag,
-  FiFileText
+  FiFileText,
+  FiAlertCircle
 } from "react-icons/fi";
 
 export const generateMetadata = async (props: {
@@ -77,7 +76,7 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
 
   // Try to get product recommendations first
   let relatedProducts = await getProductRecommendations(id);
-  
+
   // If no recommendations are available, get recent products as fallback
   if (!relatedProducts || relatedProducts.length === 0) {
     try {
@@ -85,10 +84,10 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
         sortKey: "CREATED_AT",
         reverse: true,
       });
-      // Filter out the current product and take the first 4 products
+      // Filter out the current product and take the first 6 products for enhanced display
       relatedProducts = products
         .filter(product => product.id !== id)
-        .slice(0, 4);
+        .slice(0, 6);
     } catch (error) {
       relatedProducts = [];
     }
@@ -130,32 +129,11 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
 
             {/* Product Information */}
             <div className="space-y-8">
-              {/* Product Header */}
+              {/* Product Header with Enhanced Functionality */}
               <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark leading-tight mb-3">
-                  {title}
-                </h1>
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="flex items-center space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                          <FiStar key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <span className="text-lg text-text-light dark:text-darkmode-text-light font-medium">(4.8/5)</span>
-                      <span className="text-sm text-text-light dark:text-darkmode-text-light">• 127 reviews</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <button className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 group">
-                      <FiHeart className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-red-500 transition-colors duration-200" />
-                    </button>
-                    <button className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 group">
-                      <FiShare2 className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-primary transition-colors duration-200" />
-                    </button>
-                  </div>
-                </div>
+                <ProductDetailContent product={product}>
+                  <div></div>
+                </ProductDetailContent>
               </div>
 
               {/* Price Section */}
@@ -181,10 +159,18 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 </div>
               </div>
 
-              {/* Product Options */}
-              <div className="space-y-6">
+              {/* Enhanced Product Options */}
+              <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-darkmode-body rounded-3xl p-6 md:p-8 border border-border dark:border-darkmode-border shadow-lg">
+                <div className="mb-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
+                    Customize Your Order
+                  </h3>
+                  <p className="text-text-light dark:text-darkmode-text-light">
+                    Select your preferred options below
+                  </p>
+                </div>
                 {options && (
-                  <VariantSelector
+                  <EnhancedVariantSelector
                     options={options}
                     variants={variants}
                     images={images}
@@ -192,13 +178,12 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 )}
               </div>
 
-              {/* Add to Cart Section */}
+              {/* Enhanced Cart Buttons Section */}
               <div className="space-y-4">
                 <Suspense>
-                  <AddToCart
+                  <EnhancedCartButtons
                     variants={product?.variants}
                     availableForSale={product?.availableForSale}
-                    stylesClass={"w-full bg-gradient-to-r from-primary to-[#600018] hover:from-[#600018] hover:to-primary text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 text-lg"}
                     handle={null}
                     defaultVariantId={defaultVariantId}
                   />
@@ -210,7 +195,7 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center space-x-3">
                   <FiTruck className="w-6 h-6 text-green-600 dark:text-green-400" />
                   <div>
-                    <p className="text-sm font-semibold text-green-800 dark:text-green-200">Free Delivery</p>
+                    <p className="text-sm font-semibold text-green-800 dark:text-green-200">Free Delivery India-wide</p>
                     <p className="text-xs text-green-600 dark:text-green-400">{estimated_delivery}</p>
                   </div>
                 </div>
@@ -221,62 +206,67 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                     <p className="text-xs text-blue-600 dark:text-blue-400">100% Protected</p>
                   </div>
                 </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4 flex items-center space-x-3">
-                  <FiRefreshCw className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center space-x-3">
+                  <FiAlertCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
                   <div>
-                    <p className="text-sm font-semibold text-purple-800 dark:text-purple-200">Easy Returns</p>
-                    <p className="text-xs text-purple-600 dark:text-purple-400">30 Day Policy</p>
+                    <p className="text-sm font-semibold text-red-800 dark:text-red-200">No Returns</p>
+                    <p className="text-xs text-red-600 dark:text-red-400">All Sales Final</p>
                   </div>
                 </div>
               </div>
 
-              {/* Payment Methods */}
-              <div className="space-y-4">
-                <h5 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-2">
-                  <FiCreditCard className="w-5 h-5 text-primary" />
-                  <span>Payment Methods</span>
+              {/* Enhanced Payment Methods */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-6 md:p-8 border border-blue-200 dark:border-blue-800 shadow-lg">
+                <h5 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-6">
+                  <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                    <FiCreditCard className="w-5 h-5 text-primary" />
+                  </div>
+                  <span>Secure Payment Methods</span>
                 </h5>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
-                  <div className="flex flex-wrap items-center gap-4">
+                <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
                   {payment_methods?.map(
                     (payment: { name: string; image_url: string }) => (
-                        <div key={payment.name} className="bg-white dark:bg-darkmode-body border border-border dark:border-darkmode-border rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow duration-200">
+                      <div
+                        key={payment.name}
+                        className="bg-white dark:bg-darkmode-body border-2 border-border dark:border-darkmode-border rounded-2xl p-4 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
+                        title={payment.name}
+                      >
                         <Image
                           src={payment.image_url}
                           alt={payment.name}
-                            width={48}
-                            height={36}
-                            className="w-[48px] h-[36px] object-contain"
+                          width={64}
+                          height={48}
+                          className="w-full h-[48px] object-contain group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                     ),
                   )}
                 </div>
-              </div>
-              </div>
-
-              {/* Social Sharing */}
-              <div className="space-y-4">
-                <h5 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-2">
-                  <FiShare2 className="w-5 h-5 text-primary" />
-                  <span>Share this product</span>
-                </h5>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
-                <Social socialName={title} className="flex space-x-4" />
+                <div className="mt-4 text-center">
+                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                    🔒 All payments are secured with 256-bit SSL encryption
+                  </p>
                 </div>
               </div>
 
-              {/* Tags */}
+
+
+              {/* Enhanced Product Tags */}
               {tags.length > 0 && (
-                <div className="space-y-4">
-                  <h5 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-2">
-                    <FiTag className="w-5 h-5 text-primary" />
-                    <span>Product Tags</span>
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-6 md:p-8 border border-green-200 dark:border-green-800 shadow-lg">
+                  <h5 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-6">
+                    <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                      <FiTag className="w-5 h-5 text-primary" />
+                    </div>
+                    <span>Product Categories</span>
                   </h5>
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
                   <Suspense>
                     <ShowTags tags={tags} />
                   </Suspense>
+                  <div className="mt-4 text-center">
+                    <p className="text-sm text-green-600 dark:text-green-400 font-medium">
+                      🏷️ Explore more products in these categories
+                    </p>
                   </div>
                 </div>
               )}
@@ -290,20 +280,43 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
         <section className="py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-darkmode-body dark:to-gray-900">
           <div className="container">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full mb-6">
-                  <FiFileText className="w-8 h-8 text-primary" />
+              <div className="text-left mb-12 pl-4 md:pl-8">
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                    <FiFileText className="w-8 h-8 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
+                      Product Details
+                    </h2>
+                    <p className="text-lg text-text-light dark:text-darkmode-text-light">
+                      Learn more about this authentic Andhra Pradesh product
+                    </p>
+                  </div>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
-                  Product Details
-                </h2>
-                <p className="text-lg text-text-light dark:text-darkmode-text-light max-w-2xl mx-auto">
-                  Learn more about this authentic Andhra Pradesh product
-                </p>
-                <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full mt-6"></div>
+                <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></div>
               </div>
               <div className="bg-white dark:bg-darkmode-body rounded-3xl shadow-xl border border-border dark:border-darkmode-border overflow-hidden">
               <Tabs descriptionHtml={descriptionHtml} />
+
+              {/* No-Return Policy Notice */}
+              <div className="bg-red-50 dark:bg-red-900/20 border-t border-red-200 dark:border-red-800 p-6">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                      <FiAlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
+                      Important Notice - No Returns Policy
+                    </h4>
+                    <p className="text-red-700 dark:text-red-300 text-sm leading-relaxed">
+                      <strong>All sales are final. No returns accepted once purchase is completed.</strong> Due to the perishable nature of our authentic food products, we cannot accept returns. We ensure all products are fresh and properly packaged before dispatch. Please contact us immediately upon delivery only for damaged or incorrect items.
+                    </p>
+                  </div>
+                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -311,62 +324,12 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
       )}
 
       {/* Enhanced Related Products Section */}
-      <section className="py-20 bg-white dark:bg-darkmode-body relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10"></div>
-        <div className="container relative">
-          {/* Always show the section header */}
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full mb-6">
-              <FiPackage className="w-8 h-8 text-primary" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
-                  You Might Also Like
-                </h2>
-            <p className="text-xl text-text-light dark:text-darkmode-text-light max-w-3xl mx-auto mb-6">
-                  Discover more authentic Andhra Pradesh products that complement your selection
-            </p>
-            <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full"></div>
-          </div>
-          
-          {/* Enhanced Product Grid */}
-          <div className="relative">
-            {relatedProducts && relatedProducts.length > 0 ? (
-              <>
-                <LatestProducts products={relatedProducts.slice(0, 4)} />
-                
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary/20 rounded-full"></div>
-                <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-accent/20 rounded-full"></div>
-                <div className="absolute top-1/2 -left-8 w-6 h-6 bg-primary/30 rounded-full"></div>
-                <div className="absolute top-1/4 -right-8 w-10 h-10 bg-accent/30 rounded-full"></div>
-              </>
-            ) : (
-              /* Fallback message when no related products are available */
-              <div className="text-center py-16">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full mb-6">
-                  <FiPackage className="w-10 h-10 text-gray-400" />
-                </div>
-                <h3 className="text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-4">
-                  More Products Coming Soon
-                </h3>
-                <p className="text-lg text-text-light dark:text-darkmode-text-light mb-8 max-w-md mx-auto">
-                  We're constantly adding new authentic Andhra Pradesh products. Check back soon for more delicious options!
-                </p>
-                <a 
-                  href="/products" 
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-[#600018] hover:from-[#600018] hover:to-primary text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-                >
-                  <span>Browse All Products</span>
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-          )}
-          </div>
-        </div>
-      </section>
+      <EnhancedRelatedProducts
+        products={relatedProducts || []}
+        currentProductId={id}
+        title="You Might Also Like"
+        subtitle="Discover more authentic Andhra Pradesh products that complement your selection"
+      />
     </>
   );
 };

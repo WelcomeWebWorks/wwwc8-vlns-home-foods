@@ -48,6 +48,9 @@ const ShowProducts = async ({
   let vendorsWithCounts: { vendor: string; productCount: number }[] = [];
   let categoriesWithCounts: { category: string; productCount: number }[] = [];
 
+  // Always fetch all products first to calculate accurate static counts
+  const allProductsForCounts = await getProducts({ sortKey, reverse });
+
   if (searchValue || brand || category || tag) {
     let queryString = "";
 
@@ -80,56 +83,16 @@ const ShowProducts = async ({
           reverse,
         })
         : await getProducts(query);
-
-    const uniqueVendors: string[] = [
-      ...new Set(
-        ((productsData?.products as Product[]) || []).map((product: Product) =>
-          String(product?.vendor || ""),
-        ),
-      ),
-    ];
-
-    const uniqueCategories: string[] = [
-      ...new Set(
-        ((productsData?.products as Product[]) || []).flatMap(
-          (product: Product) =>
-            product.collections.nodes.map(
-              (collectionNode: any) => collectionNode.title || "",
-            ),
-        ),
-      ),
-    ];
-
-    // For query results, still calculate counts from ALL products to show accurate totals
-    const allProductsForCounts = await getProducts({ sortKey, reverse });
-
-    vendorsWithCounts = uniqueVendors.map((vendor: string) => {
-      const productCount = (allProductsForCounts?.products || []).filter(
-        (product: Product) => product?.vendor === vendor,
-      ).length;
-      return { vendor, productCount };
-    });
-    
-    categoriesWithCounts = uniqueCategories.map((category: string) => {
-      const productCount = ((allProductsForCounts?.products as Product[]) || []).filter(
-        (product: Product) =>
-          product.collections.nodes.some(
-            (collectionNode: any) => collectionNode.title === category,
-          ),
-      ).length;
-      return { category, productCount };
-    });
   } else {
     // Fetch all products
     productsData = await getProducts({ sortKey, reverse, cursor });
-    
+  }
+
   // Always calculate category and vendor counts from ALL products (not filtered)
   // This ensures counts remain accurate regardless of current filter
-  const allProductsData = await getProducts({ sortKey, reverse });
-  
   const uniqueVendors: string[] = [
     ...new Set(
-      ((allProductsData?.products as Product[]) || []).map((product: Product) =>
+      ((allProductsForCounts?.products as Product[]) || []).map((product: Product) =>
         String(product?.vendor || ""),
       ),
     ),
@@ -137,7 +100,7 @@ const ShowProducts = async ({
 
   const uniqueCategories: string[] = [
     ...new Set(
-      ((allProductsData?.products as Product[]) || []).flatMap(
+      ((allProductsForCounts?.products as Product[]) || []).flatMap(
         (product: Product) =>
           product.collections.nodes.map(
             (collectionNode: any) => collectionNode.title || "",
@@ -147,14 +110,14 @@ const ShowProducts = async ({
   ];
 
   vendorsWithCounts = uniqueVendors.map((vendor: string) => {
-    const productCount = (allProductsData?.products || []).filter(
+    const productCount = (allProductsForCounts?.products || []).filter(
       (product: Product) => product?.vendor === vendor,
     ).length;
     return { vendor, productCount };
   });
 
   categoriesWithCounts = uniqueCategories.map((category: string) => {
-    const productCount = ((allProductsData?.products as Product[]) || []).filter(
+    const productCount = ((allProductsForCounts?.products as Product[]) || []).filter(
       (product: Product) =>
         product.collections.nodes.some(
           (collectionNode: any) => collectionNode.title === category,
@@ -162,7 +125,6 @@ const ShowProducts = async ({
     ).length;
     return { category, productCount };
   });
-  }
   
   // Fetch categories and vendors with error handling
   let categories: any[] = [];

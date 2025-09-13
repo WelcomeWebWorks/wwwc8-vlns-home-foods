@@ -59,7 +59,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-light dark:bg-darkmode-light login-bg">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container py-8">
         {/* Back to Home Link */}
         <div className="mb-8">
           <Link 

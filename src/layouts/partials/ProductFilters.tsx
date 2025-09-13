@@ -44,7 +44,8 @@ const ProductFilters = ({
   const handleCategoryClick = (handle: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
 
-    if (handle === selectedCategory) {
+    if (handle === "" || handle === selectedCategory) {
+      // Clear category filter for "All Categories" or deselect current category
       newParams.delete("c");
     } else {
       newParams.set("c", handle);
@@ -63,6 +64,26 @@ const ProductFilters = ({
         </h5>
         <hr className="border-border dark:border-darkmode-border mb-4" />
         <ul className="space-y-3">
+          {/* All Categories Option */}
+          <li
+            className={`flex items-center justify-between cursor-pointer p-3 rounded-lg transition-all duration-200 ${
+              !selectedCategory
+                ? "bg-primary text-white shadow-md"
+                : "text-text-light dark:text-darkmode-text-light hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary"
+            }`}
+            onClick={() => handleCategoryClick("")}
+          >
+            <span className="font-medium">All Categories</span>
+            <span className={`text-sm px-2 py-1 rounded-full font-medium ${
+              !selectedCategory
+                ? "bg-white text-primary border-2 border-white"
+                : "bg-primary text-white"
+            }`}>
+              {categoriesWithCounts?.reduce((total, cat) => total + cat.productCount, 0) ||
+               categories.reduce((total, cat) => total + (cat?.products?.edges?.length || 0), 0)}
+            </span>
+          </li>
+
           {categories.map((category) => (
             <li
               key={category.handle}
@@ -80,7 +101,7 @@ const ProductFilters = ({
                   : "bg-primary text-white"
               }`}>
                 {(() => {
-                  // Try to get count from categoriesWithCounts first
+                  // Use static count from categoriesWithCounts (original total count)
                   if (categoriesWithCounts && categoriesWithCounts.length > 0) {
                     const found = categoriesWithCounts.find(
                       (c) => c.category === category.title
@@ -89,12 +110,12 @@ const ProductFilters = ({
                       return found.productCount;
                     }
                   }
-                  
-                  // Fallback to category products count
+
+                  // Fallback to category products count (static)
                   if (category?.products?.edges && category.products.edges.length !== undefined) {
                     return category.products.edges.length;
                   }
-                  
+
                   // Final fallback
                   return 0;
                 })()}

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { FaShoppingCart, FaArrowLeft, FaEdit, FaSave, FaTimes, FaWhatsapp } from "react-icons/fa";
+import { FiAlertCircle } from "react-icons/fi";
 import Price from "../Price";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
@@ -72,12 +73,12 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
 
   return (
     <div className="login-bg min-h-screen py-8">
-      <div className="container mx-auto px-4">
+      <div className="container">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            href="/products" 
-            className="inline-flex items-center gap-2 text-text-dark dark:text-darkmode-text-dark hover:text-primary transition-colors duration-200 mb-4"
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-[#600018] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mb-4"
           >
             <FaArrowLeft className="w-4 h-4" />
             <span className="font-medium">Continue Shopping</span>
@@ -316,6 +317,25 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                         amount={cart.cost.totalAmount.amount}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
+                    </div>
+                  </div>
+                </div>
+
+                {/* No-Return Policy Notice */}
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
+                        <FiAlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-sm font-semibold text-red-800 dark:text-red-200 mb-1">
+                        No Returns Policy
+                      </h4>
+                      <p className="text-xs text-red-700 dark:text-red-300">
+                        All sales are final. No returns accepted once purchase is completed.
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -29,8 +29,8 @@ faqs:
   - title: "How do you ensure the authenticity of your products?"
     content: "Our products are meticulously prepared in small batches using recipes passed down through generations. We source ingredients locally and maintain traditional cooking methods to preserve the authentic taste of Andhra Pradesh cuisine."
 
-  - title: "Do you deliver across India?"
-    content: "Yes, we deliver our products across India. We use reliable packaging to ensure your food items reach you fresh and in perfect condition, maintaining the authentic flavors you love."
+  - title: "Do you deliver worldwide?"
+    content: "Yes, we deliver worldwide! We provide free delivery across India for all orders. For international orders, shipping charges apply. We use reliable packaging to ensure your food items reach you fresh and in perfect condition, maintaining the authentic flavors you love."
 
   - title: "How long do your products stay fresh?"
     content: "Our products are made with natural preservatives and traditional methods. Most items have a shelf life of 2-4 weeks when stored properly. We provide detailed storage instructions with each order."

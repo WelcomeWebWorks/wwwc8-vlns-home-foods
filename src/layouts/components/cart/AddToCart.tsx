@@ -4,6 +4,8 @@ import { addItem } from "@/lib/utils/cartActions";
 import { ProductVariant } from "@/lib/shopify/types";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
 interface AddToCartProps {
@@ -55,7 +57,28 @@ export function AddToCart({
   defaultVariantId,
 }: AddToCartProps) {
   const [message, formAction] = useActionState(addItem, null);
-  const selectedVariantId = defaultVariantId || variants[0]?.id;
+  const searchParams = useSearchParams();
+
+  // Dynamically determine the selected variant based on URL parameters
+  const selectedVariantId = useMemo(() => {
+    const selectedOptions = Array.from(searchParams.entries());
+
+    // If no options are selected, use the default variant
+    if (selectedOptions.length === 0) {
+      return defaultVariantId || variants[0]?.id;
+    }
+
+    // Find variant that matches all selected options
+    const variant = variants.find((variant: ProductVariant) =>
+      selectedOptions.every(([key, value]) =>
+        variant.selectedOptions.some(
+          (option) => option.name.toLowerCase() === key && option.value === value,
+        ),
+      ),
+    );
+
+    return variant?.id || defaultVariantId || variants[0]?.id;
+  }, [searchParams, variants, defaultVariantId]);
 
   return (
     <form action={formAction}>

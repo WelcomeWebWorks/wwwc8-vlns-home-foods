@@ -9,6 +9,8 @@ import menu from "@/config/menu.json";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
+import EnhancedNavigation from "@/layouts/components/navigation/EnhancedNavigation";
+import MobileEnhancedNavigation from "@/layouts/components/navigation/MobileEnhancedNavigation";
 
 interface INavigationLink {
   name: string;
@@ -57,27 +59,11 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
             <Logo />
           </div>
 
-          {/* Desktop Navigation Menu - Hidden on mobile/tablet */}
-          <div className="hidden lg:block flex-1">
-            <div className="flex justify-center">
-              <ul className="flex space-x-8">
-                {main.map((menu, i) => (
-                  <li key={`menu-${i}`}>
-                    <Link
-                      href={menu.url}
-                      className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
-                        isMenuItemActive(menu, pathname)
-                          ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                          : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
-                      }`}
-                    >
-                      {menu.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          {/* Enhanced Desktop Navigation Menu - Hidden on mobile/tablet */}
+          <EnhancedNavigation
+            staticMenuItems={main}
+            pathname={pathname}
+          />
 
           <div className="flex items-center space-x-4">
             <ThemeSwitcher className="mr-2" />
@@ -163,33 +149,22 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
             </button>
           </div>
           
-          <nav className="space-y-2">
-            {main.map((menu, i) => (
+          <MobileEnhancedNavigation
+            staticMenuItems={main}
+            pathname={pathname}
+            onLinkClick={handleToggleSidebar}
+          />
+
+          {navigation_button.enable && (
+            <div className="mt-6 pt-4 border-t border-border dark:border-darkmode-border">
               <Link
-                key={`mobile-menu-${i}`}
-                href={menu.url}
-                className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
-                  isMenuItemActive(menu, pathname) 
-                    ? 'bg-[#800020] text-white font-bold shadow-md' 
-                    : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
-                }`}
-                onClick={handleToggleSidebar}
+                className="btn btn-outline-primary btn-sm w-full text-center"
+                href={navigation_button.link}
               >
-                {menu.name}
+                {navigation_button.label}
               </Link>
-            ))}
-            
-            {navigation_button.enable && (
-              <div className="mt-6 pt-4 border-t border-border dark:border-darkmode-border">
-                <Link
-                  className="btn btn-outline-primary btn-sm w-full text-center"
-                  href={navigation_button.link}
-                >
-                  {navigation_button.label}
-                </Link>
-              </div>
-            )}
-          </nav>
+            </div>
+          )}
         </div>
       </nav>
     </header>

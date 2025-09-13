@@ -19,10 +19,32 @@
 }
 
 /* form style */
-@utility form-input {
+.form-input {
   @apply w-full rounded-lg border-2 border-border bg-light px-6 py-4 text-text-dark placeholder:text-text-light focus:border-primary focus:ring-transparent transition-all duration-300 dark:border-darkmode-border dark:bg-darkmode-light dark:text-light;
 }
 
-@utility form-label {
+.form-label {
   @apply mb-4 block font-secondary text-xl font-normal text-text-dark dark:text-darkmode-light;
+}
+
+/* responsive width utilities */
+.container-full {
+  @apply w-full mx-auto px-2 sm:px-3 md:px-4 lg:px-6 xl:px-8 2xl:px-12;
+}
+
+.container-wide {
+  @apply w-full mx-auto px-1 sm:px-2 md:px-3 lg:px-4 xl:px-6 2xl:px-8;
+}
+
+.container-narrow {
+  @apply w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8;
+}
+
+/* Full width responsive grid utilities */
+.grid-responsive {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8;
+}
+
+.grid-responsive-large {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4 md:gap-6 lg:gap-8;
 }

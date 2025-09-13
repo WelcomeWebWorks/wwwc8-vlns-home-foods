@@ -88,30 +88,30 @@ const ProductLayouts = ({
                     <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
-                    <p className="font-semibold text-text-dark dark:text-darkmode-text-dark max-md:hidden">
+                    <p className="font-semibold text-text-dark dark:text-darkmode-text-dark max-sm:hidden">
                       View Options
                     </p>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => layoutChange("card")}
-                      className={`p-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
+                      className={`p-2 md:p-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
                         isListView 
                           ? "border-border dark:border-darkmode-border text-text-light dark:text-darkmode-text-light hover:border-primary hover:text-primary" 
                           : "border-primary bg-primary text-white shadow-md"
                       }`}
                     >
-                      <BsGridFill className="w-4 h-4" />
+                      <BsGridFill className="w-3 h-3 md:w-4 md:h-4" />
                     </button>
                     <button
                       onClick={() => layoutChange("list")}
-                      className={`p-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
-                        isListView 
-                          ? "border-primary bg-primary text-white shadow-md" 
+                      className={`p-2 md:p-3 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
+                        isListView
+                          ? "border-primary bg-primary text-white shadow-md"
                           : "border-border dark:border-darkmode-border text-text-light dark:text-darkmode-text-light hover:border-primary hover:text-primary"
                       }`}
                     >
-                      <FaList className="w-4 h-4" />
+                      <FaList className="w-3 h-3 md:w-4 md:h-4" />
                     </button>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ const ProductLayouts = ({
                       <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                       </svg>
-                      <p className="font-semibold text-text-dark dark:text-darkmode-text-dark max-md:hidden">
+                      <p className="font-semibold text-text-dark dark:text-darkmode-text-dark max-sm:hidden">
                         Sort By
                       </p>
                     </div>

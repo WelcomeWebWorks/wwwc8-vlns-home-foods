@@ -5,6 +5,7 @@ import TwSizeIndicator from "@/helpers/TwSizeIndicator";
 import Footer from "@/partials/Footer";
 import Header from "@/partials/Header";
 import Providers from "@/partials/Providers";
+import WhatsAppButton from "@/layouts/components/WhatsAppButton";
 import "@/styles/main.css";
 
 export default function RootLayout({
@@ -57,6 +58,7 @@ export default function RootLayout({
           </Header>
           <main className="relative z-10">{children}</main>
           <Footer />
+          <WhatsAppButton />
         </Providers>
       </body>
     </html>

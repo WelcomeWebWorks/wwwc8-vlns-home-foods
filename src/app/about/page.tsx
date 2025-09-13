@@ -30,12 +30,12 @@ const About = () => {
       <SeoMeta {...frontmatter} />
 
       <div className="min-h-screen bg-light dark:bg-darkmode-light login-bg">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container py-8">
           {/* Back to Home Link */}
           <div className="mb-8">
-            <Link 
-              href="/" 
-              className="inline-flex items-center text-primary hover:text-[#600018] transition-colors duration-300"
+            <Link
+              href="/"
+              className="inline-flex items-center bg-primary hover:bg-[#600018] text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -64,7 +64,7 @@ const About = () => {
             {about_us && about_us.length > 0 ? (
               about_us.map((section: AboutUsItem, index: number) => (
               <div
-                className={`max-w-6xl mx-auto ${index % 2 === 0 ? 'lg:flex lg:items-center lg:gap-12' : 'lg:flex lg:flex-row-reverse lg:items-center lg:gap-12'}`}
+                className={`w-full mx-auto ${index % 2 === 0 ? 'lg:flex lg:items-center lg:gap-12' : 'lg:flex lg:flex-row-reverse lg:items-center lg:gap-12'}`}
               key={section?.title}
             >
                 <div className={`${index % 2 === 0 ? 'lg:w-1/2' : 'lg:w-1/2'} mb-8 lg:mb-0`}>

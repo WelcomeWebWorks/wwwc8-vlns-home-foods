@@ -60,6 +60,80 @@
   @apply block py-1 font-medium text-xl text-text-light transition hover:!text-darkmode-text-dark dark:!text-darkmode-text dark:hover:text-darkmode-primary;
 }
 
+/* Enhanced Navigation Dropdown Styles */
+.enhanced-nav-dropdown {
+  @apply absolute top-full left-0 mt-1 bg-white dark:bg-darkmode-body rounded-lg shadow-2xl border border-border dark:border-darkmode-border z-50 overflow-hidden;
+  min-width: 320px;
+}
+
+.enhanced-nav-dropdown-content {
+  @apply p-4;
+}
+
+.enhanced-nav-section-title {
+  @apply text-sm font-semibold text-text-dark dark:text-darkmode-text-dark mb-3 flex items-center;
+}
+
+.enhanced-nav-category-item {
+  @apply text-left px-3 py-2 text-sm text-text-light dark:text-darkmode-text-light hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary rounded transition-colors duration-200;
+}
+
+.enhanced-nav-tag-item {
+  @apply px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-text-dark dark:text-darkmode-text-dark hover:bg-primary hover:text-white rounded-full transition-colors duration-200;
+}
+
+.enhanced-nav-view-all {
+  @apply block text-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-[#600018] transition-colors duration-200 text-sm font-medium;
+}
+
+/* Mobile Enhanced Navigation Styles */
+.mobile-enhanced-nav-section {
+  @apply w-full flex items-center justify-between px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out text-gray-700 hover:bg-gray-100 hover:text-primary;
+}
+
+.mobile-enhanced-nav-subsection {
+  @apply ml-4 space-y-1;
+}
+
+.mobile-enhanced-nav-category {
+  @apply block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-primary rounded transition-colors duration-200;
+}
+
+.mobile-enhanced-nav-tag {
+  @apply px-2 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-primary hover:text-white rounded-full transition-colors duration-200;
+}
+
+/* Enhanced Product Detail Page Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) translateX(-50%);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+.animate-float-up {
+  animation: float-up 1s ease-out forwards;
+}
+
 /* theme-switcher */
 .theme-switcher {
   @apply inline-flex;

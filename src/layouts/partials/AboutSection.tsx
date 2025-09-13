@@ -97,10 +97,10 @@ const AboutSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-text-dark dark:text-darkmode-text-dark mb-1">
-                      All India Delivery
+                      Worldwide Delivery Available
                     </h4>
                     <p className="text-sm text-text-light dark:text-darkmode-text-light">
-                      Fresh products delivered nationwide
+                      Free delivery across India, international shipping available
                     </p>
                   </div>
                 </div>

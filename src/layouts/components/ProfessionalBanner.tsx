@@ -32,8 +32,8 @@ const ProfessionalBanner = () => {
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
                 <FaTruck className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">All India Delivery</h3>
-              <p className="text-white/80 text-sm">Fresh products delivered nationwide</p>
+              <h3 className="text-lg font-semibold text-white mb-2">Worldwide Delivery Available</h3>
+              <p className="text-white/80 text-sm">Free delivery across India, international shipping available</p>
             </div>
             
             <div className="flex flex-col items-center text-center">
