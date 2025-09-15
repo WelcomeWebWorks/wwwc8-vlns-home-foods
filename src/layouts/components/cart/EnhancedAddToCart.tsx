@@ -2,36 +2,48 @@
 
 import { addItem } from "@/lib/utils/cartActions";
 import { ProductVariant } from "@/lib/shopify/types";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { triggerCartUpdate } from "@/hooks/useProductCartState";
+import { showToast } from "@/components/ui/Toast";
 
-interface AddToCartProps {
+interface EnhancedAddToCartProps {
   variants: ProductVariant[];
   availableForSale: boolean;
   stylesClass?: string;
   handle?: string | null;
   defaultVariantId?: string;
+  productTitle?: string;
 }
 
 function SubmitButton({
   availableForSale,
   selectedVariantId,
   stylesClass,
+  onOptimisticAdd,
 }: {
   availableForSale: boolean;
   selectedVariantId: string | undefined;
   stylesClass?: string;
+  onOptimisticAdd?: () => void;
 }) {
   const { pending } = useFormStatus();
+
+  const handleClick = () => {
+    // Optimistic update for faster UI response
+    if (onOptimisticAdd && !pending) {
+      onOptimisticAdd();
+    }
+  };
 
   return (
     <button
       type="submit"
       disabled={!availableForSale || !selectedVariantId || pending}
+      onClick={handleClick}
       className={`${stylesClass || "btn btn-primary"} ${
         !availableForSale || !selectedVariantId || pending
           ? "opacity-50 cursor-not-allowed"
@@ -50,23 +62,16 @@ function SubmitButton({
   );
 }
 
-export function AddToCart({
+export function EnhancedAddToCart({
   variants,
   availableForSale,
   stylesClass,
   handle,
   defaultVariantId,
-}: AddToCartProps) {
+  productTitle = "Product",
+}: EnhancedAddToCartProps) {
   const [message, formAction] = useActionState(addItem, null);
   const searchParams = useSearchParams();
-
-  // Trigger cart update when item is successfully added
-  useEffect(() => {
-    if (message === null) {
-      // Item was successfully added (no error message)
-      triggerCartUpdate();
-    }
-  }, [message]);
 
   // Dynamically determine the selected variant based on URL parameters
   const selectedVariantId = useMemo(() => {
@@ -89,6 +94,23 @@ export function AddToCart({
     return variant?.id || defaultVariantId || variants[0]?.id;
   }, [searchParams, variants, defaultVariantId]);
 
+  // Only show error messages, remove success toasts to prevent bulk messages
+  useEffect(() => {
+    if (message && message.trim() !== "") {
+      // Show error message with red toast
+      showToast(`❌ Error: ${message}`, "error", 4000);
+    } else if (message === null) {
+      // Item was successfully added - trigger immediate cart update without toast
+      triggerCartUpdate();
+    }
+  }, [message, productTitle]);
+
+  const handleOptimisticAdd = () => {
+    // Remove optimistic toast to prevent bulk messages
+    // Just trigger immediate cart update for faster response
+    triggerCartUpdate();
+  };
+
   return (
     <form action={formAction}>
       <input type="hidden" name="selectedVariantId" value={selectedVariantId} />
@@ -96,10 +118,8 @@ export function AddToCart({
         availableForSale={availableForSale}
         selectedVariantId={selectedVariantId}
         stylesClass={stylesClass}
+        onOptimisticAdd={handleOptimisticAdd}
       />
-      {message && (
-        <p className="text-sm text-red-600 dark:text-red-400 mt-2">{message}</p>
-      )}
     </form>
   );
 }

@@ -8,7 +8,7 @@ import { defaultSort, sorting } from "@/lib/constants";
 import { getCollectionProducts, getProducts } from "@/lib/shopify";
 import { PageInfo, Product } from "@/lib/shopify/types";
 import { titleify } from "@/lib/utils/textConverter";
-import CustomizableProductCard from "@/components/product/CustomizableProductCard";
+import CompactProductCard from "@/layouts/components/product/CompactProductCard";
 import { useEffect, useRef, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
@@ -237,7 +237,7 @@ const ProductCardView = ({ searchParams }: { searchParams: any }) => {
       <div className="product-grid-responsive">
         {products.map((product, index) => (
           <div key={index} className="w-full product-card-mobile">
-            <CustomizableProductCard product={product} />
+            <CompactProductCard product={product} />
           </div>
         ))}
       </div>

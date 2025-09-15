@@ -10,10 +10,10 @@ const ProfessionalBanner = () => {
         <div className="text-center">
           {/* Main Banner Content */}
           <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
+            <h2 className="font-secondary text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight tracking-tight">
               Experience Authentic Andhra Pradesh Flavors
             </h2>
-            <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-6">
+            <p className="font-primary text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-6 leading-relaxed">
               From traditional recipes to premium ingredients, we bring the authentic taste of Andhra Pradesh to your doorstep
             </p>
           </div>
@@ -24,24 +24,24 @@ const ProfessionalBanner = () => {
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
                 <FaGift className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Premium Quality</h3>
-              <p className="text-white/80 text-sm">Handpicked ingredients for authentic taste</p>
+              <h3 className="font-primary text-lg font-semibold text-white mb-2">Premium Quality</h3>
+              <p className="font-primary text-white/80 text-sm">Handpicked ingredients for authentic taste</p>
             </div>
             
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
                 <FaTruck className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Worldwide Delivery Available</h3>
-              <p className="text-white/80 text-sm">Free delivery across India, international shipping available</p>
+              <h3 className="font-primary text-lg font-semibold text-white mb-2">Worldwide Delivery Available</h3>
+              <p className="font-primary text-white/80 text-sm">Free delivery across India, international shipping available</p>
             </div>
             
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
                 <FaShieldAlt className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">Trusted Heritage</h3>
-              <p className="text-white/80 text-sm">Generations of traditional recipes</p>
+              <h3 className="font-primary text-lg font-semibold text-white mb-2">Trusted Heritage</h3>
+              <p className="font-primary text-white/80 text-sm">Generations of traditional recipes</p>
             </div>
           </div>
 

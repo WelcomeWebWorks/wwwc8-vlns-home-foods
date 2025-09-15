@@ -2,10 +2,11 @@
 
 import { CartItem } from "@/lib/shopify/types";
 import { updateItemQuantity } from "@/lib/utils/cartActions";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import LoadingDots from "../loadings/LoadingDots";
+import { triggerCartUpdate } from "@/hooks/useProductCartState";
 
 function SubmitButton({ type }: { type: "plus" | "minus" }) {
   const { pending } = useFormStatus();
@@ -43,6 +44,14 @@ export function EditItemQuantityButton({
 }) {
   const [message, formAction] = useActionState(updateItemQuantity, null);
   const newQuantity = type === "plus" ? item.quantity + 1 : item.quantity - 1;
+
+  // Trigger cart update when quantity is successfully updated
+  useEffect(() => {
+    if (message === null) {
+      // Quantity was successfully updated (no error message)
+      triggerCartUpdate();
+    }
+  }, [message]);
 
   return (
     <form action={formAction}>

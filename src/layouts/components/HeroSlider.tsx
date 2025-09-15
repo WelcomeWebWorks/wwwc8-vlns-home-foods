@@ -48,11 +48,11 @@ const HeroSlider = ({ products }: { products: Product[] }) => {
                 <div className="container">
                   <div className="hero-text-container">
                     {item?.description && (
-                      <p className="hero-subtitle">
+                      <p className="hero-subtitle font-primary text-sm md:text-base lg:text-lg font-medium text-white/90 mb-3 tracking-wide uppercase">
                         {item.description}
                       </p>
                     )}
-                    <h1 className="hero-title">
+                    <h1 className="hero-title font-secondary text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
                       {item.title}
                     </h1>
                     {item.handle && (

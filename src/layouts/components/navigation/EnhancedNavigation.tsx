@@ -54,22 +54,37 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
     fetchNavigationData();
   }, []);
 
-  // Define category and tag keywords for each dropdown
+  // Define category and tag keywords for each dropdown in the required order
   const navigationConfig = [
     {
       title: "Sweets",
-      categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert"],
-      tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery"],
+      categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "mithai"],
+      tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery", "mithai"],
+    },
+    {
+      title: "Namkeen",
+      categoryKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "savory"],
+      tagKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "crispy", "crunchy", "savory", "spicy"],
+    },
+    {
+      title: "Millets",
+      categoryKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy"],
+      tagKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy", "organic", "nutritious"],
     },
     {
       title: "Pickles",
-      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili"],
-      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour"],
+      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
+      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
     },
     {
-      title: "Snacks",
-      categoryKeywords: ["snack", "mixture", "namkeen", "chips", "murukku", "sev"],
-      tagKeywords: ["snack", "mixture", "namkeen", "chips", "murukku", "sev", "crispy", "crunchy", "savory"],
+      title: "Daily Essentials",
+      categoryKeywords: ["essential", "daily", "oil", "ghee", "flour", "rice", "dal", "spice"],
+      tagKeywords: ["essential", "daily", "oil", "ghee", "flour", "rice", "dal", "spice", "cooking", "kitchen"],
+    },
+    {
+      title: "Chilli Powders",
+      categoryKeywords: ["chilli", "chili", "powder", "spice", "red", "guntur", "kashmiri"],
+      tagKeywords: ["chilli", "chili", "powder", "spice", "red", "hot", "guntur", "kashmiri", "paprika"],
     },
   ];
 
@@ -102,25 +117,21 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
     <div className="hidden lg:block flex-1">
       <div className="flex justify-center">
         <ul className="flex space-x-6">
-          {/* Static menu items */}
-          {staticMenuItems
-            .filter((menu) => menu.name !== "Products") // Remove static Products link
-            .map((menu, i) => (
-              <li key={`menu-${i}`}>
-                <Link
-                  href={menu.url}
-                  className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
-                    isMenuItemActive(menu, pathname)
-                      ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                      : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
-                  }`}
-                >
-                  {menu.name}
-                </Link>
-              </li>
-            ))}
+          {/* Home - First item */}
+          <li>
+            <Link
+              href="/"
+              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+                pathname === "/"
+                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+              }`}
+            >
+              Home
+            </Link>
+          </li>
 
-          {/* Dynamic dropdown menus */}
+          {/* Dynamic dropdown menus in required order */}
           {navigationConfig.map((config, index) => (
             <li key={`dropdown-${index}`}>
               <DynamicNavDropdown
@@ -133,7 +144,35 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
             </li>
           ))}
 
-          {/* All Products link */}
+          {/* About */}
+          <li>
+            <Link
+              href="/about"
+              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+                pathname === "/about"
+                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+              }`}
+            >
+              About
+            </Link>
+          </li>
+
+          {/* Contact */}
+          <li>
+            <Link
+              href="/contact"
+              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+                pathname === "/contact"
+                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+              }`}
+            >
+              Contact
+            </Link>
+          </li>
+
+          {/* All Products - Last item */}
           <li>
             <Link
               href="/products"

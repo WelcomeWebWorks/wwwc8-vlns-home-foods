@@ -75,66 +75,114 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  // Define category and tag keywords for each section
+  // Define category and tag keywords for each section in the required order
   const navigationConfig = [
     {
       title: "Sweets",
-      categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert"],
-      tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery"],
+      categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "mithai"],
+      tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery", "mithai"],
+    },
+    {
+      title: "Namkeen",
+      categoryKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "savory"],
+      tagKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "crispy", "crunchy", "savory", "spicy"],
+    },
+    {
+      title: "Millets",
+      categoryKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy"],
+      tagKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy", "organic", "nutritious"],
     },
     {
       title: "Pickles",
-      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili"],
-      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour"],
+      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
+      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
     },
     {
-      title: "Snacks",
-      categoryKeywords: ["snack", "mixture", "namkeen", "chips", "murukku", "sev"],
-      tagKeywords: ["snack", "mixture", "namkeen", "chips", "murukku", "sev", "crispy", "crunchy", "savory"],
+      title: "Daily Essentials",
+      categoryKeywords: ["essential", "daily", "oil", "ghee", "flour", "rice", "dal", "spice"],
+      tagKeywords: ["essential", "daily", "oil", "ghee", "flour", "rice", "dal", "spice", "cooking", "kitchen"],
+    },
+    {
+      title: "Chilli Powders",
+      categoryKeywords: ["chilli", "chili", "powder", "spice", "red", "guntur", "kashmiri"],
+      tagKeywords: ["chilli", "chili", "powder", "spice", "red", "hot", "guntur", "kashmiri", "paprika"],
     },
   ];
 
   if (loading) {
     return (
       <nav className="space-y-2">
-        {staticMenuItems.map((menu, i) => (
-          <Link
-            key={`mobile-menu-${i}`}
-            href={menu.url}
-            className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
-              isMenuItemActive(menu, pathname) 
-                ? 'bg-[#800020] text-white font-bold shadow-md' 
-                : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
-            }`}
-            onClick={onLinkClick}
-          >
-            {menu.name}
-          </Link>
-        ))}
+        {/* Home */}
+        <Link
+          href="/"
+          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+            pathname === "/"
+              ? 'bg-[#800020] text-white font-bold shadow-md'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+          }`}
+          onClick={onLinkClick}
+        >
+          Home
+        </Link>
+
         <div className="px-4 py-3 text-gray-500">Loading categories...</div>
+
+        {/* About */}
+        <Link
+          href="/about"
+          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+            pathname === "/about"
+              ? 'bg-[#800020] text-white font-bold shadow-md'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+          }`}
+          onClick={onLinkClick}
+        >
+          About
+        </Link>
+
+        {/* Contact */}
+        <Link
+          href="/contact"
+          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+            pathname === "/contact"
+              ? 'bg-[#800020] text-white font-bold shadow-md'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+          }`}
+          onClick={onLinkClick}
+        >
+          Contact
+        </Link>
+
+        {/* All Products */}
+        <Link
+          href="/products"
+          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+            pathname === "/products"
+              ? 'bg-[#800020] text-white font-bold shadow-md'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+          }`}
+          onClick={onLinkClick}
+        >
+          All Products
+        </Link>
       </nav>
     );
   }
 
   return (
     <nav className="space-y-2">
-      {/* Static menu items (excluding Products) */}
-      {staticMenuItems
-        .filter((menu) => menu.name !== "Products")
-        .map((menu, i) => (
-          <Link
-            key={`mobile-menu-${i}`}
-            href={menu.url}
-            className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
-              isMenuItemActive(menu, pathname) 
-                ? 'bg-[#800020] text-white font-bold shadow-md' 
-                : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
-            }`}
-            onClick={onLinkClick}
-          >
-            {menu.name}
-          </Link>
-        ))}
+      {/* Home - First item */}
+      <Link
+        href="/"
+        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          pathname === "/"
+            ? 'bg-[#800020] text-white font-bold shadow-md'
+            : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+        }`}
+        onClick={onLinkClick}
+      >
+        Home
+      </Link>
 
       {/* Dynamic category sections */}
       {navigationConfig.map((config) => {
@@ -220,12 +268,38 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
         );
       })}
 
-      {/* All Products link */}
+      {/* About */}
+      <Link
+        href="/about"
+        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          pathname === "/about"
+            ? 'bg-[#800020] text-white font-bold shadow-md'
+            : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+        }`}
+        onClick={onLinkClick}
+      >
+        About
+      </Link>
+
+      {/* Contact */}
+      <Link
+        href="/contact"
+        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          pathname === "/contact"
+            ? 'bg-[#800020] text-white font-bold shadow-md'
+            : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+        }`}
+        onClick={onLinkClick}
+      >
+        Contact
+      </Link>
+
+      {/* All Products - Last item */}
       <Link
         href="/products"
         className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
           pathname === "/products"
-            ? 'bg-[#800020] text-white font-bold shadow-md' 
+            ? 'bg-[#800020] text-white font-bold shadow-md'
             : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
         }`}
         onClick={onLinkClick}

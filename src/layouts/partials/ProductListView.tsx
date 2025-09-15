@@ -94,7 +94,7 @@ const ProductListView = ({ searchParams }: { searchParams: any }) => {
           };
 
           productsData =
-            category && category !== "all"
+            category
               ? await getCollectionProducts({
                 collection: category,
                 sortKey,

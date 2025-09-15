@@ -6,6 +6,7 @@ import Footer from "@/partials/Footer";
 import Header from "@/partials/Header";
 import Providers from "@/partials/Providers";
 import WhatsAppButton from "@/layouts/components/WhatsAppButton";
+import { ToastManager } from "@/components/ui/Toast";
 import "@/styles/main.css";
 
 export default function RootLayout({
@@ -59,6 +60,7 @@ export default function RootLayout({
           <main className="relative z-10">{children}</main>
           <Footer />
           <WhatsAppButton />
+          <ToastManager />
         </Providers>
       </body>
     </html>
