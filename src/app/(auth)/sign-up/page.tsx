@@ -3,8 +3,10 @@
 import { CustomerError } from "@/lib/shopify/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, Suspense } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
+
+export const dynamic = "force-dynamic";
 
 export interface FormData {
   firstName?: string;
@@ -13,7 +15,7 @@ export interface FormData {
   confirmPassword?: string;
 }
 
-const SignUp = () => {
+const SignUpContent = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -383,6 +385,23 @@ const SignUp = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const SignUp = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-light dark:bg-darkmode-light flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <BiLoaderAlt className="animate-spin w-8 h-8 text-white" />
+          </div>
+          <p className="text-text-light dark:text-darkmode-text-light">Loading...</p>
+        </div>
+      </div>
+    }>
+      <SignUpContent />
+    </Suspense>
   );
 };
 

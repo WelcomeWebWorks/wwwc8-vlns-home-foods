@@ -182,7 +182,7 @@ const About = () => {
                   Reasons to Shop with Us
                 </h2>
                 <p className="text-text-light dark:text-darkmode-text-light max-w-2xl mx-auto">
-                  We're committed to providing you with the best experience and quality products
+                  We&apos;re committed to providing you with the best experience and quality products
                 </p>
               </div>
 

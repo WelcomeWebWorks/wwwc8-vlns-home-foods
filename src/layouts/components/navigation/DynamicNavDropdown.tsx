@@ -3,8 +3,9 @@
 import { Collection } from "@/lib/shopify/types";
 import { createUrl } from "@/lib/utils";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import { isCategoryActive, isTagActive } from "@/lib/utils/navigationUtils";
 
 interface DynamicNavDropdownProps {
   title: string;
@@ -25,6 +26,8 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Filter categories based on keywords
   const filteredCategories = categories.filter((category) =>
@@ -78,6 +81,10 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
     };
   }, [timeoutId]);
 
+  // Check if this dropdown should be highlighted
+  const isDropdownActive = isCategoryActive(pathname, searchParams, categoryKeywords) || 
+                          isTagActive(pathname, searchParams, tagKeywords);
+
   // Don't render if no relevant categories or tags
   if (filteredCategories.length === 0 && filteredTags.length === 0) {
     return null;
@@ -92,13 +99,17 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
     >
       {/* Dropdown Trigger */}
       <button
-        className="nav-link text-lg font-medium transition-all duration-300 ease-in-out hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg flex items-center space-x-1"
+        className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md flex items-center space-x-1 ${
+          isDropdownActive
+            ? 'bg-[#800020] text-white font-bold shadow-md'
+            : 'hover:text-[#800020] hover:bg-gray-100'
+        }`}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
         <span>{title}</span>
         <svg
-          className={`w-4 h-4 transition-transform duration-200 ${
+          className={`w-2.5 h-2.5 xl:w-3 xl:h-3 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
           fill="none"
@@ -116,7 +127,7 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-80 bg-white dark:bg-darkmode-body rounded-lg shadow-2xl border border-border dark:border-darkmode-border z-50 overflow-hidden">
+        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 w-72 xl:w-80 2xl:w-96 bg-white dark:bg-darkmode-body rounded-lg shadow-2xl border border-border dark:border-darkmode-border z-50 overflow-hidden">
           <div className="p-4">
             {/* Categories Section */}
             {filteredCategories.length > 0 && (

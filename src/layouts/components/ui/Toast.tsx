@@ -63,20 +63,20 @@ export const Toast: React.FC<ToastProps> = ({
 
   return (
     <div
-      className={`fixed top-4 right-4 z-[9999] transform transition-all duration-300 ease-in-out ${
+      className={`transform transition-all duration-300 ease-in-out ${
         isVisible && !isLeaving
           ? "translate-x-0 opacity-100 scale-100"
           : "translate-x-full opacity-0 scale-95"
       }`}
     >
       <div
-        className={`${getColors()} px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[300px] backdrop-blur-sm border border-white/20`}
+        className={`${getColors()} px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 min-w-[320px] backdrop-blur-sm border border-white/20`}
       >
         <div className="flex-shrink-0">
           {getIcon()}
         </div>
         <div className="flex-1">
-          <p className="text-sm font-medium">{message}</p>
+          <p className="text-sm font-semibold">{message}</p>
         </div>
         <button
           onClick={() => {
@@ -107,6 +107,9 @@ export const ToastManager: React.FC = () => {
 
   useEffect(() => {
     const handleShowToast = (event: CustomEvent<Omit<ToastData, 'id'>>) => {
+      // Clear existing toasts of the same type to prevent duplicates
+      setToasts(prev => prev.filter(toast => toast.type !== event.detail.type));
+      
       toastCounter += 1;
       const newToast = {
         ...event.detail,
@@ -127,12 +130,12 @@ export const ToastManager: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-0 right-0 z-[9999] p-4 space-y-2">
+    <div className="fixed top-20 right-4 z-[9999] space-y-2">
       {toasts.map((toast, index) => (
         <div
           key={toast.id}
           style={{
-            transform: `translateY(${index * 10}px)`,
+            transform: `translateY(${index * 5}px)`,
             zIndex: 9999 - index
           }}
         >

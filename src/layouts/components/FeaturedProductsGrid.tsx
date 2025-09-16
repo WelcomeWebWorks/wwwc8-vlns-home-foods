@@ -1,35 +1,44 @@
 "use client";
 
-import { AddToCart } from "@/components/cart/AddToCart";
-import config from "@/config/config.json";
-import { Product, ProductVariant } from "@/lib/shopify/types";
-import ProductImageWithHover from "./product/ProductImageWithHover";
+import { Product } from "@/lib/shopify/types";
+import EnhancedProductCard from "./product/EnhancedProductCard";
+import { Suspense } from "react";
 import Link from "next/link";
-import { Suspense, useState, useMemo } from "react";
 
 interface FeaturedProductsGridProps {
   products: Product[];
 }
 
 const FeaturedProductsGrid = ({ products }: FeaturedProductsGridProps) => {
-  const { currencySymbol } = config.shopify;
-
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
+    <div className="relative">
+      {/* Texture Background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#800020]/10 via-transparent to-[#600018]/10"></div>
+        <div className="absolute top-0 left-0 w-full h-full" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23800020' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat'
+        }}></div>
+        <div className="absolute top-20 right-20 w-40 h-40 bg-[#800020]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-32 h-32 bg-[#600018]/5 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Products Grid */}
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
         {products.map((product: Product) => (
-          <FeaturedProductCard key={product.id} product={product} />
+          <EnhancedProductCard key={product.id} product={product} />
         ))}
       </div>
 
-      <div className="flex justify-center mt-8 md:mt-12">
+      {/* View All Products Button */}
+      <div className="flex justify-center mt-12 md:mt-16 relative z-10">
         <Link
-          className="btn btn-primary btn-lg font-semibold px-8 py-4"
+          className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#800020] to-[#600018] text-white font-bold rounded-2xl hover:from-[#600018] hover:to-[#500015] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           href={"/products"}
         >
           View All Products
           <svg 
-            className="w-4 h-4 ml-2 transition-transform duration-300 hover:translate-x-1" 
+            className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -38,221 +47,23 @@ const FeaturedProductsGrid = ({ products }: FeaturedProductsGridProps) => {
           </svg>
         </Link>
       </div>
-    </>
-  );
-};
 
-interface FeaturedProductCardProps {
-  product: Product;
-}
-
-const FeaturedProductCard = ({ product }: FeaturedProductCardProps) => {
-  const { currencySymbol } = config.shopify;
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
-
-  // Initialize default selections for each option
-  const defaultOptions = useMemo(() => {
-    const defaults: Record<string, string> = {};
-    product.options?.forEach((option) => {
-      if (option.values.length > 0) {
-        defaults[option.name.toLowerCase()] = option.values[0];
-      }
-    });
-    return defaults;
-  }, [product.options]);
-
-  // Merge default options with selected options
-  const currentOptions = { ...defaultOptions, ...selectedOptions };
-
-  // Find the current variant based on selected options
-  const currentVariant = useMemo(() => {
-    return product.variants.find((variant) =>
-      variant.availableForSale &&
-      Object.entries(currentOptions).every(([optionName, optionValue]) =>
-        variant.selectedOptions.some(
-          (selectedOption) =>
-            selectedOption.name.toLowerCase() === optionName &&
-            selectedOption.value === optionValue
-        )
-      )
-    );
-  }, [product.variants, currentOptions]);
-
-  // Get the current price
-  const currentPrice = currentVariant?.price || product.variants.find(v => v.availableForSale)?.price || product.variants[0]?.price;
-  const currentCompareAtPrice = currentVariant?.compareAtPrice;
-
-  // Handle option selection
-  const handleOptionChange = (optionName: string, value: string) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [optionName.toLowerCase()]: value
-    }));
-  };
-
-  // Prevent event bubbling
-  const handleDropdownClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  // Get unique values for each option
-  const getOptionValues = (optionName: string) => {
-    const values = new Set<string>();
-    product.variants.forEach((variant) => {
-      const option = variant.selectedOptions.find(
-        (opt) => opt.name.toLowerCase() === optionName.toLowerCase()
-      );
-      if (option && variant.availableForSale) {
-        values.add(option.value);
-      }
-    });
-    return Array.from(values);
-  };
-
-  // Render option selector
-  const renderOptionSelector = (optionName: string) => {
-    const values = getOptionValues(optionName);
-    const currentValue = currentOptions[optionName.toLowerCase()];
-
-    if (values.length <= 1) return null;
-
-    if (values.length <= 3) {
-      return (
-        <div className="mb-3">
-          <label className="block text-sm font-medium text-text-light dark:text-darkmode-text-light mb-2">
-            {optionName}:
-          </label>
-          <div className="flex gap-2 flex-wrap justify-center">
-            {values.map((value) => (
-              <button
-                key={value}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleOptionChange(optionName, value);
-                }}
-                className={`px-3 py-2 text-sm rounded border transition-colors min-w-[60px] ${
-                  currentValue === value
-                    ? "bg-primary text-white border-primary"
-                    : "bg-white dark:bg-darkmode-body border-border dark:border-darkmode-border text-text-dark dark:text-darkmode-text-dark hover:bg-gray-50 dark:hover:bg-gray-700"
-                }`}
-              >
-                {value}
-              </button>
-            ))}
+      {products.length === 0 && (
+        <div className="text-center py-12">
+          <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-full flex items-center justify-center">
+            <svg className="w-12 h-12 text-[#800020]" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
           </div>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-darkmode-text-dark mb-3">No Products Found</h3>
+          <p className="text-gray-600 dark:text-darkmode-text-light max-w-md mx-auto">
+            We&apos;re working on adding more amazing products. Check back soon!
+          </p>
         </div>
-      );
-    } else {
-      return (
-        <div className="mb-3">
-          <label className="block text-sm font-medium text-text-light dark:text-darkmode-text-light mb-2">
-            {optionName}:
-          </label>
-          <select
-            value={currentValue}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleOptionChange(optionName, e.target.value);
-            }}
-            onClick={handleDropdownClick}
-            className="w-full px-3 py-2 text-sm border border-border dark:border-darkmode-border rounded bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-1 focus:ring-primary"
-          >
-            {values.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </div>
-      );
-    }
-  };
-
-  const defaultVariantId = currentVariant?.id || product.variants[0]?.id;
-
-  return (
-    <div className="group">
-      <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-darkmode-light">
-        {/* Image Container */}
-        <div className="relative h-64 md:h-64 lg:h-72 overflow-hidden">
-          <ProductImageWithHover
-            images={product.images}
-            width={600}
-            height={400}
-            alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            fallbackSrc="/images/product_image404.jpg"
-          />
-          
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
-          {/* Shop Now Button Overlay */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Link
-              href={`/products/${product.handle}`}
-              className="bg-primary hover:bg-[#600018] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg inline-flex items-center"
-            >
-              Shop Now
-              <svg 
-                className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-6">
-          <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-3 group-hover:text-primary transition-colors duration-300">
-            <Link href={`/products/${product.handle}`}>
-              {product.title}
-            </Link>
-          </h3>
-
-          {/* Customization Options */}
-          {product.options && product.options.length > 0 && (
-            <div className="mb-4" onClick={handleDropdownClick}>
-              {product.options.map((option) => (
-                <div key={option.id}>
-                  {renderOptionSelector(option.name)}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Price Display */}
-          <div className="flex flex-wrap justify-center items-center gap-x-2 mb-4">
-            <span className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark">
-              {currencySymbol} {currentPrice?.amount} {currentPrice?.currencyCode}
-            </span>
-            {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
-              <s className="text-text-light dark:text-darkmode-text-light text-sm font-medium">
-                {currencySymbol} {currentCompareAtPrice.amount} {currentCompareAtPrice.currencyCode}
-              </s>
-            )}
-          </div>
-
-          {/* Add to Cart Button */}
-          <div className="w-full">
-            <Suspense>
-              <AddToCart
-                variants={product.variants}
-                availableForSale={product.availableForSale}
-                handle={product.handle}
-                defaultVariantId={defaultVariantId}
-                stylesClass="btn btn-primary w-full py-3 font-semibold"
-              />
-            </Suspense>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
+
 
 export default FeaturedProductsGrid;

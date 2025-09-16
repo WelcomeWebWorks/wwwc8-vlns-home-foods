@@ -57,7 +57,7 @@ const EnhancedRelatedProducts: React.FC<EnhancedRelatedProductsProps> = ({
               More Products Coming Soon
             </h3>
             <p className="text-lg text-text-light dark:text-darkmode-text-light mb-8 max-w-md mx-auto">
-              We're constantly adding new authentic Andhra Pradesh products. Check back soon for more delicious options!
+              We&apos;re constantly adding new authentic Andhra Pradesh products. Check back soon for more delicious options!
             </p>
             <Link 
               href="/products" 

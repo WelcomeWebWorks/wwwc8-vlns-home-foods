@@ -73,7 +73,7 @@ export type PageInfo = {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   endCursor: string;
-};
+} | null;
 
 export type CartItem = {
   id: string;
@@ -354,5 +354,101 @@ export type ShopifyProductsOperation = {
     reverse?: boolean;
     sortKey?: string;
     cursor?: string;
+  };
+};
+
+// Blog Types
+export type Blog = {
+  id: string;
+  title: string;
+  handle: string;
+  url: string;
+  seo: {
+    title: string;
+    description: string;
+  };
+};
+
+export type Article = {
+  id: string;
+  title: string;
+  handle: string;
+  excerpt: string;
+  content: string;
+  contentHtml: string;
+  publishedAt: string;
+  updatedAt: string;
+  author: string;
+  tags: string[];
+  url: string;
+  seo: {
+    title: string;
+    description: string;
+  };
+  image: {
+    url: string;
+    altText: string;
+    width: number;
+    height: number;
+  };
+  blog: {
+    id: string;
+    title: string;
+    handle: string;
+  };
+};
+
+export type BlogOperation = {
+  data: {
+    blogs: {
+      edges: Array<{
+        node: Blog;
+      }>;
+    };
+  };
+  variables: {
+    first: number;
+  };
+};
+
+export type BlogByHandleOperation = {
+  data: {
+    blog: {
+      id: string;
+      title: string;
+      handle: string;
+      url: string;
+      seo: {
+        title: string;
+        description: string;
+      };
+      articles: {
+        edges: Array<{
+          node: Article;
+        }>;
+      };
+    };
+  };
+  variables: {
+    handle: string;
+    first: number;
+  };
+};
+
+export type ArticleOperation = {
+  data: {
+    article: Article;
+  };
+  variables: {
+    id: string;
+  };
+};
+
+export type ArticleByHandleOperation = {
+  data: {
+    articleByHandle: Article;
+  };
+  variables: {
+    handle: string;
   };
 };

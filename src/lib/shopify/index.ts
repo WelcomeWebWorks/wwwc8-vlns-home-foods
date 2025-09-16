@@ -38,6 +38,13 @@ import {
 } from "./queries/product";
 import { getVendorsQuery } from "./queries/vendor";
 import {
+  getBlogsQuery,
+  getBlogQuery,
+  getBlogByHandleQuery,
+  getArticleQuery,
+  getArticleByHandleQuery,
+} from "./queries/blog";
+import {
   Cart,
   Collection,
   Connection,
@@ -47,6 +54,12 @@ import {
   Page,
   PageInfo,
   Product,
+  Blog,
+  Article,
+  BlogOperation,
+  BlogByHandleOperation,
+  ArticleOperation,
+  ArticleByHandleOperation,
   ShopifyAddToCartOperation,
   ShopifyCart,
   ShopifyCartOperation,
@@ -118,47 +131,80 @@ export async function shopifyFetch<T>({
 
     // Check if the response is ok
     if (!result.ok) {
-      throw new Error(`HTTP error! status: ${result.status}`);
+      console.warn(`Shopify API HTTP error: ${result.status} - ${result.statusText}`);
+      // Return empty data instead of throwing error
+      return { 
+        status: result.status, 
+        body: { 
+          data: {} 
+        } as T
+      };
     }
 
     // Ensure we have a response body
     if (!result.body) {
-      throw new Error("No response body received");
+      console.warn("No response body received from Shopify API");
+      return { 
+        status: 200, 
+        body: { 
+          data: {} 
+        } as T
+      };
     }
 
     const body = await result.json();
 
     if (body.errors) {
-      throw body.errors[0];
+      console.warn("Shopify API errors:", body.errors);
+      // Return empty data instead of throwing error
+      return { 
+        status: 200, 
+        body: { 
+          data: {} 
+        } as T
+      };
     }
 
     return { status: result.status, body };
   } catch (e) {
     // Handle AbortError specifically
     if (e instanceof Error && e.name === 'AbortError') {
-      throw {
-        error: new Error('Request timeout'),
-        query,
+      console.warn("Shopify API request timeout");
+      return { 
+        status: 408, 
+        body: { 
+          data: {} 
+        } as T
       };
     }
 
     if (isShopifyError(e)) {
-      throw {
+      console.warn("Shopify API error:", {
         cause: e.cause?.toString() || "unknown",
         status: e.status || 500,
         message: e.message,
-        query,
+      });
+      return { 
+        status: e.status || 500, 
+        body: { 
+          data: {} 
+        } as T
       };
     }
 
     // Enhanced error logging
-    console.error("Shopify fetch error:", {
-      error: e,
+    console.warn("Shopify fetch error:", {
+      error: e instanceof Error ? e.message : "Unknown error",
       query: query.substring(0, 100) + "...", // Log first 100 chars of query
-      variables,
     });
 
-    throw { error: e, query };
+    // Return empty data instead of throwing error
+    return { 
+      status: 500, 
+      body: { 
+        data: {} 
+      } as T
+    };
   }
 }
 
@@ -344,36 +390,41 @@ export async function getCollectionProducts({
   sortKey?: string;
   filterCategoryProduct?: any[]; // Update the type based on your GraphQL schema
 }): Promise<{ pageInfo: PageInfo | null; products: Product[] }> {
-  const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
-    query: getCollectionProductsQuery,
-    tags: [TAGS.collections, TAGS.products],
-    variables: {
-      handle: collection,
-      reverse,
-      sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
-      filterCategoryProduct, // Pass the filters variable to the query
-    } as {
-      handle: string;
-      reverse?: boolean;
-      sortKey?: string;
-      filterCategoryProduct?: any[];
-    },
-  });
+  try {
+    const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
+      query: getCollectionProductsQuery,
+      tags: [TAGS.collections, TAGS.products],
+      variables: {
+        handle: collection,
+        reverse,
+        sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
+        filterCategoryProduct, // Pass the filters variable to the query
+      } as {
+        handle: string;
+        reverse?: boolean;
+        sortKey?: string;
+        filterCategoryProduct?: any[];
+      },
+    });
 
-  if (!res.body.data.collection) {
-    // console.log(`No collection found for \`${collection}\``);
+    if (!res.body.data.collection) {
+      console.warn(`No collection found for \`${collection}\``);
+      return { pageInfo: null, products: [] };
+    }
+
+    // return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
+    const pageInfo = res.body.data?.collection?.products?.pageInfo;
+
+    return {
+      pageInfo,
+      products: reshapeProducts(
+        removeEdgesAndNodes(res.body.data.collection.products),
+      ),
+    };
+  } catch (error) {
+    console.warn(`Error fetching collection products for "${collection}":`, error);
     return { pageInfo: null, products: [] };
   }
-
-  // return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
-  const pageInfo = res.body.data?.collection?.products?.pageInfo;
-
-  return {
-    pageInfo,
-    products: reshapeProducts(
-      removeEdgesAndNodes(res.body.data.collection.products),
-    ),
-  };
 }
 
 export async function createCustomer(input: CustomerInput): Promise<any> {
@@ -419,31 +470,31 @@ export async function getUserDetails(accessToken: string): Promise<user> {
 }
 
 export async function getCollections(): Promise<Collection[]> {
-  const res = await shopifyFetch<ShopifyCollectionsOperation>({
-    query: getCollectionsQuery,
-    tags: [TAGS.collections],
-  });
-  const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
-  const collections = [
-    // {
-    //   handle: '',
-    //   title: 'All',
-    //   description: 'All products',
-    //   seo: {
-    //     title: 'All',
-    //     description: 'All products'
-    //   },
-    //   path: '/products',
-    //   updatedAt: new Date().toISOString()
-    // },
-    // Filter out the `hidden` collections.
-    // Collections that start with `hidden-*` need to be hidden on the search page.
-    ...reshapeCollections(shopifyCollections).filter(
-      (collection) => !collection.handle.startsWith("hidden"),
-    ),
-  ];
+  try {
+    const res = await shopifyFetch<ShopifyCollectionsOperation>({
+      query: getCollectionsQuery,
+      tags: [TAGS.collections],
+    });
+    
+    if (!res.body?.data?.collections) {
+      console.warn("No collections data received from Shopify API");
+      return [];
+    }
+    
+    const shopifyCollections = removeEdgesAndNodes(res.body.data.collections);
+    const collections = [
+      // Filter out the `hidden` collections.
+      // Collections that start with `hidden-*` need to be hidden on the search page.
+      ...reshapeCollections(shopifyCollections).filter(
+        (collection) => !collection.handle.startsWith("hidden"),
+      ),
+    ];
 
-  return collections;
+    return collections;
+  } catch (error) {
+    console.warn("Error fetching collections:", error);
+    return [];
+  }
 }
 
 export async function getMenu(handle: string): Promise<Menu[]> {
@@ -600,18 +651,34 @@ export async function getProducts({
   sortKey?: string;
   cursor?: string;
 }): Promise<{ pageInfo: PageInfo; products: Product[] }> {
-  const res = await shopifyFetch<ShopifyProductsOperation>({
-    query: getProductsQuery,
-    tags: [TAGS.products],
-    variables: { query, reverse, sortKey, cursor },
-  });
+  try {
+    const res = await shopifyFetch<ShopifyProductsOperation>({
+      query: getProductsQuery,
+      tags: [TAGS.products],
+      variables: { query, reverse, sortKey, cursor },
+    });
 
-  const pageInfo = res.body.data?.products?.pageInfo;
+    if (!res.body?.data?.products) {
+      console.warn("No products data received from Shopify API");
+      return {
+        pageInfo: null,
+        products: [],
+      };
+    }
 
-  return {
-    pageInfo,
-    products: reshapeProducts(removeEdgesAndNodes(res.body.data.products)),
-  };
+    const pageInfo = res.body.data.products.pageInfo;
+
+    return {
+      pageInfo,
+      products: reshapeProducts(removeEdgesAndNodes(res.body.data.products)),
+    };
+  } catch (error) {
+    console.warn("Error fetching products:", error);
+    return {
+      pageInfo: null,
+      products: [],
+    };
+  }
 }
 
 export async function getHighestProductPrice(): Promise<{
@@ -629,6 +696,143 @@ export async function getHighestProductPrice(): Promise<{
   } catch (error) {
     console.log("Error fetching highest product price:", error);
     throw error;
+  }
+}
+
+// Blog API Functions
+export async function getBlogs({
+  first = 10,
+}: {
+  first?: number;
+} = {}): Promise<{ blogs: Blog[] }> {
+  try {
+    // Try to fetch blogs, but if it fails, return empty array
+    const res = await shopifyFetch<BlogOperation>({
+      query: getBlogsQuery,
+      variables: { first },
+    });
+
+    if (!res.body?.data?.blogs) {
+      console.warn("No blogs data found in response");
+      return { blogs: [] };
+    }
+
+    return {
+      blogs: res.body.data.blogs.edges.map((edge) => edge.node),
+    };
+  } catch (error) {
+    console.warn("Error fetching blogs:", error);
+    // Return empty array as fallback
+    return { blogs: [] };
+  }
+}
+
+export async function getBlog({
+  handle,
+  first = 10,
+}: {
+  handle: string;
+  first?: number;
+}): Promise<{
+  blog: {
+    id: string;
+    title: string;
+    handle: string;
+    url: string;
+    seo: {
+      title: string;
+      description: string;
+    };
+  } | null;
+  articles: Article[];
+}> {
+  try {
+    const res = await shopifyFetch<BlogByHandleOperation>({
+      query: getBlogQuery,
+      variables: { handle, first },
+    });
+
+    if (!res.body?.data?.blog) {
+      console.warn(`No blog found with handle: ${handle}`);
+      return { blog: null, articles: [] };
+    }
+
+    return {
+      blog: {
+        id: res.body.data.blog.id,
+        title: res.body.data.blog.title,
+        handle: res.body.data.blog.handle,
+        url: res.body.data.blog.url,
+        seo: res.body.data.blog.seo,
+      },
+      articles: res.body.data.blog.articles.edges.map((edge) => edge.node),
+    };
+  } catch (error) {
+    console.warn(`Error fetching blog with handle ${handle}:`, error);
+    return { blog: null, articles: [] };
+  }
+}
+
+export async function getArticle({
+  id,
+}: {
+  id: string;
+}): Promise<Article | null> {
+  try {
+    const res = await shopifyFetch<ArticleOperation>({
+      query: getArticleQuery,
+      variables: { id },
+    });
+
+    if (!res.body?.data?.article) {
+      console.warn(`No article found with id: ${id}`);
+      return null;
+    }
+
+    return res.body.data.article;
+  } catch (error) {
+    console.warn(`Error fetching article with id ${id}:`, error);
+    return null;
+  }
+}
+
+export async function getArticleByHandle({
+  handle,
+}: {
+  handle: string;
+}): Promise<Article | null> {
+  try {
+    const res = await shopifyFetch<ArticleByHandleOperation>({
+      query: getArticleByHandleQuery,
+      variables: { handle },
+    });
+
+    if (!res.body?.data?.articleByHandle) {
+      console.warn(`No article found with handle: ${handle}`);
+      return null;
+    }
+
+    return res.body.data.articleByHandle;
+  } catch (error) {
+    console.warn(`Error fetching article with handle ${handle}:`, error);
+    return null;
+  }
+}
+
+// Function to get articles from a specific blog (fallback approach)
+export async function getBlogArticles({
+  blogHandle = "news", // Default blog handle
+  first = 10,
+}: {
+  blogHandle?: string;
+  first?: number;
+} = {}): Promise<{ blog: Blog | null; articles: Article[] }> {
+  try {
+    const res = await getBlog({ handle: blogHandle, first });
+    return res;
+  } catch (error) {
+    console.warn(`Error fetching blog articles from ${blogHandle}:`, error);
+    return { blog: null, articles: [] };
   }
 }
 

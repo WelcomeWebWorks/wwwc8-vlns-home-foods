@@ -6,8 +6,11 @@ import Footer from "@/partials/Footer";
 import Header from "@/partials/Header";
 import Providers from "@/partials/Providers";
 import WhatsAppButton from "@/layouts/components/WhatsAppButton";
+import EnhancedMarketingBanners from "@/layouts/components/EnhancedMarketingBanners";
 import { ToastManager } from "@/components/ui/Toast";
 import "@/styles/main.css";
+
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
   children,
@@ -24,7 +27,7 @@ export default function RootLayout({
         {/* responsive meta */}
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
 
         {/* favicon */}
@@ -58,6 +61,7 @@ export default function RootLayout({
             <Cart />
           </Header>
           <main className="relative z-10">{children}</main>
+          <EnhancedMarketingBanners />
           <Footer />
           <WhatsAppButton />
           <ToastManager />

@@ -3,11 +3,13 @@
 import { CustomerError } from "@/lib/shopify/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, Suspense } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { FormData } from "../sign-up/page";
 
-const Login = () => {
+export const dynamic = "force-dynamic";
+
+const LoginContent = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -230,6 +232,23 @@ const Login = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Login = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-light dark:bg-darkmode-light flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <BiLoaderAlt className="animate-spin w-8 h-8 text-white" />
+          </div>
+          <p className="text-text-light dark:text-darkmode-text-light">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 };
 

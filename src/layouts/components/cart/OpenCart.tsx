@@ -11,7 +11,7 @@ export default function OpenCart({
   return (
     <Link 
       href="/cart" 
-      className="relative text-3xl text-yellow-500 hover:text-yellow-600 transition-colors duration-200"
+      className="relative text-4xl sm:text-5xl text-yellow-500 hover:text-yellow-600 transition-colors duration-200"
       aria-label="View cart"
     >
       <BsCart3
@@ -19,7 +19,7 @@ export default function OpenCart({
       />
 
       {quantity && quantity > 0 ? (
-        <div className="bg-[#800020] text-white text-xs font-bold rounded-full absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center shadow-lg border-2 border-white">
+        <div className="bg-[#800020] text-white text-sm font-bold rounded-full absolute -top-1 -right-1 w-7 h-7 flex items-center justify-center shadow-lg border-2 border-white">
           {quantity > 99 ? '99+' : quantity}
         </div>
       ) : null}

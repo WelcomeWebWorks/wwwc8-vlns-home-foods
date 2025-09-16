@@ -14,6 +14,7 @@ import { cookies } from "next/headers";
 
 export async function addItem(prevState: any, formData: FormData) {
   const selectedVariantId = formData.get("selectedVariantId") as string;
+  const quantity = parseInt(formData.get("quantity") as string) || 1;
   
   let cartId = (await cookies()).get("cartId")?.value;
   let cart;
@@ -34,9 +35,10 @@ export async function addItem(prevState: any, formData: FormData) {
 
   try {
     await addToCart(cartId, [
-      { merchandiseId: selectedVariantId, quantity: 1 },
+      { merchandiseId: selectedVariantId, quantity },
     ]);
     revalidateTag(TAGS.cart);
+    return null; // Success
   } catch (e) {
     return "Error adding item to cart";
   }

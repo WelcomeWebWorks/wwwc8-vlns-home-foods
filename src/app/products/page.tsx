@@ -75,14 +75,46 @@ const ShowProducts = async ({
       cursor,
     };
 
-    productsData =
-      category && category !== "all"
-        ? await getCollectionProducts({
-          collection: category,
+    // Check if category exists before trying to fetch collection products
+    if (category && category !== "all") {
+      try {
+        // First, get all collections to check if the category exists
+        const allCollections = await getCollections();
+        const categoryExists = allCollections.some(
+          (collection) => collection.handle === category
+        );
+
+        if (categoryExists) {
+          productsData = await getCollectionProducts({
+            collection: category,
+            sortKey,
+            reverse,
+          });
+        } else {
+          // If category doesn't exist, fall back to search with category name
+          console.warn(`Collection "${category}" not found, falling back to search`);
+          const searchQuery = queryString ? `${queryString} ${category}` : category;
+          productsData = await getProducts({
+            sortKey,
+            reverse,
+            query: searchQuery,
+            cursor,
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching collection "${category}":`, error);
+        // Fall back to search with category name
+        const searchQuery = queryString ? `${queryString} ${category}` : category;
+        productsData = await getProducts({
           sortKey,
           reverse,
-        })
-        : await getProducts(query);
+          query: searchQuery,
+          cursor,
+        });
+      }
+    } else {
+      productsData = await getProducts(query);
+    }
   } else {
     // Fetch all products
     productsData = await getProducts({ sortKey, reverse, cursor });

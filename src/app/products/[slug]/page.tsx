@@ -12,6 +12,7 @@ import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser";
 import { getProduct, getProductRecommendations, getProducts } from "@/lib/shopify";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import {
@@ -101,15 +102,15 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
       <section className="py-6 bg-gradient-to-r from-light to-secondary dark:from-darkmode-light dark:to-darkmode-secondary">
         <div className="container">
           <nav className="flex items-center space-x-2 text-sm">
-            <a href="/" className="text-primary hover:text-[#600018] transition-colors duration-200 flex items-center space-x-1">
+            <Link href="/" className="text-primary hover:text-[#600018] transition-colors duration-200 flex items-center space-x-1">
               <FiHome className="w-4 h-4" />
               <span>Home</span>
-            </a>
+            </Link>
             <span className="text-text-light dark:text-darkmode-text-light">/</span>
-            <a href="/products" className="text-primary hover:text-[#600018] transition-colors duration-200 flex items-center space-x-1">
+            <Link href="/products" className="text-primary hover:text-[#600018] transition-colors duration-200 flex items-center space-x-1">
               <FiPackage className="w-4 h-4" />
               <span>Products</span>
-            </a>
+            </Link>
             <span className="text-text-light dark:text-darkmode-text-light">/</span>
             <span className="text-text-dark dark:text-darkmode-text-dark font-medium truncate">{title}</span>
           </nav>

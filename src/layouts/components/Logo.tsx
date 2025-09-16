@@ -32,33 +32,33 @@ const Logo = ({ src }: { src?: string }) => {
   // Since theme switcher is disabled, we always use light mode
   const logoPath = src ? src : logo;
 
-  // Desktop logo size (larger)
-  const desktopLogoHeight = parseInt(logo_height.replace("px", "")) * 0.5; // 60px for desktop
-  const desktopLogoWidth = parseInt(logo_width.replace("px", "")) * 0.5; // 225px for desktop
-  
-  // Mobile/tablet logo size (original)
-  const mobileLogoHeight = parseInt(logo_height.replace("px", "")); // 40px for mobile
-  const mobileLogoWidth = parseInt(logo_width.replace("px", "")); // 150px for mobile
+  // Responsive logo sizing
+  const baseLogoHeight = parseInt(logo_height.replace("px", ""));
+  const baseLogoWidth = parseInt(logo_width.replace("px", ""));
 
   return (
     <Link href="/" className="navbar-brand inline-block">
       {logoPath ? (
         <Image
-          width={desktopLogoWidth * 2}
-          height={desktopLogoHeight * 2}
+          width={baseLogoWidth * 2}
+          height={baseLogoHeight * 2}
           src={logoPath}
           alt={title}
           priority
-          className="lg:h-[60px] lg:w-[225px] h-[40px] w-[150px]"
+          className="h-[24px] w-[90px] sm:h-[28px] sm:w-[110px] xl:h-[40px] xl:w-[150px] 2xl:h-[45px] 2xl:w-[170px]"
           style={{
             height: "auto",
             width: "auto",
           }}
         />
       ) : logo_text ? (
-        logo_text
+        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary">
+          {logo_text}
+        </span>
       ) : (
-        title
+        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary">
+          {title}
+        </span>
       )}
     </Link>
   );

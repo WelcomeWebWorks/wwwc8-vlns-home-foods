@@ -1,5 +1,5 @@
 .header {
-  @apply py-6 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
+  @apply py-2 xl:py-3 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
   background-color: #fffef7;
 }
 
@@ -23,9 +23,33 @@
   @apply block p-3 font-bold text-2xl transition-all duration-300 text-text-light hover:text-text-dark dark:text-darkmode-text dark:hover:text-darkmode-primary lg:px-2 lg:py-3 cursor-pointer;
 }
 
-/* Desktop horizontal navigation */
+/* Desktop horizontal navigation - Compact sizing */
 .navbar .nav-link {
-  @apply text-lg font-medium px-4 py-2;
+  @apply text-xs xl:text-sm font-medium px-2 py-1.5 xl:px-3 xl:py-1.5;
+}
+
+
+/* Navigation menu responsive behavior - Single row layout */
+.nav-menu {
+  @apply flex flex-nowrap justify-center gap-0.5 xl:gap-1 2xl:gap-2;
+}
+
+/* Ensure proper spacing on different screen sizes */
+@media (min-width: 1280px) {
+  .nav-menu {
+    @apply gap-1.5;
+  }
+}
+
+@media (min-width: 1536px) {
+  .nav-menu {
+    @apply gap-2;
+  }
+}
+
+/* Compact navigation container */
+.navbar-container {
+  @apply w-full flex items-center justify-between min-h-[50px] xl:min-h-[60px];
 }
 
 .nav-list {

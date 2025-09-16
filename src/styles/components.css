@@ -186,10 +186,14 @@ main {
 
 .hero-bg-image {
   @apply w-full h-full object-cover object-center;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-overlay {
-  @apply absolute inset-0 bg-black/40;
+  @apply absolute inset-0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(0.5px);
 }
 
 .hero-content {
@@ -214,14 +218,14 @@ main {
 }
 
 .hero-subtitle {
-  @apply text-sm md:text-base lg:text-lg font-medium text-white/90 mb-3 tracking-wide uppercase;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  @apply text-sm md:text-base lg:text-lg font-medium text-white/95 mb-4 tracking-wide uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   letter-spacing: 0.1em;
 }
 
 .hero-title {
-  @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-6 leading-tight tracking-tight;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  @apply text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-8 leading-tight tracking-tight;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
   line-height: 1.1;
 }
 
@@ -230,9 +234,10 @@ main {
 }
 
 .hero-btn {
-  @apply px-6 py-3 text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+  @apply px-6 py-3 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap;
   background: #800020;
   border: 2px solid #800020;
+  min-height: 48px;
 }
 
 .hero-btn:hover {
@@ -240,23 +245,88 @@ main {
   border-color: #600018;
 }
 
-/* Responsive Hero Adjustments */
-@media (max-width: 640px) {
+.hero-btn span {
+  @apply inline-block;
+}
+
+.hero-btn svg {
+  @apply inline-block ml-2 flex-shrink-0;
+}
+
+/* Enhanced Responsive Hero Adjustments */
+
+/* Tablet View (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
   .hero-section {
-    height: calc(100vh - 60px);
-    max-height: calc(100vh - 60px);
+    height: 50vh;
+    min-height: 400px;
+    max-height: 500px;
   }
   
   .hero-swiper .swiper-slide {
-    height: calc(100vh - 60px);
+    height: 50vh;
+    min-height: 400px;
+    max-height: 500px;
   }
   
   .hero-content {
-    height: calc(100vh - 60px);
+    height: 50vh;
+    min-height: 400px;
+    max-height: 500px;
   }
   
   .hero-slide {
-    height: calc(100vh - 60px);
+    height: 50vh;
+    min-height: 400px;
+    max-height: 500px;
+  }
+  
+  .hero-title {
+    @apply text-2xl md:text-3xl leading-tight;
+  }
+  
+  .hero-subtitle {
+    @apply text-sm md:text-base;
+  }
+  
+  .hero-btn {
+    @apply px-5 py-3 text-base inline-flex items-center justify-center whitespace-nowrap;
+    min-height: 44px;
+  }
+  
+  .hero-btn svg {
+    @apply ml-2 flex-shrink-0;
+  }
+  
+  .hero-text-container {
+    @apply max-w-2xl;
+  }
+}
+
+/* Mobile View (up to 767px) */
+@media (max-width: 767px) {
+  .hero-section {
+    height: 50vh;
+    min-height: 300px;
+    max-height: 400px;
+  }
+  
+  .hero-swiper .swiper-slide {
+    height: 50vh;
+    min-height: 300px;
+    max-height: 400px;
+  }
+  
+  .hero-content {
+    height: 50vh;
+    min-height: 300px;
+    max-height: 400px;
+  }
+  
+  .hero-slide {
+    height: 50vh;
+    min-height: 300px;
+    max-height: 400px;
   }
   
   .hero-title {
@@ -268,11 +338,16 @@ main {
   }
   
   .hero-btn {
-    @apply px-4 py-2 text-sm;
+    @apply px-4 py-2 text-sm inline-flex items-center justify-center whitespace-nowrap;
+    min-height: 40px;
+  }
+  
+  .hero-btn svg {
+    @apply ml-1 flex-shrink-0;
   }
   
   .hero-text-container {
-    @apply max-w-xs;
+    @apply max-w-xs px-2;
   }
   
   .hero-swiper .swiper-pagination {
@@ -285,6 +360,54 @@ main {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+  }
+}
+
+/* Small Mobile View (up to 480px) */
+@media (max-width: 480px) {
+  .hero-section {
+    height: 50vh;
+    min-height: 250px;
+    max-height: 350px;
+  }
+  
+  .hero-swiper .swiper-slide {
+    height: 50vh;
+    min-height: 250px;
+    max-height: 350px;
+  }
+  
+  .hero-content {
+    height: 50vh;
+    min-height: 250px;
+    max-height: 350px;
+  }
+  
+  .hero-slide {
+    height: 50vh;
+    min-height: 250px;
+    max-height: 350px;
+  }
+  
+  .hero-title {
+    @apply text-lg leading-tight;
+  }
+  
+  .hero-subtitle {
+    @apply text-xs;
+  }
+  
+  .hero-btn {
+    @apply px-3 py-2 text-xs inline-flex items-center justify-center whitespace-nowrap;
+    min-height: 36px;
+  }
+  
+  .hero-btn svg {
+    @apply ml-1 flex-shrink-0;
+  }
+  
+  .hero-text-container {
+    @apply max-w-xs px-1;
   }
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import ImageFallback from "@/helpers/ImageFallback";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -69,8 +70,8 @@ const CollectionsSlider = ({ collections }: { collections: any }) => {
           return (
             <SwiperSlide key={handle}>
               <div className="text-center relative">
-                <img
-                  src={image?.url}
+                <Image
+                  src={image?.url || "/images/image-placeholder.png"}
                   width={424}
                   height={306}
                   alt={title}

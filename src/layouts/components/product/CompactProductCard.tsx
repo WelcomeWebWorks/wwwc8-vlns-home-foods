@@ -166,7 +166,7 @@ const CompactProductCard = ({ product, className = "" }: CompactProductCardProps
   }, [product.options]);
 
   // Merge default options with selected options
-  const finalOptions = { ...defaultOptions, ...selectedOptions };
+  const finalOptions = useMemo(() => ({ ...defaultOptions, ...selectedOptions }), [defaultOptions, selectedOptions]);
 
   // Find the variant that matches the selected options
   const currentVariant = useMemo(() => {

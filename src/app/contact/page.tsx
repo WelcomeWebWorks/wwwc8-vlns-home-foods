@@ -8,6 +8,8 @@ import { ContactUsItem, RegularPage } from "@/types";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
+
+export const dynamic = "force-dynamic";
 import { FaFacebook, FaWhatsapp, FaInstagram } from "react-icons/fa";
 
 const Contact = () => {
@@ -94,7 +96,7 @@ const Contact = () => {
               Contact VLNS Home Foods
             </h1>
             <p className="text-lg text-text-light dark:text-darkmode-text-light max-w-2xl mx-auto">
-              Get in touch with us for authentic Andhra Pradesh flavors. We'd love to hear from you!
+              Get in touch with us for authentic Andhra Pradesh flavors. We&apos;d love to hear from you!
             </p>
           </div>
 
@@ -218,7 +220,7 @@ const Contact = () => {
                   Send us a Message
                 </h2>
                 <p className="text-text-light dark:text-darkmode-text-light">
-                  We'll get back to you as soon as possible
+                  We&apos;ll get back to you as soon as possible
                 </p>
               </div>
 
@@ -347,7 +349,7 @@ const Contact = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <p className="text-sm font-medium text-green-600 dark:text-green-400">
-                        Thank you! Your message has been sent successfully. We'll get back to you soon.
+                        Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
                       </p>
                     </div>
                   </div>

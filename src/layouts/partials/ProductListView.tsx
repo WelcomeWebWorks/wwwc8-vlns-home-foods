@@ -8,7 +8,7 @@ import { defaultSort, sorting } from "@/lib/constants";
 import { getCollectionProducts, getProducts } from "@/lib/shopify";
 import { PageInfo, Product } from "@/lib/shopify/types";
 import { titleify } from "@/lib/utils/textConverter";
-import CustomizableProductListItem from "@/components/product/CustomizableProductListItem";
+import EnhancedProductCard from "@/layouts/components/product/EnhancedProductCard";
 import { useEffect, useRef, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
@@ -234,7 +234,7 @@ const ProductListView = ({ searchParams }: { searchParams: any }) => {
 
         <div className="row space-y-6">
           {products?.map((product: Product) => (
-            <CustomizableProductListItem key={product.id} product={product} />
+            <EnhancedProductCard key={product.id} product={product} />
           ))}
         </div>
 

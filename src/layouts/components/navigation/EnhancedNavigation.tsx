@@ -5,7 +5,8 @@ import { getAllTags, getCollections } from "@/lib/shopify";
 import { useEffect, useState } from "react";
 import DynamicNavDropdown from "./DynamicNavDropdown";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { isCategoryActive, isAllProductsActive, createCategoryUrl } from "@/lib/utils/navigationUtils";
 
 interface INavigationLink {
   name: string;
@@ -28,6 +29,7 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
   const [categories, setCategories] = useState<Collection[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchNavigationData = async () => {
@@ -54,13 +56,55 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
     fetchNavigationData();
   }, []);
 
-  // Define category and tag keywords for each dropdown in the required order
-  const navigationConfig = [
+  // Define categories that should have dropdowns
+  const dropdownCategories = [
     {
       title: "Sweets",
       categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "mithai"],
       tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery", "mithai"],
     },
+    {
+      title: "Pickles",
+      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
+      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
+    },
+  ];
+
+  // Function to find the actual category handle from Shopify collections
+  const findCategoryHandle = (categoryKeywords: string[]): string | null => {
+    if (!categories || categories.length === 0) return null;
+    
+    // First, try to find exact matches
+    for (const category of categories) {
+      const categoryTitle = category.title.toLowerCase();
+      const categoryHandle = category.handle.toLowerCase();
+      
+      for (const keyword of categoryKeywords) {
+        if (categoryTitle.includes(keyword.toLowerCase()) || 
+            categoryHandle.includes(keyword.toLowerCase())) {
+          return category.handle;
+        }
+      }
+    }
+    
+    // If no exact match, try partial matches
+    for (const category of categories) {
+      const categoryTitle = category.title.toLowerCase();
+      const categoryHandle = category.handle.toLowerCase();
+      
+      for (const keyword of categoryKeywords) {
+        if (categoryTitle.includes(keyword.toLowerCase()) || 
+            categoryHandle.includes(keyword.toLowerCase())) {
+          return category.handle;
+        }
+      }
+    }
+    
+    return null;
+  };
+
+  // Define categories that should be direct links (no dropdowns)
+  const directLinkCategories = [
     {
       title: "Namkeen",
       categoryKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "savory"],
@@ -70,11 +114,6 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
       title: "Millets",
       categoryKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy"],
       tagKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy", "organic", "nutritious"],
-    },
-    {
-      title: "Pickles",
-      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
-      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
     },
     {
       title: "Daily Essentials",
@@ -90,17 +129,17 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
 
   if (loading) {
     return (
-      <div className="hidden lg:block flex-1">
+      <div className="w-full">
         <div className="flex justify-center">
-          <ul className="flex space-x-8">
+          <ul className="flex flex-nowrap justify-center gap-0.5 xl:gap-1 2xl:gap-2">
             {staticMenuItems.map((menu, i) => (
               <li key={`menu-${i}`}>
                 <Link
                   href={menu.url}
-                  className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+                  className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
                     isMenuItemActive(menu, pathname)
-                      ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                      : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+                      ? 'bg-[#800020] text-white font-bold shadow-md'
+                      : 'hover:text-[#800020] hover:bg-gray-100'
                   }`}
                 >
                   {menu.name}
@@ -114,25 +153,47 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
   }
 
   return (
-    <div className="hidden lg:block flex-1">
+    <div className="w-full">
       <div className="flex justify-center">
-        <ul className="flex space-x-6">
+        <ul className="flex flex-nowrap justify-center gap-0.5 xl:gap-1 2xl:gap-2">
           {/* Home - First item */}
           <li>
             <Link
               href="/"
-              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
                 pathname === "/"
-                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+                  ? 'bg-[#800020] text-white font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100'
               }`}
             >
               Home
             </Link>
           </li>
 
-          {/* Dynamic dropdown menus in required order */}
-          {navigationConfig.map((config, index) => (
+          {/* Direct link categories (no dropdowns) */}
+          {directLinkCategories.map((config, index) => {
+            const isActive = isCategoryActive(pathname, searchParams, config.categoryKeywords);
+            const categoryHandle = findCategoryHandle(config.categoryKeywords);
+            const categoryUrl = categoryHandle ? createCategoryUrl(categoryHandle) : '/products';
+            
+            return (
+              <li key={`direct-${index}`}>
+                <Link
+                  href={categoryUrl}
+                  className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+                    isActive
+                      ? 'bg-[#800020] text-white font-bold shadow-md'
+                      : 'hover:text-[#800020] hover:bg-gray-100'
+                  }`}
+                >
+                  {config.title}
+                </Link>
+              </li>
+            );
+          })}
+
+          {/* Dropdown categories */}
+          {dropdownCategories.map((config, index) => (
             <li key={`dropdown-${index}`}>
               <DynamicNavDropdown
                 title={config.title}
@@ -148,10 +209,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/about"
-              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
                 pathname === "/about"
-                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+                  ? 'bg-[#800020] text-white font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100'
               }`}
             >
               About
@@ -162,10 +223,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/contact"
-              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
+              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
                 pathname === "/contact"
-                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+                  ? 'bg-[#800020] text-white font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100'
               }`}
             >
               Contact
@@ -176,10 +237,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/products"
-              className={`nav-link text-lg font-medium transition-all duration-300 ease-in-out ${
-                pathname === "/products"
-                  ? 'bg-[#800020] text-white px-4 py-2 rounded-lg font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100 px-4 py-2 rounded-lg'
+              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+                isAllProductsActive(pathname, searchParams)
+                  ? 'bg-[#800020] text-white font-bold shadow-md'
+                  : 'hover:text-[#800020] hover:bg-gray-100'
               }`}
             >
               All Products

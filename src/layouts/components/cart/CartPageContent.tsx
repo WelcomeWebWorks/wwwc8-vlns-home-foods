@@ -109,7 +109,7 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
               Your cart is empty
             </h2>
             <p className="text-text-light dark:text-darkmode-text-light mb-8">
-              Looks like you haven't added any items to your cart yet.
+              Looks like you haven&apos;t added any items to your cart yet.
             </p>
             <Link
               href="/products"
@@ -120,15 +120,15 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2">
-              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 sm:p-6">
+                <h2 className="text-lg sm:text-xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4 sm:mb-6">
                   Cart Items ({cart.totalQuantity})
                 </h2>
                 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {cart.lines.map((item, i) => {
                     const merchandiseSearchParams = {} as MerchandiseSearchParams;
 
@@ -148,11 +148,11 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                     return (
                       <div
                         key={i}
-                        className="flex items-center gap-4 p-4 border border-border dark:border-darkmode-border rounded-xl hover:shadow-md transition-all duration-200"
+                        className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-border dark:border-darkmode-border rounded-xl hover:shadow-md transition-all duration-200"
                       >
                         {/* Product Image */}
-                        <Link href={merchandiseUrl} className="flex-shrink-0">
-                          <div className="relative w-20 h-20 overflow-hidden rounded-lg border border-border dark:border-darkmode-border">
+                        <Link href={merchandiseUrl} className="flex-shrink-0 w-full sm:w-auto">
+                          <div className="relative w-20 h-20 sm:w-20 sm:h-20 overflow-hidden rounded-lg border border-border dark:border-darkmode-border mx-auto sm:mx-0">
                             <Image
                               className="h-full w-full object-cover"
                               // @ts-ignore
@@ -165,16 +165,16 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                         </Link>
 
                         {/* Product Details */}
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 w-full sm:w-auto">
                           <Link
                             href={merchandiseUrl}
                             className="block"
                           >
-                            <h3 className="font-semibold text-text-dark dark:text-darkmode-text-dark hover:text-primary transition-colors duration-200 line-clamp-2">
+                            <h3 className="font-semibold text-text-dark dark:text-darkmode-text-dark hover:text-primary transition-colors duration-200 text-sm sm:text-base leading-tight break-words">
                               {item.merchandise.product.title}
                             </h3>
                             {item.merchandise.title !== DEFAULT_OPTION && (
-                              <p className="text-sm text-text-light dark:text-darkmode-text-light mt-1">
+                              <p className="text-xs sm:text-sm text-text-light dark:text-darkmode-text-light mt-1 break-words">
                                 {item.merchandise.title}
                               </p>
                             )}
@@ -183,7 +183,7 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                           {/* Price */}
                           <div className="mt-2">
                             <Price
-                              className="text-lg font-bold text-primary"
+                              className="text-base sm:text-lg font-bold text-primary"
                               amount={item.cost.totalAmount.amount}
                               currencyCode={item.cost.totalAmount.currencyCode}
                             />
@@ -191,13 +191,13 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                         </div>
 
                         {/* Quantity Controls */}
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
                           <div className="flex items-center border border-border dark:border-darkmode-border rounded-lg">
                             <EditItemQuantityButton
                               item={item}
                               type="minus"
                             />
-                            <span className="px-4 py-2 text-sm font-medium text-text-dark dark:text-darkmode-text-dark min-w-[3rem] text-center">
+                            <span className="px-3 sm:px-4 py-2 text-sm font-medium text-text-dark dark:text-darkmode-text-dark min-w-[2.5rem] sm:min-w-[3rem] text-center">
                               {item.quantity}
                             </span>
                             <EditItemQuantityButton
@@ -219,9 +219,9 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
             </div>
 
             {/* Cart Summary & Note */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Order Note */}
-              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-6">
+              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark flex items-center gap-2">
                     <FaEdit className="w-4 h-4" />
@@ -280,7 +280,7 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
               </div>
 
               {/* Order Summary */}
-              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-6">
+              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 sm:p-6">
                 <h3 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
                   Order Summary
                 </h3>

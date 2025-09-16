@@ -4,8 +4,9 @@ import { Collection } from "@/lib/shopify/types";
 import { getAllTags, getCollections } from "@/lib/shopify";
 import { createUrl } from "@/lib/utils";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { isCategoryActive, isTagActive, isAllProductsActive, createCategoryUrl } from "@/lib/utils/navigationUtils";
 
 interface INavigationLink {
   name: string;
@@ -32,6 +33,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
   const [loading, setLoading] = useState(true);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchNavigationData = async () => {
@@ -75,13 +77,55 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  // Define category and tag keywords for each section in the required order
-  const navigationConfig = [
+  // Define categories that should have dropdowns
+  const dropdownCategories = [
     {
       title: "Sweets",
       categoryKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "mithai"],
       tagKeywords: ["sweet", "laddu", "halwa", "burfi", "mysore", "dessert", "sugar", "jaggery", "mithai"],
     },
+    {
+      title: "Pickles",
+      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
+      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
+    },
+  ];
+
+  // Function to find the actual category handle from Shopify collections
+  const findCategoryHandle = (categoryKeywords: string[]): string | null => {
+    if (!categories || categories.length === 0) return null;
+    
+    // First, try to find exact matches
+    for (const category of categories) {
+      const categoryTitle = category.title.toLowerCase();
+      const categoryHandle = category.handle.toLowerCase();
+      
+      for (const keyword of categoryKeywords) {
+        if (categoryTitle.includes(keyword.toLowerCase()) || 
+            categoryHandle.includes(keyword.toLowerCase())) {
+          return category.handle;
+        }
+      }
+    }
+    
+    // If no exact match, try partial matches
+    for (const category of categories) {
+      const categoryTitle = category.title.toLowerCase();
+      const categoryHandle = category.handle.toLowerCase();
+      
+      for (const keyword of categoryKeywords) {
+        if (categoryTitle.includes(keyword.toLowerCase()) || 
+            categoryHandle.includes(keyword.toLowerCase())) {
+          return category.handle;
+        }
+      }
+    }
+    
+    return null;
+  };
+
+  // Define categories that should be direct links (no dropdowns)
+  const directLinkCategories = [
     {
       title: "Namkeen",
       categoryKeywords: ["namkeen", "snack", "mixture", "chips", "murukku", "sev", "savory"],
@@ -91,11 +135,6 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
       title: "Millets",
       categoryKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy"],
       tagKeywords: ["millet", "ragi", "bajra", "jowar", "quinoa", "grain", "healthy", "organic", "nutritious"],
-    },
-    {
-      title: "Pickles",
-      categoryKeywords: ["pickle", "achar", "mango", "lime", "chili", "gongura"],
-      tagKeywords: ["pickle", "achar", "mango", "lime", "chili", "spicy", "tangy", "sour", "gongura"],
     },
     {
       title: "Daily Essentials",
@@ -115,7 +154,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
         {/* Home */}
         <Link
           href="/"
-          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
             pathname === "/"
               ? 'bg-[#800020] text-white font-bold shadow-md'
               : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -125,12 +164,12 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
           Home
         </Link>
 
-        <div className="px-4 py-3 text-gray-500">Loading categories...</div>
+        <div className="px-4 py-3 text-gray-500 text-sm">Loading categories...</div>
 
         {/* About */}
         <Link
           href="/about"
-          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
             pathname === "/about"
               ? 'bg-[#800020] text-white font-bold shadow-md'
               : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -143,7 +182,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
         {/* Contact */}
         <Link
           href="/contact"
-          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
             pathname === "/contact"
               ? 'bg-[#800020] text-white font-bold shadow-md'
               : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -156,7 +195,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
         {/* All Products */}
         <Link
           href="/products"
-          className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
             pathname === "/products"
               ? 'bg-[#800020] text-white font-bold shadow-md'
               : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -174,7 +213,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
       {/* Home - First item */}
       <Link
         href="/"
-        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+        className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
           pathname === "/"
             ? 'bg-[#800020] text-white font-bold shadow-md'
             : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -184,8 +223,30 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
         Home
       </Link>
 
-      {/* Dynamic category sections */}
-      {navigationConfig.map((config) => {
+      {/* Direct link categories (no dropdowns) */}
+      {directLinkCategories.map((config, index) => {
+        const isActive = isCategoryActive(pathname, searchParams, config.categoryKeywords);
+        const categoryHandle = findCategoryHandle(config.categoryKeywords);
+        const categoryUrl = categoryHandle ? createCategoryUrl(categoryHandle) : '/products';
+        
+        return (
+          <Link
+            key={`mobile-direct-${index}`}
+            href={categoryUrl}
+            className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
+              isActive
+                ? 'bg-[#800020] text-white font-bold shadow-md'
+                : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+            }`}
+            onClick={onLinkClick}
+          >
+            {config.title}
+          </Link>
+        );
+      })}
+
+      {/* Dropdown categories */}
+      {dropdownCategories.map((config) => {
         const filteredCategories = categories.filter((category) =>
           config.categoryKeywords.some((keyword) =>
             category.title.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -203,15 +264,22 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
           return null;
         }
 
+        const isDropdownActive = isCategoryActive(pathname, searchParams, config.categoryKeywords) || 
+                                isTagActive(pathname, searchParams, config.tagKeywords);
+
         return (
           <div key={config.title}>
             <button
               onClick={() => toggleSection(config.title)}
-              className="w-full flex items-center justify-between px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out text-gray-700 hover:bg-gray-100 hover:text-[#800020]"
+              className={`w-full flex items-center justify-between px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
+                isDropdownActive
+                  ? 'bg-[#800020] text-white font-bold shadow-md'
+                  : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
+              }`}
             >
               <span>{config.title}</span>
               <svg
-                className={`w-5 h-5 transition-transform duration-200 ${
+                className={`w-4 h-4 transition-transform duration-200 ${
                   expandedSection === config.title ? "rotate-180" : ""
                 }`}
                 fill="none"
@@ -271,7 +339,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
       {/* About */}
       <Link
         href="/about"
-        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+        className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
           pathname === "/about"
             ? 'bg-[#800020] text-white font-bold shadow-md'
             : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -284,7 +352,7 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
       {/* Contact */}
       <Link
         href="/contact"
-        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
+        className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
           pathname === "/contact"
             ? 'bg-[#800020] text-white font-bold shadow-md'
             : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
@@ -297,8 +365,8 @@ const MobileEnhancedNavigation: React.FC<MobileEnhancedNavigationProps> = ({
       {/* All Products - Last item */}
       <Link
         href="/products"
-        className={`block px-4 py-3 text-lg font-medium rounded-lg transition-all duration-300 ease-in-out ${
-          pathname === "/products"
+        className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ease-in-out ${
+          isAllProductsActive(pathname, searchParams)
             ? 'bg-[#800020] text-white font-bold shadow-md'
             : 'text-gray-700 hover:bg-gray-100 hover:text-[#800020]'
         }`}

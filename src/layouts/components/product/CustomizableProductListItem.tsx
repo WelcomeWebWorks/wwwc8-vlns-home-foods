@@ -28,7 +28,7 @@ const CustomizableProductListItem = ({ product, className = "" }: CustomizablePr
   }, [product.options]);
 
   // Merge default options with selected options
-  const currentOptions = { ...defaultOptions, ...selectedOptions };
+  const currentOptions = useMemo(() => ({ ...defaultOptions, ...selectedOptions }), [defaultOptions, selectedOptions]);
 
   // Find the current variant based on selected options
   const currentVariant = useMemo(() => {

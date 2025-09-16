@@ -5,6 +5,7 @@ import { getUserDetails } from "@/lib/shopify";
 import type { user } from "@/lib/shopify/types";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Gravatar from "react-gravatar";
 import { BsPerson } from "react-icons/bs";
@@ -88,13 +89,13 @@ const NavUser = () => {
           </div>
         </button>
       ) : (
-        <a
+        <Link
           className="text-2xl text-gray-700 hover:text-[#800020] flex items-center bg-gray-100 hover:bg-gray-200 rounded-lg p-2 transition-all duration-200 shadow-sm"
           href="/sign-up"
           aria-label="create account"
         >
           <BsPerson />
-        </a>
+        </Link>
       )}
 
       {dropdownOpen && (
