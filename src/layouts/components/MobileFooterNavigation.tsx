@@ -7,8 +7,9 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { isCategoryActive, isAllProductsActive, createCategoryUrl } from "@/lib/utils/navigationUtils";
-import { BsCart3, BsGrid3X3Gap, BsPerson, BsList } from "react-icons/bs";
-import { FaUser, FaShoppingCart, FaTh, FaBars, FaTimes, FaChevronUp, FaHome } from "react-icons/fa";
+import { BsGrid3X3Gap, BsPerson, BsList } from "react-icons/bs";
+import { FaUser, FaTh, FaBars, FaTimes, FaChevronUp, FaHome } from "react-icons/fa";
+import Image from "next/image";
 
 interface MobileFooterNavigationProps {
   onMenuClick: () => void;
@@ -27,9 +28,14 @@ const MobileFooterNavigation: React.FC<MobileFooterNavigationProps> = ({
   const [loading, setLoading] = useState(true);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -136,6 +142,32 @@ const MobileFooterNavigation: React.FC<MobileFooterNavigationProps> = ({
   const isProductsActive = isAllProductsActive(pathname, searchParams);
   const isAccountActive = pathname === "/login" || pathname === "/sign-up";
 
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-gray-200 shadow-2xl lg:hidden" suppressHydrationWarning={true}>
+        <div className="flex items-center justify-around py-2 px-4" suppressHydrationWarning={true}>
+          <div className="flex flex-col items-center justify-center p-3 rounded-2xl" suppressHydrationWarning={true}>
+            <div className="w-8 h-8 rounded-xl bg-gray-100" suppressHydrationWarning={true}></div>
+            <span className="text-xs font-medium mt-1 text-gray-600" suppressHydrationWarning={true}>Home</span>
+          </div>
+          <div className="flex flex-col items-center justify-center p-3 rounded-2xl" suppressHydrationWarning={true}>
+            <div className="w-8 h-8 rounded-xl bg-gray-100" suppressHydrationWarning={true}></div>
+            <span className="text-xs font-medium mt-1 text-gray-600" suppressHydrationWarning={true}>Products</span>
+          </div>
+          <div className="flex flex-col items-center justify-center p-3 rounded-2xl" suppressHydrationWarning={true}>
+            <div className="w-8 h-8 rounded-xl bg-gray-100" suppressHydrationWarning={true}></div>
+            <span className="text-xs font-medium mt-1 text-gray-600" suppressHydrationWarning={true}>Cart</span>
+          </div>
+          <div className="flex flex-col items-center justify-center p-3 rounded-2xl" suppressHydrationWarning={true}>
+            <div className="w-8 h-8 rounded-xl bg-gray-100" suppressHydrationWarning={true}></div>
+            <span className="text-xs font-medium mt-1 text-gray-600" suppressHydrationWarning={true}>Account</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-gray-200 shadow-2xl lg:hidden">
       <div className="flex items-center justify-around py-2 px-4">
@@ -205,7 +237,13 @@ const MobileFooterNavigation: React.FC<MobileFooterNavigationProps> = ({
               ? 'bg-gradient-to-r from-[#800020] to-[#600018] text-white shadow-lg' 
               : 'bg-gray-100 text-gray-600 group-hover:bg-[#800020] group-hover:text-white'
           }`}>
-            <FaShoppingCart className="w-4 h-4" />
+             <Image
+               src="/images/shopping-cart.svg"
+               alt="Shopping Cart"
+               width={24}
+               height={24}
+               className="w-6 h-6"
+             />
           </div>
           <span className={`text-xs font-medium mt-1 transition-colors duration-300 ${
             cartHighlighted 

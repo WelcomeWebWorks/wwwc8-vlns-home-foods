@@ -1,5 +1,5 @@
 .header {
-  @apply py-2 xl:py-3 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
+  @apply py-1 xl:py-0 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
   background-color: #fffef7;
 }
 
@@ -49,7 +49,51 @@
 
 /* Compact navigation container */
 .navbar-container {
-  @apply w-full flex items-center justify-between min-h-[50px] xl:min-h-[60px];
+  @apply w-full flex items-center justify-between min-h-[50px] xl:min-h-[35px];
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 640px) {
+  .navbar {
+    @apply px-2 py-1;
+  }
+  
+  .navbar-brand {
+    @apply flex-shrink-0;
+  }
+  
+  /* Move cart and menu significantly to the left */
+  .mobile-nav-actions {
+    @apply flex items-center space-x-4 flex-shrink-0 -translate-x-12;
+    margin-right: 0;
+  }
+  
+  /* Mobile menu button spacing from right edge */
+  .mobile-nav-actions > div:last-child {
+    @apply mr-8;
+  }
+  
+  /* Additional leftward movement for better positioning */
+  .mobile-nav-actions {
+    position: relative;
+    left: -2rem;
+  }
+  
+  /* Reduce mobile navigation height */
+  .header {
+    @apply py-0;
+    min-height: 50px;
+  }
+  
+  /* Compact mobile navigation row */
+  .mobile-nav-row {
+    @apply min-h-[35px] py-0.5;
+  }
+  
+  /* Reduce search bar spacing */
+  .mobile-search-container {
+    @apply mt-0.5 px-2;
+  }
 }
 
 .nav-list {

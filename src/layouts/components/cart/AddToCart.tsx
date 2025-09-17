@@ -5,7 +5,7 @@ import { ProductVariant } from "@/lib/shopify/types";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import { triggerCartUpdate } from "@/hooks/useProductCartState";
 
@@ -59,6 +59,11 @@ export function AddToCart({
 }: AddToCartProps) {
   const [message, formAction] = useActionState(addItem, null);
   const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Trigger cart update when item is successfully added
   useEffect(() => {
@@ -70,6 +75,8 @@ export function AddToCart({
 
   // Dynamically determine the selected variant based on URL parameters
   const selectedVariantId = useMemo(() => {
+    if (!mounted) return defaultVariantId || variants[0]?.id;
+    
     const selectedOptions = Array.from(searchParams.entries());
 
     // If no options are selected, use the default variant
@@ -87,7 +94,23 @@ export function AddToCart({
     );
 
     return variant?.id || defaultVariantId || variants[0]?.id;
-  }, [searchParams, variants, defaultVariantId]);
+  }, [searchParams, variants, defaultVariantId, mounted]);
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <form>
+        <button
+          type="submit"
+          disabled
+          className="btn btn-primary max-md:btn-sm"
+        >
+          <BiLoaderAlt className="animate-spin" />
+          Loading...
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form action={formAction}>

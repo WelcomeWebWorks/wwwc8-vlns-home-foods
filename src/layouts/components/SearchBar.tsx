@@ -10,6 +10,11 @@ const SearchBar = () => {
   const searchParams = useSearchParams();
   const [isInputEditing, setInputEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const inputField = document.getElementById(
@@ -61,10 +66,23 @@ const SearchBar = () => {
     router.push(createUrl("/products", newParams));
   };
 
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <div className="relative w-full max-w-md">
+        <div className="flex items-center bg-white dark:bg-darkmode-body border-2 border-border dark:border-darkmode-border rounded-2xl px-4 py-3 shadow-lg">
+          <div className="w-5 h-5 bg-gray-200 rounded"></div>
+          <div className="flex-1 ml-3 bg-gray-200 h-4 rounded" suppressHydrationWarning={true}></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form
       onSubmit={onSubmit}
       className="border-2 border-gray-300 hover:border-[#800020] focus-within:border-[#800020] rounded-xl flex bg-white shadow-lg transition-all duration-300 pl-4 relative"
+      suppressHydrationWarning={true}
     >
       <input
         id="searchInput"

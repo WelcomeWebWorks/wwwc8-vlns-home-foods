@@ -181,8 +181,15 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
 // Hook to get wishlist data
 export const useWishlist = () => {
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Initial load
     const loadWishlist = () => {
       if (typeof window !== 'undefined') {
@@ -208,7 +215,7 @@ export const useWishlist = () => {
     return () => {
       window.removeEventListener('wishlistChanged', handleWishlistChange as EventListener);
     };
-  }, []);
+  }, [mounted]);
 
   const isInWishlist = (productId: string): boolean => {
     return wishlist.some(item => item.id === productId);

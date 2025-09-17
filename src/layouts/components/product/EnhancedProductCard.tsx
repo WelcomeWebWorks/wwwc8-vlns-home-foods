@@ -43,14 +43,15 @@ const EnhancedProductCard = ({ product, className = "" }: EnhancedProductCardPro
 
   return (
     <>
-      <div className={`bg-white dark:bg-darkmode-body rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden w-full ${className}`}>
+      <div className={`bg-white dark:bg-darkmode-body rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden w-full ${className}`} suppressHydrationWarning={true}>
         {/* Clickable Card Area */}
         <Link 
           href={`/products/${product.handle}`}
           className="block cursor-pointer"
+          suppressHydrationWarning={true}
         >
           {/* Product Image */}
-          <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="relative aspect-[4/3] overflow-hidden" suppressHydrationWarning={true}>
             <ProductImageWithHover
               images={product.images}
               width={400}

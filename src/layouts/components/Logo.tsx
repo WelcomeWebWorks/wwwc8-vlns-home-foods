@@ -37,7 +37,7 @@ const Logo = ({ src }: { src?: string }) => {
   const baseLogoWidth = parseInt(logo_width.replace("px", ""));
 
   return (
-    <Link href="/" className="navbar-brand inline-block">
+    <Link href="/" className="navbar-brand inline-block" suppressHydrationWarning={true}>
       {logoPath ? (
         <Image
           width={baseLogoWidth * 2}
@@ -45,18 +45,19 @@ const Logo = ({ src }: { src?: string }) => {
           src={logoPath}
           alt={title}
           priority
-          className="h-[24px] w-[90px] sm:h-[28px] sm:w-[110px] xl:h-[40px] xl:w-[150px] 2xl:h-[45px] 2xl:w-[170px]"
+          className="h-[9px] w-[34px] sm:h-[28px] sm:w-[110px] xl:h-[40px] xl:w-[150px] 2xl:h-[45px] 2xl:w-[170px]"
           style={{
             height: "auto",
             width: "auto",
           }}
+          suppressHydrationWarning={true}
         />
       ) : logo_text ? (
-        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary">
+        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary" suppressHydrationWarning={true}>
           {logo_text}
         </span>
       ) : (
-        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary">
+        <span className="text-xs sm:text-sm xl:text-lg font-bold text-primary" suppressHydrationWarning={true}>
           {title}
         </span>
       )}

@@ -1,11 +1,79 @@
+/* Prevent horizontal overflow globally */
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile and tablet viewport fixes */
+@media (max-width: 1024px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+  }
+  
+  /* Prevent any element from causing horizontal scroll */
+  * {
+    max-width: 100%;
+  }
+  
+  /* Ensure containers don't overflow */
+  .container, .container-lg {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
 /* section style */
 .section {
   @apply py-14 xl:py-28;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* About section specific mobile/tablet fixes */
+@media (max-width: 1024px) {
+  .section {
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  /* Ensure about section content doesn't cause scroll */
+  .section .container {
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  /* Prevent any child elements from causing scroll */
+  .section * {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Specific about section fixes */
+  .about-section {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+  
+  .about-section .container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
 }
 
 /* main content spacing */
 main {
   @apply relative z-10;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* container */

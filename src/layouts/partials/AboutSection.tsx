@@ -4,7 +4,7 @@ import ImageFallback from "@/helpers/ImageFallback";
 
 const AboutSection = () => {
   return (
-    <section className="section dark:bg-darkmode-light relative overflow-hidden" style={{ backgroundColor: '#fffef7' }}>
+    <section className="section about-section dark:bg-darkmode-light relative overflow-hidden" style={{ backgroundColor: '#fffef7', overflow: 'hidden' }}>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#800020]/10 via-transparent to-[#600018]/10"></div>
@@ -57,7 +57,7 @@ const AboutSection = () => {
             <div className="group text-center">
               <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-[#800020]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Traditional Recipes</h3>
@@ -68,33 +68,33 @@ const AboutSection = () => {
             <div className="group text-center">
               <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-[#800020]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Premium Ingredients</h3>
               <p className="text-gray-600">Carefully selected, locally sourced ingredients of the highest quality</p>
             </div>
 
-            {/* Handcrafted Quality */}
-            <div className="group text-center">
-              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-[#800020]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Handcrafted Quality</h3>
-              <p className="text-gray-600">Each product is meticulously crafted in small batches for exceptional quality</p>
-            </div>
-
-            {/* Global Delivery */}
+            {/* No Preservatives */}
             <div className="group text-center">
               <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-[#800020]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No Preservatives</h3>
+              <p className="text-gray-600">Pure, natural ingredients with traditional preparation methods - no artificial preservatives</p>
+            </div>
+
+            {/* Global Delivery */}
+            <div className="group text-center">
+              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-[#800020]/10 to-[#600018]/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-10 h-10 text-[#800020]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                </svg>
+              </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Global Delivery</h3>
-              <p className="text-gray-600">Free delivery across India, worldwide shipping to bring taste home</p>
+              <p className="text-gray-600">Worldwide shipping via air and ground transport to bring authentic flavors home</p>
             </div>
           </div>
 
@@ -125,7 +125,7 @@ const AboutSection = () => {
         <div className="relative">
           <div className="relative max-w-4xl mx-auto">
             <ImageFallback
-              src="/images/aboutUs.png"
+              src="/images/aboutUS.jpg"
               alt="VLNS Home Foods - Authentic Andhra Pradesh Flavors"
               width={800}
               height={500}

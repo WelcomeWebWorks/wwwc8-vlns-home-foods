@@ -14,26 +14,37 @@ const Social: React.FC<{ socialName: string; className: string }> = ({
   const pathname = usePathname();
   const [baseUrl, setBaseUrl] = useState("");
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setBaseUrl(window.location.origin);
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      setBaseUrl(window.location.origin);
+    }
   }, []);
 
   const handleCopyLink = () => {
-    const fullLink = `${baseUrl}${pathname}`;
-    const textArea = document.createElement("textarea");
-    textArea.value = fullLink;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
+    if (typeof window !== 'undefined') {
+      const fullLink = `${baseUrl}${pathname}`;
+      const textArea = document.createElement("textarea");
+      textArea.value = fullLink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
 
-    // Show the tooltip
-    setIsTooltipVisible(true);
-    setTimeout(() => {
-      setIsTooltipVisible(false);
-    }, 1000);
+      // Show the tooltip
+      setIsTooltipVisible(true);
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+      }, 1000);
+    }
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return <ul className={className}></ul>;
+  }
 
   return (
     <ul className={className}>

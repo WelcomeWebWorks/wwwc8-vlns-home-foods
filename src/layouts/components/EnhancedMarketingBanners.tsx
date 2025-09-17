@@ -131,7 +131,7 @@ const EnhancedMarketingBanners = () => {
             {[
               {
                 icon: FaTruck,
-                text: "IN / US",
+                text: "WORLDWIDE",
                 description: "Shipping & Delivery",
                 color: "from-[#800020] to-[#600018]"
               },
@@ -148,9 +148,9 @@ const EnhancedMarketingBanners = () => {
                 color: "from-[#800020] to-[#600018]"
               },
               {
-                icon: FaMapMarkerAlt,
-                text: "FIND A STORE",
-                description: "Store Locator",
+                icon: FaHeart,
+                text: "AUTHENTIC",
+                description: "Traditional Taste",
                 color: "from-[#600018] to-[#800020]"
               }
             ].map((feature, index) => {

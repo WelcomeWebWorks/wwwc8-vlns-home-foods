@@ -140,7 +140,7 @@ Successfully revamped the entire About section on the homepage with a completely
 <div className="relative">
   <div className="relative max-w-4xl mx-auto">
     <ImageFallback
-      src="/images/aboutUs.png"
+      src="/images/aboutUS.jpg"
       alt="VLNS Home Foods - Authentic Andhra Pradesh Flavors"
       width={800}
       height={500}

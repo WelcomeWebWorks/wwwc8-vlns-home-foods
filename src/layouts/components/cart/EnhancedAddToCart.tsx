@@ -2,7 +2,7 @@
 
 import { addItem } from "@/lib/utils/cartActions";
 import { ProductVariant } from "@/lib/shopify/types";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
@@ -72,9 +72,16 @@ export function EnhancedAddToCart({
 }: EnhancedAddToCartProps) {
   const [message, formAction] = useActionState(addItem, null);
   const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Dynamically determine the selected variant based on URL parameters
   const selectedVariantId = useMemo(() => {
+    if (!mounted) return defaultVariantId || variants[0]?.id;
+    
     const selectedOptions = Array.from(searchParams.entries());
 
     // If no options are selected, use the default variant
@@ -92,7 +99,7 @@ export function EnhancedAddToCart({
     );
 
     return variant?.id || defaultVariantId || variants[0]?.id;
-  }, [searchParams, variants, defaultVariantId]);
+  }, [searchParams, variants, defaultVariantId, mounted]);
 
   // Only show error messages, remove success toasts to prevent bulk messages
   useEffect(() => {
@@ -110,6 +117,22 @@ export function EnhancedAddToCart({
     // Just trigger immediate cart update for faster response
     triggerCartUpdate();
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <form>
+        <button
+          type="submit"
+          disabled
+          className="btn btn-primary max-md:btn-sm"
+        >
+          <BiLoaderAlt className="animate-spin" />
+          Loading...
+        </button>
+      </form>
+    );
+  }
 
   return (
     <form action={formAction}>

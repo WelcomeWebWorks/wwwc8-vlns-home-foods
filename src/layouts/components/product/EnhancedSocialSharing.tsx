@@ -21,12 +21,21 @@ const EnhancedSocialSharing: React.FC<EnhancedSocialSharingProps> = ({
   const [baseUrl, setBaseUrl] = useState("");
   const [isTooltipVisible, setIsTooltipVisible] = useState("");
   const [canShare, setCanShare] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setBaseUrl(window.location.origin);
-    // Check if Web Share API is supported
-    setCanShare(!!navigator.share);
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      setBaseUrl(window.location.origin);
+      // Check if Web Share API is supported
+      setCanShare(!!navigator.share);
+    }
   }, []);
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return <div className={className}></div>;
+  }
 
   const fullUrl = `${baseUrl}${pathname}`;
   const shareText = `Check out this amazing product: ${productTitle}`;

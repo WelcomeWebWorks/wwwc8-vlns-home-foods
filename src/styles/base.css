@@ -1,9 +1,13 @@
 html {
   @apply text-base-sm md:text-base;
+  overflow-x: hidden;
 }
 
 body {
   @apply bg-body text-base font-primary font-normal leading-relaxed text-text dark:bg-darkmode-body dark:text-darkmode-text;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 h1,

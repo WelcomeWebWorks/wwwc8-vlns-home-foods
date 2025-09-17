@@ -14,8 +14,15 @@ export const useCartState = (): CartState => {
     itemCount: 0,
     isLoading: true,
   });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const checkCartState = async () => {
       try {
         // Check if cart ID exists in cookies
@@ -79,7 +86,7 @@ export const useCartState = (): CartState => {
       window.removeEventListener('cartUpdated', handleCartUpdate);
       window.removeEventListener('storage', handleCartUpdate);
     };
-  }, []);
+  }, [mounted]);
 
   return cartState;
 };

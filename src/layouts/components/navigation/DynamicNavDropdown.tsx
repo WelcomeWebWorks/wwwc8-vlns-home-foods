@@ -59,6 +59,10 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
     setTimeoutId(id);
   };
 
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   const handleCategoryClick = (categoryHandle: string) => {
     const params = new URLSearchParams();
     params.set("c", categoryHandle);
@@ -99,17 +103,18 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
     >
       {/* Dropdown Trigger */}
       <button
-        className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md flex items-center space-x-1 ${
+        onClick={handleClick}
+        className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 flex items-center space-x-2 ${
           isDropdownActive
-            ? 'bg-[#800020] text-white font-bold shadow-md'
-            : 'hover:text-[#800020] hover:bg-gray-100'
+            ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+            : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
         }`}
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
         <span>{title}</span>
         <svg
-          className={`w-2.5 h-2.5 xl:w-3 xl:h-3 transition-transform duration-200 ${
+          className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
           fill="none"
@@ -189,7 +194,7 @@ const DynamicNavDropdown: React.FC<DynamicNavDropdownProps> = ({
                 href="/products"
                 className="block text-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-[#600018] transition-colors duration-200 text-sm font-medium"
               >
-                View All {title}
+                View All Products
               </Link>
             </div>
           </div>

@@ -1,16 +1,30 @@
 "use client";
 
 import { FaWhatsapp } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const WhatsAppButton = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const handleWhatsAppClick = () => {
-    const phoneNumber = "919581154327"; // Phone number from contact info
-    const message = encodeURIComponent(
-      "Hello VLNS Home Foods! I need support with my order. Please help me."
-    );
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(whatsappUrl, "_blank");
+    if (typeof window !== 'undefined') {
+      const phoneNumber = "919581154327"; // Phone number from contact info
+      const message = encodeURIComponent(
+        "Hello VLNS Home Foods! I need support with my order. Please help me."
+      );
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-32 right-6 z-40 lg:bottom-6 lg:right-6 lg:z-50">

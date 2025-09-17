@@ -70,14 +70,14 @@ function getDefaultContent(filePath: string): string | null {
 title: "About VLNS Home Foods"
 description: "Learn about our authentic Andhra Pradesh flavors and family tradition"
 meta_title: "About Us - VLNS Home Foods"
-image: "/images/aboutUs.png"
+image: "/images/aboutUS.jpg"
 about_us:
   - title: "Our Story"
     content: "Welcome to VLNS Home Foods, your one-stop shop for authentic Andhra Pradesh flavors. We're a family-run business dedicated to bringing you the timeless tastes of homemade sweets, savory snacks, and spicy pickles, crafted with love and tradition."
-    image: "/images/aboutUs.png"
+    image: "/images/aboutUS.jpg"
   - title: "Our Mission"
     content: "At VLNS Home Foods, we believe that the best food is made with care, using the freshest ingredients and recipes passed down through generations. Our journey began in 2025 with a simple goal: to share the rich culinary heritage of Andhra Pradesh with the world."
-    image: "/images/aboutUs.png"
+    image: "/images/aboutUS.jpg"
 faq_section_title: "Frequently Asked Questions"
 faq_section_subtitle: "Everything you need to know about VLNS Home Foods"
 faqs:

@@ -5,7 +5,7 @@ import { ShopifyCollection } from "@/lib/shopify/types";
 import { createUrl } from "@/lib/utils";
 import { slugify } from "@/lib/utils/textConverter";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
 
 const ProductFilters = ({
@@ -23,9 +23,27 @@ const ProductFilters = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const selectedBrands = searchParams.getAll("b");
   const selectedCategory = searchParams.get("c");
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-6">
+        <div className="space-y-6">
+          <div className="h-6 bg-gray-200 rounded"></div>
+          <div className="h-6 bg-gray-200 rounded"></div>
+          <div className="h-6 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+    );
+  }
 
   const handleBrandClick = (name: string) => {
     const slugName = slugify(name.toLowerCase());

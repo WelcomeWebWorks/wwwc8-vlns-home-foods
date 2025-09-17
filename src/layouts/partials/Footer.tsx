@@ -30,7 +30,7 @@ const Footer = () => {
               <div className="mb-6">
           <Logo />
               </div>
-              <p className="text-text-light dark:text-darkmode-text-light text-base md:text-lg leading-relaxed mb-6">
+              <p className="text-text-light dark:text-darkmode-text-light text-lg md:text-lg leading-relaxed mb-6">
                 VLNS Home Foods brings you the authentic taste of Andhra Pradesh with traditional recipes, 
                 premium ingredients, and generations of culinary heritage.
               </p>
@@ -38,23 +38,23 @@ const Footer = () => {
               {/* Contact Info */}
               <div className="space-y-4">
                 <div className="flex items-center text-text-light dark:text-darkmode-text-light">
-                  <FaPhone className="w-5 h-5 mr-3 text-primary" />
-                  <span className="text-base md:text-lg font-medium">+91 9581154327</span>
+                  <FaPhone className="w-6 h-6 mr-3 text-primary" />
+                  <span className="text-lg md:text-lg font-medium">+91 9581154327</span>
                 </div>
                 <div className="flex items-center text-text-light dark:text-darkmode-text-light">
-                  <FaEnvelope className="w-5 h-5 mr-3 text-primary" />
-                  <span className="text-base md:text-lg font-medium">info@vlnshomefoods.com</span>
+                  <FaEnvelope className="w-6 h-6 mr-3 text-primary" />
+                  <span className="text-lg md:text-lg font-medium">info@vlnshomefoods.com</span>
                 </div>
                 <div className="flex items-start text-text-light dark:text-darkmode-text-light">
-                  <FaMapMarkerAlt className="w-5 h-5 mr-3 mt-1 text-primary flex-shrink-0" />
-                  <span className="text-base md:text-lg font-medium">Andhra Pradesh, India</span>
+                  <FaMapMarkerAlt className="w-6 h-6 mr-3 mt-1 text-primary flex-shrink-0" />
+                  <span className="text-lg md:text-lg font-medium">Andhra Pradesh, India</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-2xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Quick Links
               </h3>
               <ul className="space-y-4">
@@ -62,7 +62,7 @@ const Footer = () => {
                   <li key={menu.name}>
                     <Link 
                       href={menu.url}
-                      className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium"
+                      className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium"
                     >
                       {menu.name}
                     </Link>
@@ -73,32 +73,42 @@ const Footer = () => {
 
             {/* Products */}
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-2xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Our Products
               </h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href="/products?c=sweets" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
-                    Traditional Sweets
+                  <Link href="/products?c=sweets" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Sweets
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=pickles" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
-                    Spicy Pickles
+                  <Link href="/products?c=pickles" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Pickles
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=snacks" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
-                    Savory Snacks
+                  <Link href="/products?c=namkeen" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Namkeen
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products?c=masala-and-mixes" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
-                    Masala & Mixes
+                  <Link href="/products?c=millets" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Millets
                   </Link>
                 </li>
                 <li>
-                  <Link href="/products" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/products?c=daily-essentials" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Daily Essentials
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products?c=chilli-powders" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
+                    Chilli Powders
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/products" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     View All Products
                   </Link>
                 </li>
@@ -107,32 +117,32 @@ const Footer = () => {
 
             {/* Customer Service */}
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
+              <h3 className="text-2xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Customer Service
               </h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href="/contact" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/contact" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     Contact Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/about" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/shipping" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/shipping" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     Shipping Info
                   </Link>
                 </li>
                 <li>
-                  <Link href="/returns" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/returns" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     Returns & Exchanges
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-base md:text-lg font-medium">
+                  <Link href="/faq" className="text-text-light dark:text-darkmode-text-light hover:text-primary transition-colors duration-300 text-lg md:text-lg font-medium">
                     FAQ
                   </Link>
                 </li>
@@ -148,8 +158,8 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaTruck className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Free Shipping</div>
-                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">All India Delivery</div>
+                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Free Shipping</div>
+                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">All India Delivery</div>
                 </div>
               </div>
             </div>
@@ -157,8 +167,8 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaShieldAlt className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Secure Payment</div>
-                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">100% Safe</div>
+                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Secure Payment</div>
+                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">100% Safe</div>
                 </div>
               </div>
             </div>
@@ -166,8 +176,8 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaHeadset className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">24/7 Support</div>
-                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">Always Here</div>
+                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">24/7 Support</div>
+                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">Always Here</div>
                 </div>
               </div>
             </div>
@@ -175,20 +185,19 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaAward className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-base md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Premium Quality</div>
-                  <div className="text-sm md:text-base text-text-light dark:text-darkmode-text-light">Authentic Taste</div>
+                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Premium Quality</div>
+                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">Authentic Taste</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Social Media & Newsletter */}
+        {/* Social Media - Centered */}
         <div className="py-10 border-t border-border dark:border-darkmode-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            {/* Social Media */}
-            <div className="flex flex-col items-center md:items-start">
-              <h4 className="text-xl md:text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-6">
+          <div className="flex justify-center">
+            <div className="flex flex-col items-center">
+              <h4 className="text-2xl md:text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-6">
                 Follow Us
               </h4>
               <ul className="flex gap-6">
@@ -207,23 +216,6 @@ const Footer = () => {
             ))}
           </ul>
         </div>
-
-            {/* Newsletter Signup */}
-            <div className="flex flex-col items-center md:items-end">
-              <h4 className="text-xl md:text-2xl font-semibold text-text-dark dark:text-darkmode-text-dark mb-6">
-                Stay Updated
-              </h4>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="px-6 py-3 border border-border dark:border-darkmode-border rounded-lg bg-white dark:bg-darkmode-body text-text-dark dark:text-darkmode-text-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base md:text-lg min-w-[250px]"
-                />
-                <button className="bg-primary hover:bg-[#600018] text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300 text-base md:text-lg">
-                  Subscribe
-                </button>
-              </div>
-            </div>
           </div>
         </div>
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { FaTruck, FaStar, FaGift, FaMapMarkerAlt } from "react-icons/fa";
+import { FaTruck, FaStar, FaGift, FaHeart } from "react-icons/fa";
 
 const FeaturesBanner = () => {
   const features = [
     {
       icon: FaTruck,
-      text: "IN / US",
+      text: "WORLDWIDE",
       description: "Shipping & Delivery"
     },
     {
@@ -20,9 +20,9 @@ const FeaturesBanner = () => {
       description: "Gift Services"
     },
     {
-      icon: FaMapMarkerAlt,
-      text: "FIND A STORE",
-      description: "Store Locator"
+      icon: FaHeart,
+      text: "AUTHENTIC",
+      description: "Traditional Taste"
     }
   ];
 

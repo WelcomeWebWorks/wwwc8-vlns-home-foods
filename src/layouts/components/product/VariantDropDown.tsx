@@ -5,15 +5,22 @@ import { useEffect, useRef, useState } from "react";
 const VariantDropDown = ({ sizeOption }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Select One");
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const updateUrl = (param: string, value: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set(param.toLowerCase(), value);
-    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-    // Replace the URL without reloading the page
-    window.history.replaceState({}, "", newUrl);
+  const updateUrl = (param: string, value: string) => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set(param.toLowerCase(), value);
+      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+
+      // Replace the URL without reloading the page
+      window.history.replaceState({}, "", newUrl);
+    }
   };
 
   const handleOptionChanged = (value: string) => {
@@ -23,13 +30,17 @@ const VariantDropDown = ({ sizeOption }: any) => {
   };
 
   useEffect(() => {
+    if (!mounted) return;
+
     const setInitialOptionFromUrl = () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const optionParam = searchParams.get(sizeOption.name.toLowerCase());
-      if (optionParam && sizeOption.values.includes(optionParam)) {
-        setSelected(optionParam);
-      } else {
-        setSelected(sizeOption.values[0] || "Select One");
+      if (typeof window !== 'undefined') {
+        const searchParams = new URLSearchParams(window.location.search);
+        const optionParam = searchParams.get(sizeOption.name.toLowerCase());
+        if (optionParam && sizeOption.values.includes(optionParam)) {
+          setSelected(optionParam);
+        } else {
+          setSelected(sizeOption.values[0] || "Select One");
+        }
       }
     };
 
@@ -43,7 +54,7 @@ const VariantDropDown = ({ sizeOption }: any) => {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [sizeOption]);
+  }, [sizeOption, mounted]);
 
   return (
     <div className="w-72 relative" ref={dropdownRef}>

@@ -2,6 +2,7 @@
 import { createUrl } from "@/lib/utils";
 import { slugify } from "@/lib/utils/textConverter";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type ShowTagsProps = {
   tags: string[];
@@ -11,6 +12,11 @@ const ShowTags: React.FC<ShowTagsProps> = ({ tags }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedTag = searchParams.get("t");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleTagClick = (name: string) => {
     const slugName = slugify(name.toLowerCase());
@@ -24,6 +30,11 @@ const ShowTags: React.FC<ShowTagsProps> = ({ tags }) => {
 
     router.push(createUrl("/products", newParams), { scroll: false });
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return <div className="flex flex-wrap gap-3"></div>;
+  }
 
   // Debug logging for tags
   console.log("ShowTags received tags:", tags);

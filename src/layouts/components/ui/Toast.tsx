@@ -111,10 +111,10 @@ export const ToastManager: React.FC = () => {
       setToasts(prev => prev.filter(toast => toast.type !== event.detail.type));
       
       toastCounter += 1;
-      const newToast = {
-        ...event.detail,
-        id: `toast-${toastCounter}-${Date.now()}`,
-      };
+        const newToast = {
+          ...event.detail,
+          id: `toast-${toastCounter}`,
+        };
       setToasts(prev => [...prev, newToast]);
     };
 

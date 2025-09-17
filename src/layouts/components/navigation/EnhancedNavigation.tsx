@@ -131,15 +131,15 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
     return (
       <div className="w-full">
         <div className="flex justify-center">
-          <ul className="flex flex-nowrap justify-center gap-0.5 xl:gap-1 2xl:gap-2">
+          <ul className="flex flex-nowrap justify-center gap-1 xl:gap-2 2xl:gap-3">
             {staticMenuItems.map((menu, i) => (
               <li key={`menu-${i}`}>
                 <Link
                   href={menu.url}
-                  className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+                  className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                     isMenuItemActive(menu, pathname)
-                      ? 'bg-[#800020] text-white font-bold shadow-md'
-                      : 'hover:text-[#800020] hover:bg-gray-100'
+                      ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                      : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
                   }`}
                 >
                   {menu.name}
@@ -155,15 +155,15 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
   return (
     <div className="w-full">
       <div className="flex justify-center">
-        <ul className="flex flex-nowrap justify-center gap-0.5 xl:gap-1 2xl:gap-2">
+        <ul className="flex flex-nowrap justify-center gap-1 xl:gap-2 2xl:gap-3">
           {/* Home - First item */}
           <li>
             <Link
               href="/"
-              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+              className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                 pathname === "/"
-                  ? 'bg-[#800020] text-white font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100'
+                  ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                  : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
               }`}
             >
               Home
@@ -180,10 +180,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
               <li key={`direct-${index}`}>
                 <Link
                   href={categoryUrl}
-                  className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+                  className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                     isActive
-                      ? 'bg-[#800020] text-white font-bold shadow-md'
-                      : 'hover:text-[#800020] hover:bg-gray-100'
+                      ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                      : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
                   }`}
                 >
                   {config.title}
@@ -209,10 +209,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/about"
-              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+              className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                 pathname === "/about"
-                  ? 'bg-[#800020] text-white font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100'
+                  ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                  : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
               }`}
             >
               About
@@ -223,10 +223,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/contact"
-              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+              className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                 pathname === "/contact"
-                  ? 'bg-[#800020] text-white font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100'
+                  ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                  : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
               }`}
             >
               Contact
@@ -237,10 +237,10 @@ const EnhancedNavigation: React.FC<EnhancedNavigationProps> = ({
           <li>
             <Link
               href="/products"
-              className={`nav-link text-xs xl:text-sm font-medium transition-all duration-300 ease-in-out px-2 py-1.5 xl:px-3 xl:py-1.5 rounded-md ${
+              className={`nav-link text-sm xl:text-base font-semibold transition-all duration-300 ease-in-out px-4 py-2.5 xl:px-5 xl:py-3 rounded-lg border-2 ${
                 isAllProductsActive(pathname, searchParams)
-                  ? 'bg-[#800020] text-white font-bold shadow-md'
-                  : 'hover:text-[#800020] hover:bg-gray-100'
+                  ? 'bg-[#800020] text-white font-bold shadow-lg border-[#800020] transform scale-105'
+                  : 'hover:text-[#800020] hover:bg-gray-50 hover:border-[#800020]/30 border-transparent hover:shadow-md hover:transform hover:scale-105'
               }`}
             >
               All Products

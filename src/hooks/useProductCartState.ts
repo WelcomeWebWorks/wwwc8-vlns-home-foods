@@ -17,8 +17,14 @@ export const useProductCartState = (variantId: string): ProductCartState => {
     lineId: null,
     isLoading: true,
   });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const checkProductInCart = async () => {
       try {
         // Check if cart ID exists in cookies
@@ -117,7 +123,7 @@ export const useProductCartState = (variantId: string): ProductCartState => {
       window.removeEventListener('focus', handleCartUpdate);
       window.removeEventListener('visibilitychange', handleCartUpdate);
     };
-  }, [variantId]);
+  }, [variantId, mounted]);
 
   return productCartState;
 };
