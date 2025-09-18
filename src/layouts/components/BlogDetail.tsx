@@ -51,7 +51,7 @@ const BlogDetail = ({ article }: BlogDetailProps) => {
           {/* Article Image */}
           <div className="relative h-64 md:h-80 lg:h-96 overflow-hidden rounded-3xl shadow-2xl mb-8">
             <ImageFallback
-              src={article.image?.url || "/images/aboutUS.png"}
+              src={article.image?.url || "/images/aboutUs.png"}
               width={800}
               height={400}
               alt={article.title}

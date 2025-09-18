@@ -224,7 +224,7 @@ const ProductsListPage = async (props: {
   const callToAction = getListPage("sections/call-to-action.md");
 
   return (
-    <div className="login-bg min-h-screen">
+    <div className="login-bg min-h-screen mobile-products-spacing">
       {/* <PageHeader title={"Products"} /> */}
       <Suspense fallback={<LoadingProducts />}>
         <ShowProducts searchParams={searchParams} />

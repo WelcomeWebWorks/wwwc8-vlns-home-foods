@@ -1,26 +1,38 @@
+"use client";
+
+import { useCurrency } from '@/contexts/CurrencyContext';
+
 const Price = ({
   amount,
   className,
-  currencyCode = "USD",
+  currencyCode,
   currencyCodeClassName,
+  showCurrencyCode = true,
 }: {
   amount: string;
   className?: string;
-  currencyCode: string;
+  currencyCode?: string;
   currencyCodeClassName?: string;
-} & React.ComponentProps<"p">) => (
-  <p suppressHydrationWarning={true} className={className}>
-    {`${new Intl.NumberFormat(undefined, {
-      style: "currency",
-      currency: currencyCode,
-      currencyDisplay: "narrowSymbol",
-    }).format(parseFloat(amount))}`}
-    <span
-      className={`ml-1 inline ${currencyCodeClassName}`}
-    >
-      {currencyCode}
-    </span>
-  </p>
-);
+  showCurrencyCode?: boolean;
+} & React.ComponentProps<"p">) => {
+  const { formatPrice, getCurrencySymbol } = useCurrency();
+  
+  const displayPrice = formatPrice(amount, currencyCode);
+  const symbol = getCurrencySymbol(currencyCode);
+  const code = currencyCode || 'INR';
+
+  return (
+    <p suppressHydrationWarning={true} className={className}>
+      {displayPrice}
+      {showCurrencyCode && (
+        <span
+          className={`ml-1 inline ${currencyCodeClassName}`}
+        >
+          {code}
+        </span>
+      )}
+    </p>
+  );
+};
 
 export default Price;

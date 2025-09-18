@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Product } from "@/lib/shopify/types";
 import WishlistButton from "./WishlistButton";
 import ShareModal from "./ShareModal";
-import { FiShare2, FiStar } from "react-icons/fi";
+import { FiShare2 } from "react-icons/fi";
 
 interface ProductDetailContentProps {
   product: Product;
@@ -33,15 +33,6 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark leading-tight mb-3">
             {product.title}
           </h1>
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="flex items-center space-x-1">
-              {[...Array(5)].map((_, i) => (
-                <FiStar key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-              ))}
-            </div>
-            <span className="text-lg text-text-light dark:text-darkmode-text-light font-medium">(4.8/5)</span>
-            <span className="text-sm text-text-light dark:text-darkmode-text-light">• 127 reviews</span>
-          </div>
         </div>
         <div className="flex items-center space-x-3">
           <WishlistButton 

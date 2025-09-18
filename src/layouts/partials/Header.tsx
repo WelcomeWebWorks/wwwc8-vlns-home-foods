@@ -13,6 +13,7 @@ import EnhancedNavigation from "@/layouts/components/navigation/EnhancedNavigati
 import MobileEnhancedNavigation from "@/layouts/components/navigation/MobileEnhancedNavigation";
 import EnhancedMobileNavigation from "@/layouts/components/navigation/EnhancedMobileNavigation";
 import MobileFooterNavigation from "@/layouts/components/MobileFooterNavigation";
+// import CurrencyToggle from "@/layouts/components/CurrencyToggle"; // Hidden for now
 
 interface INavigationLink {
   name: string;
@@ -153,6 +154,9 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
 
             {/* Right Side Actions - Far right */}
             <div className="flex items-center space-x-3 flex-shrink-0">
+              {/* Currency Toggle - Hidden for now */}
+              {/* <CurrencyToggle /> */}
+              
               {/* Theme Switcher */}
               <ThemeSwitcher className="hidden sm:block" />
               
@@ -201,6 +205,9 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-2 flex-shrink-0">
+              {/* Currency Toggle - Hidden for now */}
+              {/* <CurrencyToggle /> */}
+              
               {/* Theme Switcher */}
               <ThemeSwitcher className="block" />
               

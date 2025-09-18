@@ -125,7 +125,7 @@ const AboutSection = () => {
         <div className="relative">
           <div className="relative max-w-4xl mx-auto">
             <ImageFallback
-              src="/images/aboutUS.png"
+              src="/images/aboutUs.png"
               alt="VLNS Home Foods - Authentic Andhra Pradesh Flavors"
               width={800}
               height={500}

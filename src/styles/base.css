@@ -48,13 +48,42 @@ body {
 
 /* Ensure main content has proper spacing for fixed header */
 main {
-  padding-top: 8rem; /* 128px - dramatically increased for mobile */
+  padding-top: 12rem; /* 192px - increased for mobile */
   margin-top: 0;
 }
 
+/* Mobile specific padding - DRAMATICALLY INCREASED */
+@media (max-width: 640px) {
+  main {
+    padding-top: 16rem; /* 256px for mobile - DRAMATICALLY increased */
+  }
+}
+
+/* Small mobile specific padding */
+@media (min-width: 641px) and (max-width: 768px) {
+  main {
+    padding-top: 14rem; /* 224px for small mobile */
+  }
+}
+
+/* Tablet specific padding */
+@media (min-width: 769px) and (max-width: 1024px) {
+  main {
+    padding-top: 13rem; /* 208px for tablet */
+  }
+}
+
+/* Large tablet specific padding */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  main {
+    padding-top: 12rem; /* 192px for large tablet */
+  }
+}
+
+/* Desktop specific padding */
 @media (min-width: 1280px) {
   main {
-    padding-top: 10rem; /* 160px for desktop - dramatically increased */
+    padding-top: 10rem; /* 160px for desktop */
   }
 }
 
@@ -63,10 +92,31 @@ main {
   padding-top: 2rem;
 }
 
+/* Mobile specific page content spacing */
+@media (max-width: 640px) {
+  .page-content {
+    padding-top: 3rem; /* 48px for mobile */
+  }
+}
+
+/* Tablet specific page content spacing */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .page-content {
+    padding-top: 2.5rem; /* 40px for tablet */
+  }
+}
+
 /* Ensure sections have proper spacing */
 .section {
   margin-top: 0;
   padding-top: 2rem;
+}
+
+/* Mobile specific section spacing */
+@media (max-width: 640px) {
+  .section {
+    padding-top: 3rem; /* 48px for mobile */
+  }
 }
 
 /* Ensure hero sections start properly */
@@ -75,9 +125,35 @@ main {
   padding-top: 2rem;
 }
 
+/* Mobile specific hero section spacing */
+@media (max-width: 640px) {
+  .hero-section {
+    padding-top: 4rem; /* 64px for mobile hero section */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-section {
+    padding-top: 3rem; /* 48px for tablet hero section */
+  }
+}
+
 /* Force all content to start after navigation */
 .container {
   padding-top: 1rem;
+}
+
+/* Mobile specific container spacing */
+@media (max-width: 640px) {
+  .container {
+    padding-top: 2rem; /* 32px for mobile containers */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding-top: 1.5rem; /* 24px for tablet containers */
+  }
 }
 
 /* Ensure all page elements are visible */
@@ -89,6 +165,13 @@ section {
 /* Ensure first section has extra padding */
 section:first-of-type {
   padding-top: 3rem;
+}
+
+/* Mobile specific first section padding */
+@media (max-width: 640px) {
+  section:first-of-type {
+    padding-top: 4rem; /* 64px for mobile first section */
+  }
 }
 
 /* Ensure product grids start properly */
@@ -130,6 +213,91 @@ main > * {
 /* Ensure first child of main has extra padding */
 main > *:first-child {
   padding-top: 2rem;
+}
+
+/* Mobile cart page specific spacing */
+.mobile-cart-spacing {
+  padding-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-cart-spacing {
+    padding-top: 4rem; /* 64px for mobile cart page */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-cart-spacing {
+    padding-top: 3rem; /* 48px for tablet cart page */
+  }
+}
+
+/* Mobile products page specific spacing */
+.mobile-products-spacing {
+  padding-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-products-spacing {
+    padding-top: 4rem; /* 64px for mobile products page */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-products-spacing {
+    padding-top: 3rem; /* 48px for tablet products page */
+  }
+}
+
+/* Mobile about page specific spacing */
+.mobile-about-spacing {
+  padding-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-about-spacing {
+    padding-top: 4rem; /* 64px for mobile about page */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-about-spacing {
+    padding-top: 3rem; /* 48px for tablet about page */
+  }
+}
+
+/* Mobile contact page specific spacing */
+.mobile-contact-spacing {
+  padding-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-contact-spacing {
+    padding-top: 4rem; /* 64px for mobile contact page */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-contact-spacing {
+    padding-top: 3rem; /* 48px for tablet contact page */
+  }
+}
+
+/* General mobile spacing utility class */
+.mobile-top-spacing {
+  padding-top: 2rem;
+}
+
+@media (max-width: 640px) {
+  .mobile-top-spacing {
+    padding-top: 4rem; /* 64px for mobile */
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-top-spacing {
+    padding-top: 3rem; /* 48px for tablet */
+  }
 }
 
 /* Force fixed positioning on all screen sizes */

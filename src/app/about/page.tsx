@@ -29,7 +29,7 @@ const About = () => {
     <>
       <SeoMeta {...frontmatter} />
 
-      <div className="min-h-screen bg-light dark:bg-darkmode-light login-bg">
+      <div className="min-h-screen bg-light dark:bg-darkmode-light login-bg mobile-about-spacing">
         <div className="container py-8">
           {/* Back to Home Link */}
           <div className="mb-8">

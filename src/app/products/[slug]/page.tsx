@@ -20,7 +20,6 @@ import {
   FiShield,
   FiShare2,
   FiCheckCircle,
-  FiStar,
   FiAward,
   FiHome,
   FiPackage,
@@ -117,7 +116,7 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
         </div>
       </section>
 
-      {/* Main Product Section */}
+      {/* Main Product Section - Revamped Professional Layout */}
       <section className="py-12 md:py-16 bg-white dark:bg-darkmode-body">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -128,46 +127,46 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
               </Suspense>
             </div>
 
-            {/* Product Information */}
+            {/* Product Information - Professional Layout */}
             <div className="space-y-8">
-              {/* Product Header with Enhanced Functionality */}
-              <div className="space-y-4">
+              {/* Product Header */}
+              <div className="space-y-6">
                 <ProductDetailContent product={product}>
                   <div></div>
                 </ProductDetailContent>
               </div>
 
-              {/* Price Section */}
+              {/* Price Section - Enhanced */}
               <div className="bg-gradient-to-r from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10 rounded-2xl p-6 border border-primary/20 dark:border-primary/30">
-              <div className="space-y-2">
-                  <div className="flex items-center space-x-2 mb-2">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
                     <FiAward className="w-5 h-5 text-primary" />
                     <span className="text-sm font-semibold text-primary">Special Price</span>
                   </div>
-                <Suspense fallback={
-                  <div className="flex gap-2 items-center">
-                    <h4 className="text-text-light dark:text-darkmode-text-light max-md:h2">
-                      {currencySymbol} {priceRange?.minVariantPrice.amount}{" "}
-                      {priceRange?.minVariantPrice?.currencyCode}
-                    </h4>
-                  </div>
-                }>
-                  <DynamicPrice 
-                    variants={variants} 
-                    defaultVariantId={defaultVariantId}
-                  />
-                </Suspense>
+                  <Suspense fallback={
+                    <div className="flex gap-2 items-center">
+                      <h4 className="text-text-light dark:text-darkmode-text-light max-md:h2">
+                        {currencySymbol} {priceRange?.minVariantPrice.amount}{" "}
+                        {priceRange?.minVariantPrice?.currencyCode}
+                      </h4>
+                    </div>
+                  }>
+                    <DynamicPrice 
+                      variants={variants} 
+                      defaultVariantId={defaultVariantId}
+                    />
+                  </Suspense>
                 </div>
               </div>
 
-              {/* Enhanced Product Options */}
-              <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-darkmode-body rounded-3xl p-6 md:p-8 border border-border dark:border-darkmode-border shadow-lg">
-                <div className="mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
-                    Customize Your Order
+              {/* Product Options - Compact and Elegant */}
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-text-dark dark:text-darkmode-text-dark mb-1">
+                    Product Options
                   </h3>
-                  <p className="text-text-light dark:text-darkmode-text-light">
-                    Select your preferred options below
+                  <p className="text-xs text-text-light dark:text-darkmode-text-light">
+                    Choose your preferred options
                   </p>
                 </div>
                 {options && (
@@ -179,8 +178,8 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 )}
               </div>
 
-              {/* Enhanced Cart Buttons Section */}
-              <div className="space-y-4">
+              {/* Add to Cart Section - Prominent */}
+              <div className="bg-gradient-to-r from-primary/10 to-accent/10 dark:from-primary/20 dark:to-accent/20 rounded-2xl p-6 border border-primary/30 dark:border-primary/40">
                 <Suspense>
                   <EnhancedCartButtons
                     variants={product?.variants}
@@ -191,84 +190,70 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
                 </Suspense>
               </div>
 
-              {/* Trust Indicators */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Trust Indicators - Compact */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center space-x-3">
-                  <FiTruck className="w-6 h-6 text-green-600 dark:text-green-400" />
+                  <FiTruck className="w-5 h-5 text-green-600 dark:text-green-400" />
                   <div>
-                    <p className="text-sm font-semibold text-green-800 dark:text-green-200">Free Delivery India-wide</p>
+                    <p className="text-sm font-semibold text-green-800 dark:text-green-200">Free Delivery</p>
                     <p className="text-xs text-green-600 dark:text-green-400">{estimated_delivery}</p>
                   </div>
                 </div>
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 flex items-center space-x-3">
-                  <FiShield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <FiShield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   <div>
                     <p className="text-sm font-semibold text-blue-800 dark:text-blue-200">Secure Payment</p>
                     <p className="text-xs text-blue-600 dark:text-blue-400">100% Protected</p>
                   </div>
                 </div>
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center space-x-3">
-                  <FiAlertCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
-                  <div>
-                    <p className="text-sm font-semibold text-red-800 dark:text-red-200">No Returns</p>
-                    <p className="text-xs text-red-600 dark:text-red-400">All Sales Final</p>
-                  </div>
-                </div>
               </div>
 
-              {/* Enhanced Payment Methods */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-6 md:p-8 border border-blue-200 dark:border-blue-800 shadow-lg">
-                <h5 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-6">
-                  <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-                    <FiCreditCard className="w-5 h-5 text-primary" />
+              {/* Payment Methods - Streamlined */}
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
+                <h5 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-4">
+                  <div className="w-6 h-6 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                    <FiCreditCard className="w-4 h-4 text-primary" />
                   </div>
-                  <span>Secure Payment Methods</span>
+                  <span>Payment Methods</span>
                 </h5>
-                <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+                <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
                   {payment_methods?.map(
                     (payment: { name: string; image_url: string }) => (
                       <div
                         key={payment.name}
-                        className="bg-white dark:bg-darkmode-body border-2 border-border dark:border-darkmode-border rounded-2xl p-4 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 group"
+                        className="bg-white dark:bg-darkmode-body border border-border dark:border-darkmode-border rounded-xl p-3 shadow-sm hover:shadow-md transition-all duration-300 group"
                         title={payment.name}
                       >
                         <Image
                           src={payment.image_url}
                           alt={payment.name}
-                          width={64}
-                          height={48}
-                          className="w-full h-[48px] object-contain group-hover:scale-110 transition-transform duration-300"
+                          width={48}
+                          height={36}
+                          className="w-full h-[36px] object-contain group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                     ),
                   )}
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                    🔒 All payments are secured with 256-bit SSL encryption
+                <div className="mt-3 text-center">
+                  <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                    🔒 SSL Encrypted Payments
                   </p>
                 </div>
               </div>
 
-
-
-              {/* Enhanced Product Tags */}
+              {/* Product Tags - Compact */}
               {tags.length > 0 && (
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-6 md:p-8 border border-green-200 dark:border-green-800 shadow-lg">
-                  <h5 className="text-xl md:text-2xl font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-6">
-                    <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-                      <FiTag className="w-5 h-5 text-primary" />
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
+                  <h5 className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark flex items-center space-x-3 mb-4">
+                    <div className="w-6 h-6 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                      <FiTag className="w-4 h-4 text-primary" />
                     </div>
-                    <span>Product Categories</span>
+                    <span>Categories</span>
                   </h5>
                   <Suspense>
                     <ShowTags tags={tags} />
                   </Suspense>
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-green-600 dark:text-green-400 font-medium">
-                      🏷️ Explore more products in these categories
-                    </p>
-                  </div>
                 </div>
               )}
             </div>
@@ -276,48 +261,29 @@ const ShowProductSingle = async ({ params }: { params: { slug: string } }) => {
         </div>
       </section>
 
-      {/* Enhanced Product Description Section */}
+      {/* Product Description Section - Compact and Elegant */}
       {description && (
-        <section className="py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-darkmode-body dark:to-gray-900">
+        <section className="py-8 bg-gray-50 dark:bg-gray-900">
           <div className="container">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-left mb-12 pl-4 md:pl-8">
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-                    <FiFileText className="w-8 h-8 text-primary" />
+            <div className="max-w-4xl mx-auto">
+              {/* Compact Header */}
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
+                    <FiFileText className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
-                      Product Details
-                    </h2>
-                    <p className="text-lg text-text-light dark:text-darkmode-text-light">
-                      Learn more about this authentic Andhra Pradesh product
-                    </p>
-                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-text-dark dark:text-darkmode-text-dark">
+                    Product Details
+                  </h2>
                 </div>
-                <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+                <p className="text-sm text-text-light dark:text-darkmode-text-light">
+                  Learn more about this authentic Andhra Pradesh product
+                </p>
               </div>
-              <div className="bg-white dark:bg-darkmode-body rounded-3xl shadow-xl border border-border dark:border-darkmode-border overflow-hidden">
-              <Tabs descriptionHtml={descriptionHtml} />
-
-              {/* No-Return Policy Notice */}
-              <div className="bg-red-50 dark:bg-red-900/20 border-t border-red-200 dark:border-red-800 p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    <div className="w-10 h-10 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center">
-                      <FiAlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">
-                      Important Notice - No Returns Policy
-                    </h4>
-                    <p className="text-red-700 dark:text-red-300 text-sm leading-relaxed">
-                      <strong>All sales are final. No returns accepted once purchase is completed.</strong> Due to the perishable nature of our authentic food products, we cannot accept returns. We ensure all products are fresh and properly packaged before dispatch. Please contact us immediately upon delivery only for damaged or incorrect items.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              
+              {/* Compact Content */}
+              <div className="bg-white dark:bg-darkmode-body rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <Tabs descriptionHtml={descriptionHtml} />
               </div>
             </div>
           </div>

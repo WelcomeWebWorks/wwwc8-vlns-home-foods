@@ -8,6 +8,7 @@ import Providers from "@/partials/Providers";
 import WhatsAppButton from "@/layouts/components/WhatsAppButton";
 import EnhancedMarketingBanners from "@/layouts/components/EnhancedMarketingBanners";
 import { ToastManager } from "@/components/ui/Toast";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import "@/styles/main.css";
 
 export const dynamic = "force-dynamic";
@@ -55,17 +56,19 @@ export default function RootLayout({
 
       <body suppressHydrationWarning={true}>
         <TwSizeIndicator />
-        <Providers>
-          <Header>
-            <div className="w-8 h-8" />
-            <Cart />
-          </Header>
-          <main className="relative z-10 pt-32 xl:pt-40">{children}</main>
-          <EnhancedMarketingBanners />
-          <Footer />
-          <WhatsAppButton />
-          <ToastManager />
-        </Providers>
+        <CurrencyProvider>
+          <Providers>
+            <Header>
+              <div className="w-8 h-8" />
+              <Cart />
+            </Header>
+            <main className="relative z-10 pt-48 sm:pt-52 md:pt-56 lg:pt-60 xl:pt-40">{children}</main>
+            <EnhancedMarketingBanners />
+            <Footer />
+            <WhatsAppButton />
+            <ToastManager />
+          </Providers>
+        </CurrencyProvider>
       </body>
     </html>
   );

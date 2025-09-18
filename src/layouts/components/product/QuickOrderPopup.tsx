@@ -9,7 +9,7 @@ import { useFormStatus } from "react-dom";
 import { triggerCartUpdate } from "@/hooks/useProductCartState";
 import { showToast } from "@/layouts/components/ui/Toast";
 import { FaTimes, FaShoppingCart, FaCheck, FaSpinner, FaMinus, FaPlus } from "react-icons/fa";
-import config from "@/config/config.json";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface QuickOrderPopupProps {
   product: Product;
@@ -133,7 +133,7 @@ function QuickOrderForm({
 }
 
 const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPopupProps) => {
-  const { currencySymbol } = config.shopify;
+  const { formatPrice } = useCurrency();
   const [selectedVariantId, setSelectedVariantId] = useState<string>("");
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
@@ -299,11 +299,11 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
                     fontFamily: "'Inter', 'Helvetica', sans-serif",
                     fontWeight: '700'
                   }}>
-                    {currencySymbol}{selectedVariant.price.amount}
+                    {formatPrice(selectedVariant.price.amount, selectedVariant.price.currencyCode)}
                   </span>
                   {selectedVariant.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > 0 && (
                     <span className="text-lg text-gray-500 line-through">
-                      {currencySymbol}{selectedVariant.compareAtPrice.amount}
+                      {formatPrice(selectedVariant.compareAtPrice.amount, selectedVariant.compareAtPrice.currencyCode)}
                     </span>
                   )}
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/lib/shopify/types";
-import CustomizableProductCard from "@/layouts/components/product/CustomizableProductCard";
+import EnhancedProductCard from "@/layouts/components/product/EnhancedProductCard";
 import Link from "next/link";
 import { FiPackage, FiArrowRight } from "react-icons/fi";
 
@@ -25,27 +25,16 @@ const EnhancedRelatedProducts: React.FC<EnhancedRelatedProductsProps> = ({
 
   if (relatedProducts.length === 0) {
     return (
-      <section className="py-20 bg-white dark:bg-darkmode-body relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10"></div>
-        
-        <div className="container relative">
-          {/* Left-aligned Section Header */}
-          <div className="text-left mb-16 pl-4 md:pl-8">
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-                <FiPackage className="w-8 h-8 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
-                  {title}
-                </h2>
-                <p className="text-xl text-text-light dark:text-darkmode-text-light">
-                  {subtitle}
-                </p>
-              </div>
-            </div>
-            <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+      <section className="py-16 bg-white dark:bg-darkmode-body">
+        <div className="container">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
+              {title}
+            </h2>
+            <p className="text-lg text-text-light dark:text-darkmode-text-light">
+              {subtitle}
+            </p>
           </div>
 
           {/* No Products Available */}
@@ -61,10 +50,10 @@ const EnhancedRelatedProducts: React.FC<EnhancedRelatedProductsProps> = ({
             </p>
             <Link 
               href="/products" 
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-[#600018] hover:from-[#600018] hover:to-primary text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg group"
+              className="inline-flex items-center px-8 py-4 bg-primary hover:bg-[#600018] text-white font-semibold rounded-xl transition-colors duration-200 text-lg"
             >
               <span>Browse All Products</span>
-              <FiArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+              <FiArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </div>
         </div>
@@ -73,49 +62,26 @@ const EnhancedRelatedProducts: React.FC<EnhancedRelatedProductsProps> = ({
   }
 
   return (
-    <section className="py-20 bg-white dark:bg-darkmode-body relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10"></div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary/20 rounded-full"></div>
-      <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-accent/20 rounded-full"></div>
-      <div className="absolute top-1/2 -left-8 w-6 h-6 bg-primary/30 rounded-full"></div>
-      <div className="absolute top-1/4 -right-8 w-10 h-10 bg-accent/30 rounded-full"></div>
-
-      <div className="container relative">
-        {/* Left-aligned Section Header */}
-        <div className="text-left mb-16 pl-4 md:pl-8">
-          <div className="flex items-center space-x-4 mb-6">
-            <div className="w-16 h-16 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center">
-              <FiPackage className="w-8 h-8 text-primary" />
-            </div>
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-text-dark dark:text-darkmode-text-dark mb-2">
-                {title}
-              </h2>
-              <p className="text-xl text-text-light dark:text-darkmode-text-light">
-                {subtitle}
-              </p>
-            </div>
-          </div>
-          <div className="w-32 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></div>
+    <section className="py-16 bg-white dark:bg-darkmode-body">
+      <div className="container">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-text-dark dark:text-darkmode-text-dark mb-4">
+            {title}
+          </h2>
+          <p className="text-lg text-text-light dark:text-darkmode-text-light">
+            {subtitle}
+          </p>
         </div>
 
-        {/* Products Grid - Responsive: 2 columns (mobile), 3 columns (tablet/desktop) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-12">
-          {relatedProducts.map((product: Product, index: number) => (
-            <div 
+        {/* Products Grid - Plain Design */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+          {relatedProducts.map((product: Product) => (
+            <EnhancedProductCard 
               key={product.id} 
-              className="transform transition-all duration-300 hover:scale-105"
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-border dark:border-darkmode-border overflow-hidden group">
-                <CustomizableProductCard product={product} />
-              </div>
-            </div>
+              product={product}
+              className="w-full"
+            />
           ))}
         </div>
 
@@ -123,11 +89,11 @@ const EnhancedRelatedProducts: React.FC<EnhancedRelatedProductsProps> = ({
         <div className="flex justify-center">
           <Link
             href="/products"
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-[#600018] hover:from-[#600018] hover:to-primary text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg group"
+            className="inline-flex items-center px-8 py-4 bg-primary hover:bg-[#600018] text-white font-semibold rounded-xl transition-colors duration-200 text-lg"
           >
             <FiPackage className="w-5 h-5 mr-2" />
             <span>View All Products</span>
-            <FiArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+            <FiArrowRight className="w-5 h-5 ml-2" />
           </Link>
         </div>
 

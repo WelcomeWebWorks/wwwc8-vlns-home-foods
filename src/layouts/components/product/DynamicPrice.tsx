@@ -1,9 +1,9 @@
 "use client";
 
 import { ProductVariant } from "@/lib/shopify/types";
-import config from "@/config/config.json";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 interface DynamicPriceProps {
   variants: ProductVariant[];
@@ -13,7 +13,7 @@ interface DynamicPriceProps {
 
 export function DynamicPrice({ variants, defaultVariantId, className = "" }: DynamicPriceProps) {
   const searchParams = useSearchParams();
-  const { currencySymbol } = config.shopify;
+  const { formatPrice, getCurrencySymbol } = useCurrency();
 
   // Find the currently selected variant based on URL parameters
   const selectedVariant = useMemo(() => {
@@ -43,21 +43,19 @@ export function DynamicPrice({ variants, defaultVariantId, className = "" }: Dyn
 
   const price = selectedVariant.price;
   const compareAtPrice = selectedVariant.compareAtPrice;
+  const currencySymbol = getCurrencySymbol(price.currencyCode);
 
   return (
     <div className={`flex gap-3 items-center ${className}`}>
       <div className="flex items-center space-x-2">
         <span className="text-3xl md:text-4xl font-bold text-primary">
-          {currencySymbol}{price.amount}
-        </span>
-        <span className="text-lg text-text-light dark:text-darkmode-text-light">
-          {price.currencyCode}
+          {formatPrice(price.amount, price.currencyCode)}
         </span>
       </div>
       {compareAtPrice && parseFloat(compareAtPrice.amount) > 0 && (
         <div className="flex flex-col">
           <s className="text-lg text-text-light dark:text-darkmode-text-light">
-            {currencySymbol}{compareAtPrice.amount}
+            {formatPrice(compareAtPrice.amount, compareAtPrice.currencyCode)}
           </s>
           <span className="text-sm text-green-600 dark:text-green-400 font-semibold">
             Save {currencySymbol}{(parseFloat(compareAtPrice.amount) - parseFloat(price.amount)).toFixed(2)}

@@ -5,9 +5,9 @@ import { Product } from "@/lib/shopify/types";
 import ProductImageWithHover from "./ProductImageWithHover";
 import Link from "next/link";
 import { FaShoppingCart, FaCheck } from "react-icons/fa";
-import config from "@/config/config.json";
 import QuickOrderPopup from "./QuickOrderPopup";
 import { useProductCartState } from "@/hooks/useProductCartState";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface EnhancedProductCardProps {
   product: Product;
@@ -15,7 +15,7 @@ interface EnhancedProductCardProps {
 }
 
 const EnhancedProductCard = ({ product, className = "" }: EnhancedProductCardProps) => {
-  const { currencySymbol } = config.shopify;
+  const { formatPrice, getCurrencySymbol } = useCurrency();
   const [isQuickOrderOpen, setIsQuickOrderOpen] = useState(false);
 
   // Get the first available variant for pricing
@@ -85,11 +85,11 @@ const EnhancedProductCard = ({ product, className = "" }: EnhancedProductCardPro
                 fontFamily: "'Inter', 'Helvetica', sans-serif",
                 fontWeight: '700'
               }}>
-                {currencySymbol}{currentPrice?.amount || "0.00"}
+                {formatPrice(currentPrice?.amount || "0.00", currentPrice?.currencyCode)}
               </span>
               {currentCompareAtPrice && parseFloat(currentCompareAtPrice.amount) > 0 && (
                 <span className="text-sm text-gray-500 line-through">
-                  {currencySymbol}{currentCompareAtPrice.amount}
+                  {formatPrice(currentCompareAtPrice.amount, currentCompareAtPrice.currencyCode)}
                 </span>
               )}
             </div>

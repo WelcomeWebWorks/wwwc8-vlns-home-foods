@@ -45,6 +45,12 @@ import {
   getArticleByHandleQuery,
 } from "./queries/blog";
 import {
+  getLocalizationQuery,
+  getProductsWithContextQuery,
+  getProductWithContextQuery,
+  getCollectionProductsWithContextQuery,
+} from "./queries/localization";
+import {
   Cart,
   Collection,
   Connection,
@@ -835,6 +841,142 @@ export async function getBlogArticles({
     return { blog: null, articles: [] };
   }
 }
+
+// Context-aware functions for multi-currency support - Hidden for now
+/*
+export async function getLocalization(countryCode?: string) {
+  try {
+    const res = await shopifyFetch({
+      query: getLocalizationQuery,
+      cache: 'no-store',
+    });
+
+    const body = res.body as any;
+    
+    if (!body?.data?.localization) {
+      console.warn('No localization data received from Shopify API');
+      return null;
+    }
+
+    return body.data.localization;
+  } catch (error) {
+    console.warn('Error fetching localization data:', error);
+    return null;
+  }
+}
+*/
+
+/*
+export async function getProductsWithContext({
+  query,
+  reverse,
+  sortKey,
+  cursor,
+  countryCode = 'IN',
+}: {
+  query?: string;
+  reverse?: boolean;
+  sortKey?: string;
+  cursor?: string;
+  countryCode?: string;
+}): Promise<{ pageInfo: PageInfo; products: Product[] }> {
+  try {
+    const res = await shopifyFetch({
+      query: getProductsWithContextQuery,
+      tags: [TAGS.products],
+      variables: { query, reverse, sortKey, cursor, countryCode },
+      cache: 'no-store',
+    });
+
+    if (!res.body?.data?.products) {
+      console.warn('No products data received from Shopify API');
+      return {
+        pageInfo: null,
+        products: [],
+      };
+    }
+
+    const pageInfo = res.body.data.products.pageInfo;
+
+    return {
+      pageInfo,
+      products: reshapeProducts(removeEdgesAndNodes(res.body.data.products)),
+    };
+  } catch (error) {
+    console.warn('Error fetching products with context:', error);
+    return {
+      pageInfo: null,
+      products: [],
+    };
+  }
+}
+*/
+
+/*
+export async function getProductWithContext(
+  handle: string,
+  countryCode: string = 'IN'
+): Promise<Product | undefined> {
+  try {
+    const res = await shopifyFetch({
+      query: getProductWithContextQuery,
+      tags: [TAGS.products],
+      variables: { handle, countryCode },
+      cache: 'no-store',
+    });
+
+    return reshapeProduct(res.body.data.product, false);
+  } catch (error) {
+    console.warn('Error fetching product with context:', error);
+    return undefined;
+  }
+}
+*/
+
+/*
+export async function getCollectionProductsWithContext({
+  collection,
+  reverse,
+  sortKey,
+  countryCode = 'IN',
+}: {
+  collection: string;
+  reverse?: boolean;
+  sortKey?: string;
+  countryCode?: string;
+}): Promise<{ pageInfo: PageInfo | null; products: Product[] }> {
+  try {
+    const res = await shopifyFetch({
+      query: getCollectionProductsWithContextQuery,
+      tags: [TAGS.collections, TAGS.products],
+      variables: {
+        handle: collection,
+        reverse,
+        sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
+        countryCode,
+      },
+      cache: 'no-store',
+    });
+
+    if (!res.body.data.collection) {
+      console.warn(`No collection found for \`${collection}\``);
+      return { pageInfo: null, products: [] };
+    }
+
+    const pageInfo = res.body.data?.collection?.products?.pageInfo;
+
+    return {
+      pageInfo,
+      products: reshapeProducts(
+        removeEdgesAndNodes(res.body.data.collection.products),
+      ),
+    };
+  } catch (error) {
+    console.warn(`Error fetching collection products with context for "${collection}":`, error);
+    return { pageInfo: null, products: [] };
+  }
+}
+*/
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
