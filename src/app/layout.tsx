@@ -60,7 +60,7 @@ export default function RootLayout({
             <div className="w-8 h-8" />
             <Cart />
           </Header>
-          <main className="relative z-10">{children}</main>
+          <main className="relative z-10 pt-32 xl:pt-40">{children}</main>
           <EnhancedMarketingBanners />
           <Footer />
           <WhatsAppButton />

@@ -117,7 +117,16 @@ const Header: React.FC<{ children: any }> = ({ children }) => {
 
   return (
     <header
-      className={`header z-50 ${settings.sticky_header && "sticky top-0"} ${navbarShadow ? "shadow-lg" : "shadow-none"}`}
+      className={`header z-[99999] fixed top-0 left-0 right-0 ${navbarShadow ? "shadow-lg" : "shadow-none"}`}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 99999,
+        width: '100%',
+        display: 'block'
+      }}
     >
       <nav className="navbar container">
         {/* Desktop Layout - Restructured for desktop only */}

@@ -75,13 +75,13 @@ const ProductLayouts = ({
   }
 
   return (
-    <section className="pt-6 pb-4 overflow-x-hidden">
+    <section className="pt-20 pb-4 overflow-x-hidden">
       <div className="container max-w-full px-4">
         <div className="row">
           <div className="col-3 max-lg:hidden" />
 
           <div className="col-12 lg:col-9">
-            <div className="bg-white dark:bg-darkmode-body rounded-2xl shadow-lg p-4 lg:p-6 mb-6 overflow-hidden">
+            <div className="professional-filter-bar sticky top-0 z-50">
               {/* Desktop Layout */}
               <div className="hidden lg:flex justify-between items-center">
                 <div className="flex gap-x-6 items-center">
@@ -168,7 +168,7 @@ const ProductLayouts = ({
                   </div>
                   <button 
                     onClick={() => setExpanded(!isExpanded)}
-                    className="flex items-center gap-x-2 px-4 py-2 bg-primary hover:bg-[#600018] text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md text-sm"
+                    className="mobile-filter-button"
                   >
                     {isExpanded ? (
                       <>
@@ -206,10 +206,12 @@ const ProductLayouts = ({
             <div className="lg:block relative">
               <div className="block lg:hidden w-full">
                 <section
-                  className="collapse-container-class z-20 w-full"
-                  style={{ display: isExpanded ? "block" : "none" }}
+                  className="collapse-container-class mobile-filter-overlay"
+                  style={{ 
+                    display: isExpanded ? "block" : "none"
+                  }}
                 >
-                  <div className="pb-8">
+                  <div className="pb-8 px-4 pt-4">
                     <Suspense>
                       <ProductFilters
                         categories={categories}

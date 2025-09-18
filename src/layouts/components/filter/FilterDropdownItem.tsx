@@ -9,7 +9,7 @@ import {
   PathFilterItem as PathFilterItemType,
 } from "../product/ProductLayouts";
 
-function PathFilterItem({ item }: { item: PathFilterItemType }) {
+function PathFilterItem({ item, onItemClick }: { item: PathFilterItemType; onItemClick?: () => void }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const active = pathname === item.path;
@@ -24,6 +24,7 @@ function PathFilterItem({ item }: { item: PathFilterItemType }) {
         href={createUrl(item.path, newParams)}
         className={`w-full text-sm ${active ? "bg-green-400" : "hover:underline"
           }`}
+        onClick={onItemClick}
       >
         {item.title}
       </DynamicTag>
@@ -31,7 +32,7 @@ function PathFilterItem({ item }: { item: PathFilterItemType }) {
   );
 }
 
-function SortFilterItem({ item }: { item: SortFilterItemType }) {
+function SortFilterItem({ item, onItemClick }: { item: SortFilterItemType; onItemClick?: () => void }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -64,6 +65,7 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
             ? "bg-primary text-white font-semibold"
             : "hover:text-primary dark:hover:text-primary"
         }`}
+        onClick={onItemClick}
       >
         {item.title}
       </DynamicTag>
@@ -71,10 +73,10 @@ function SortFilterItem({ item }: { item: SortFilterItemType }) {
   );
 }
 
-export function FilterDropdownItem({ item }: { item: ListItem }) {
+export function FilterDropdownItem({ item, onItemClick }: { item: ListItem; onItemClick?: () => void }) {
   return "path" in item ? (
-    <PathFilterItem item={item} />
+    <PathFilterItem item={item} onItemClick={onItemClick} />
   ) : (
-    <SortFilterItem item={item} />
+    <SortFilterItem item={item} onItemClick={onItemClick} />
   );
 }

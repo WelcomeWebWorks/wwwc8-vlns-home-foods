@@ -158,8 +158,8 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaTruck className="w-6 h-6 text-primary mr-4" />
                 <div>
-                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">Free Shipping</div>
-                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">All India Delivery</div>
+                  <div className="text-lg md:text-lg font-semibold text-text-dark dark:text-darkmode-text-dark">WORLDWIDE</div>
+                  <div className="text-base md:text-base text-text-light dark:text-darkmode-text-light">Shipping & Delivery</div>
                 </div>
               </div>
             </div>

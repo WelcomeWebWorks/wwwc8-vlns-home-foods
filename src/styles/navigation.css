@@ -1,11 +1,49 @@
 .header {
-  @apply py-1 xl:py-0 relative z-50 border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
+  @apply py-1 xl:py-0 relative z-[99999] border-b border-border dark:bg-darkmode-body dark:border-darkmode-border;
   background-color: #fffef7;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
+  width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
 }
 
 /* navbar items */
 .navbar {
   @apply relative flex flex-wrap items-center justify-between;
+}
+
+/* Ensure fixed positioning works on all devices */
+@media (max-width: 1024px) {
+  .header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99999 !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 99999 !important;
+  }
+}
+
+/* Force fixed positioning */
+.header[style*="position"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 99999 !important;
 }
 
 .navbar-brand {

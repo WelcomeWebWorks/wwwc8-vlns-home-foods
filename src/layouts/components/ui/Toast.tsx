@@ -68,6 +68,10 @@ export const Toast: React.FC<ToastProps> = ({
           ? "translate-x-0 opacity-100 scale-100"
           : "translate-x-full opacity-0 scale-95"
       }`}
+      style={{
+        zIndex: 999999,
+        position: 'relative'
+      }}
     >
       <div
         className={`${getColors()} px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 min-w-[320px] backdrop-blur-sm border border-white/20`}
@@ -130,13 +134,23 @@ export const ToastManager: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-20 right-4 z-[9999] space-y-2">
+    <div 
+      className="fixed top-20 right-4 z-[999999] space-y-2"
+      style={{
+        zIndex: 999999,
+        position: 'fixed',
+        top: '5rem',
+        right: '1rem',
+        pointerEvents: 'auto'
+      }}
+    >
       {toasts.map((toast, index) => (
         <div
           key={toast.id}
           style={{
             transform: `translateY(${index * 5}px)`,
-            zIndex: 9999 - index
+            zIndex: 999999 - index,
+            position: 'relative'
           }}
         >
           <Toast

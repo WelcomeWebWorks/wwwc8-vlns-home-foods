@@ -7,7 +7,7 @@ import { addItem } from "@/lib/utils/cartActions";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { triggerCartUpdate } from "@/hooks/useProductCartState";
-import { showToast } from "@/components/ui/Toast";
+import { showToast } from "@/layouts/components/ui/Toast";
 import { FaTimes, FaShoppingCart, FaCheck, FaSpinner, FaMinus, FaPlus } from "react-icons/fa";
 import config from "@/config/config.json";
 
@@ -47,7 +47,7 @@ function AddToCartButton({
       type="submit"
       disabled={!availableForSale || !selectedVariantId || isAdding}
       onClick={handleClick}
-      className="w-full bg-gradient-to-r from-[#800020] to-[#600018] hover:from-[#600018] hover:to-[#500015] text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
+      className="w-full bg-gradient-to-r from-[#800020] to-[#600018] hover:from-[#600018] hover:to-[#500015] text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
     >
       {isAdding ? (
         <>
@@ -193,7 +193,7 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
 
   // Handle add to cart - now handled in QuickOrderForm
 
-  // Handle escape key
+  // Handle escape key and prevent background scrolling
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -201,14 +201,34 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
       }
     };
 
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
+      
+      // Add CSS classes to disable scrolling
+      document.documentElement.classList.add("popup-open");
+      document.body.classList.add("popup-open");
+      
+      // Prevent scroll events
+      document.addEventListener("wheel", preventScroll, { passive: false });
+      document.addEventListener("touchmove", preventScroll, { passive: false });
+      document.addEventListener("scroll", preventScroll, { passive: false });
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
+      document.removeEventListener("scroll", preventScroll);
+      
+      // Remove CSS classes to restore scrolling
+      document.documentElement.classList.remove("popup-open");
+      document.body.classList.remove("popup-open");
     };
   }, [isOpen, onClose]);
 
@@ -223,34 +243,41 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
 
   return (
     <div 
-      className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-[9998] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-hidden"
       onClick={handleBackdropClick}
-      style={{ paddingTop: '150px' }}
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: 'hidden'
+      }}
     >
       <div 
         ref={popupRef}
-        className="relative w-full max-w-2xl bg-white dark:bg-darkmode-body rounded-3xl shadow-2xl transform transition-all duration-300 scale-95 animate-in zoom-in-95 my-8"
+        className="relative w-full max-w-lg bg-white dark:bg-darkmode-body rounded-3xl shadow-2xl transform transition-all duration-300 scale-95 animate-in zoom-in-95 z-[9999]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+          className="absolute top-3 right-3 z-10 w-8 h-8 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
         >
-          <FaTimes className="w-5 h-5" />
+          <FaTimes className="w-4 h-4" />
         </button>
 
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="p-3 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-start space-x-4">
             {/* Product Image */}
-            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
+            <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
               {product.images[0] && (
                 <Image
                   src={product.images[0].url}
                   alt={product.title}
-                  width={80}
-                  height={80}
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover"
                 />
               )}
@@ -258,7 +285,7 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
             
             {/* Product Info */}
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-darkmode-text-dark mb-2 line-clamp-2" style={{
+              <h2 className="text-base font-bold text-gray-900 dark:text-darkmode-text-dark mb-1 line-clamp-2" style={{
                 fontFamily: "'Playfair Display', 'Georgia', serif",
                 fontWeight: '700'
               }}>
@@ -268,7 +295,7 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
               {/* Price */}
               {selectedVariant && (
                 <div className="flex items-center space-x-2">
-                  <span className="text-2xl font-bold text-[#800020]" style={{
+                  <span className="text-lg font-bold text-[#800020]" style={{
                     fontFamily: "'Inter', 'Helvetica', sans-serif",
                     fontWeight: '700'
                   }}>
@@ -286,10 +313,10 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-3">
           {/* Variants Selection */}
           {product.options && product.options.length > 0 && (
-            <div className="space-y-4 mb-6">
+            <div className="space-y-2 mb-3">
               {product.options.map((option) => {
                 const optionVariants = availableVariants.filter(variant =>
                   variant.selectedOptions.some(selectedOption =>
@@ -326,7 +353,7 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
                             key={value}
                             type="button"
                             onClick={() => handleOptionChange(option.name, value)}
-                            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 transform hover:scale-105 ${
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 transform hover:scale-105 ${
                               isSelected
                                 ? "bg-[#800020] text-white shadow-lg ring-2 ring-[#800020]/30"
                                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-md"
@@ -347,8 +374,8 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
           )}
 
           {/* Quantity Selection */}
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3" style={{
+          <div className="mb-3">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" style={{
               fontFamily: "'Inter', 'Helvetica', sans-serif",
               fontWeight: '600'
             }}>
@@ -358,12 +385,12 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
               <button
                 onClick={() => handleQuantityChange(selectedQuantity - 1)}
                 disabled={selectedQuantity <= 1}
-                className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-8 h-8 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FaMinus className="w-4 h-4" />
               </button>
               
-              <span className="w-12 text-center text-lg font-semibold text-gray-900 dark:text-darkmode-text-dark" style={{
+              <span className="w-10 text-center text-base font-semibold text-gray-900 dark:text-darkmode-text-dark" style={{
                 fontFamily: "'Inter', 'Helvetica', sans-serif"
               }}>
                 {selectedQuantity}
@@ -372,7 +399,7 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
               <button
                 onClick={() => handleQuantityChange(selectedQuantity + 1)}
                 disabled={selectedQuantity >= 10}
-                className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-8 h-8 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <FaPlus className="w-4 h-4" />
               </button>

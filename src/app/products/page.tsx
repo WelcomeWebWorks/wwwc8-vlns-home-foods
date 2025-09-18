@@ -120,23 +120,11 @@ const ShowProducts = async ({
     productsData = await getProducts({ sortKey, reverse, cursor });
   }
 
-  // Always calculate category and vendor counts from ALL products (not filtered)
-  // This ensures counts remain accurate regardless of current filter
+  // Calculate vendor counts from all products
   const uniqueVendors: string[] = [
     ...new Set(
       ((allProductsForCounts?.products as Product[]) || []).map((product: Product) =>
         String(product?.vendor || ""),
-      ),
-    ),
-  ];
-
-  const uniqueCategories: string[] = [
-    ...new Set(
-      ((allProductsForCounts?.products as Product[]) || []).flatMap(
-        (product: Product) =>
-          product.collections.nodes.map(
-            (collectionNode: any) => collectionNode.title || "",
-          ),
       ),
     ),
   ];
@@ -147,16 +135,6 @@ const ShowProducts = async ({
     ).length;
     return { vendor, productCount };
   });
-
-  categoriesWithCounts = uniqueCategories.map((category: string) => {
-    const productCount = ((allProductsForCounts?.products as Product[]) || []).filter(
-      (product: Product) =>
-        product.collections.nodes.some(
-          (collectionNode: any) => collectionNode.title === category,
-        ),
-    ).length;
-    return { category, productCount };
-  });
   
   // Fetch categories and vendors with error handling
   let categories: any[] = [];
@@ -164,6 +142,11 @@ const ShowProducts = async ({
   
   try {
     categories = await getCollections();
+    // Calculate category counts from actual collection data (like home page)
+    categoriesWithCounts = categories.map((category: any) => ({
+      category: category.title,
+      productCount: category.products?.edges?.length || 0
+    }));
   } catch (error) {
     console.error("Error fetching categories:", error);
   }

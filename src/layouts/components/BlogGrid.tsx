@@ -65,7 +65,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
         {/* Image Container */}
         <div className="relative h-48 md:h-56 lg:h-64 overflow-hidden">
           <ImageFallback
-            src={article.image?.url || "/images/aboutUS.jpg"}
+            src={article.image?.url || "/images/aboutUS.png"}
             width={400}
             height={300}
             alt={article.title}
