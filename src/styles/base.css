@@ -138,6 +138,29 @@ main {
   }
 }
 
+/* Fix tablet spacing between hero and about sections (481px - 1280px) */
+@media (min-width: 481px) and (max-width: 1280px) {
+  .hero-section {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .about-section {
+    margin-top: 0;
+    padding-top: 1rem; /* Reduce from 2rem to 1rem */
+  }
+  
+  /* Remove extra padding from first section on tablets */
+  section:first-of-type {
+    padding-top: 0;
+  }
+  
+  /* Reduce container padding on tablets */
+  .container {
+    padding-top: 0.5rem; /* Reduce from 1.5rem to 0.5rem */
+  }
+}
+
 /* Force all content to start after navigation */
 .container {
   padding-top: 1rem;

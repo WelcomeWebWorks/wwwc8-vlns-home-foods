@@ -251,7 +251,8 @@ const QuickOrderPopup = ({ product, isOpen, onClose, onAddToCart }: QuickOrderPo
         left: 0,
         right: 0,
         bottom: 0,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        paddingTop: '120px' // Push popup below navigation bar
       }}
     >
       <div 

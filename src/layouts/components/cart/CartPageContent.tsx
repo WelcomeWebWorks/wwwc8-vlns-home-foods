@@ -12,6 +12,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import Price from "../Price";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
+import ZipCodeValidator from "./ZipCodeValidator";
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -324,6 +325,9 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                 {/* No-Return Policy Notice */}
 
                 <div className="mt-6 space-y-3">
+                  {/* ZIP Code Validator */}
+                  <ZipCodeValidator />
+                  
                   <a
                     href={cart.checkoutUrl}
                     className="block w-full bg-primary hover:bg-[#600018] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
