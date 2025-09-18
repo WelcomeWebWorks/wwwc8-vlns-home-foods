@@ -136,10 +136,10 @@ const EnhancedMobileNavigation: React.FC<EnhancedMobileNavigationProps> = ({
 
   // Contact information
   const contactInfo = {
-    phone: "+91 9876543210",
+    phone: "+91 9581154327",
     email: "info@vlnshomefoods.com",
-    address: "Andhra Pradesh, India",
-    whatsapp: "+91 9876543210"
+    address: "D.NO:1/44, OPP.RTC BUS STAND, PEDANANDIPADU, GUNTUR ROAD, AP-522235",
+    whatsapp: "+91 9581154327"
   };
 
   if (loading) {
