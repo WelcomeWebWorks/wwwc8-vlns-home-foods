@@ -84,6 +84,8 @@ export type CartItem = {
   merchandise: {
     id: string;
     title: string;
+    weight: number;
+    weightUnit: string;
     selectedOptions: {
       name: string;
       value: string;
@@ -139,6 +141,8 @@ export type ProductVariant = {
   id: string;
   title: string;
   availableForSale: boolean;
+  weight: number;
+  weightUnit: string;
   selectedOptions: {
     name: string;
     value: string;

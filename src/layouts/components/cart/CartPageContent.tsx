@@ -7,8 +7,8 @@ import { updateCartNoteAction } from "@/lib/utils/cartActions";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { FaShoppingCart, FaArrowLeft, FaEdit, FaSave, FaTimes, FaWhatsapp } from "react-icons/fa";
-import { FiAlertCircle } from "react-icons/fi";
+import { FaShoppingCart, FaArrowLeft, FaEdit, FaSave, FaTimes, FaWhatsapp, FaWeight } from "react-icons/fa";
+import { FiAlertCircle, FiInfo } from "react-icons/fi";
 import Price from "../Price";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
@@ -71,6 +71,28 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
     const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  // Calculate total cart weight
+  const calculateTotalWeight = () => {
+    if (!cart || cart.lines.length === 0) return 0;
+    
+    let totalWeightInGrams = 0;
+    
+    cart.lines.forEach((item) => {
+      // The merchandise is the ProductVariant itself, so we can access weight directly
+      const weight = item.merchandise.weight || 0;
+      
+      // Convert weight to grams if needed (assuming weight is in grams)
+      const weightInGrams = weight || 0;
+      totalWeightInGrams += weightInGrams * item.quantity;
+    });
+    
+    // Convert grams to kilograms
+    return totalWeightInGrams / 1000;
+  };
+
+  const totalWeight = calculateTotalWeight();
+  const isOver5kg = totalWeight > 5;
 
   return (
     <div className="login-bg min-h-screen py-8 mobile-cart-spacing">
@@ -310,6 +332,19 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                     <span className="text-text-light dark:text-darkmode-text-light">Calculated at checkout</span>
                   </div>
                   
+                  {/* Total Weight Display */}
+                  {totalWeight > 0 && (
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FaWeight className="w-4 h-4 text-text-light dark:text-darkmode-text-light" />
+                        <span className="text-text-light dark:text-darkmode-text-light">Total Weight</span>
+                      </div>
+                      <span className="text-text-dark dark:text-darkmode-text-dark font-medium">
+                        {totalWeight.toFixed(2)} kg
+                      </span>
+                    </div>
+                  )}
+                  
                   <div className="border-t border-border dark:border-darkmode-border pt-3">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-text-dark dark:text-darkmode-text-dark">Total</span>
@@ -327,6 +362,25 @@ export default function CartPageContent({ cart }: { cart: Cart | undefined }) {
                 <div className="mt-6 space-y-3">
                   {/* ZIP Code Validator */}
                   <ZipCodeValidator />
+                  
+                  {/* 5kg Threshold Warning */}
+                  {isOver5kg && (
+                    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-amber-100 dark:bg-amber-800 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <FiInfo className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-1">
+                            Heavy Order Notice
+                          </h4>
+                          <p className="text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
+                            Your order is over 5 kg. For better shipping rates and assistance, we recommend you connect with us directly before placing the order.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   <a
                     href={cart.checkoutUrl}
