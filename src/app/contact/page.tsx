@@ -64,10 +64,13 @@ const Contact = () => {
   return (
     <>
       <SeoMeta
-        title={title}
-        meta_title={meta_title}
-        description={description}
-        image={image}
+        title="Contact VLNS Home Foods - Get in Touch"
+        meta_title="Contact Us - VLNS Home Foods | Authentic Andhra Pradesh Flavors"
+        description="Get in touch with VLNS Home Foods for authentic Andhra Pradesh flavors. Visit our shop in Guntur or contact us for orders and inquiries. Phone: +91 9581154327, Email: info@vlnshomefoods.com"
+        keywords="contact VLNS Home Foods, Andhra Pradesh food contact, Guntur food shop, Indian food contact, VLNS Home Foods phone, food delivery contact, traditional food contact"
+        image="/images/og-contact.png"
+        type="website"
+        siteName="VLNS Home Foods"
       />
       
       <div className="min-h-screen bg-light dark:bg-darkmode-light login-bg mobile-contact-spacing">

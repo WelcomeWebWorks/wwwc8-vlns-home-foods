@@ -13,6 +13,7 @@ import CallToAction from "@/layouts/partials/CallToAction";
 import FeaturedProductsGrid from "@/layouts/components/FeaturedProductsGrid";
 import BlogSection from "@/layouts/components/BlogSection";
 import SeoMeta from "@/layouts/partials/SeoMeta";
+import StructuredData from "@/layouts/components/StructuredData";
 import { Suspense } from "react";
 
 const { collections } = config.shopify;
@@ -43,7 +44,17 @@ const Home = () => {
 
   return (
     <>
-      <SeoMeta />
+      <SeoMeta 
+        title="VLNS Home Foods - Authentic Andhra Pradesh Flavors"
+        meta_title="VLNS Home Foods - Authentic Andhra Pradesh Flavors | Traditional Sweets, Pickles & Snacks"
+        description="Experience authentic Andhra Pradesh flavors with VLNS Home Foods. Traditional homemade sweets, spicy pickles, and savory snacks delivered to your doorstep. Family recipes passed down through generations."
+        keywords="Andhra Pradesh food, traditional Indian sweets, homemade pickles, authentic Indian snacks, VLNS Home Foods, Guntur food, Indian cuisine, traditional recipes, spicy pickles, crispy snacks, homemade sweets"
+        image="/images/og-home.png"
+        type="website"
+        siteName="VLNS Home Foods"
+      />
+      <StructuredData type="Organization" />
+      <StructuredData type="LocalBusiness" />
       {/* Enhanced Hero Section with Static Images */}
       <section className="hero-section">
         <EnhancedHeroSlider />

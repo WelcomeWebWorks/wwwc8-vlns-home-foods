@@ -16,7 +16,12 @@ const BlogPage = () => {
     <>
       <SeoMeta 
         title="Our Blog - VLNS Home Foods"
-        description="Discover the stories, traditions, and secrets behind authentic Andhra Pradesh cuisine through our blog articles."
+        meta_title="Blog - VLNS Home Foods | Authentic Andhra Pradesh Food Stories"
+        description="Discover the stories, traditions, and secrets behind authentic Andhra Pradesh cuisine through our blog articles. Learn about traditional recipes, cooking methods, and cultural heritage."
+        keywords="Andhra Pradesh food blog, traditional Indian cuisine blog, Indian food recipes, Andhra food culture, traditional cooking methods, Indian food stories, VLNS Home Foods blog"
+        image="/images/og-blog.png"
+        type="website"
+        siteName="VLNS Home Foods"
       />
       
       {/* Blog Section */}

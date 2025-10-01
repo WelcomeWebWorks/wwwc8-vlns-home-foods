@@ -14,6 +14,7 @@ import CallToAction from "@/partials/CallToAction";
 import ProductCardView from "@/partials/ProductCardView";
 import ProductFilters from "@/partials/ProductFilters";
 import ProductListView from "@/partials/ProductListView";
+import SeoMeta from "@/partials/SeoMeta";
 import { Suspense } from "react";
 
 interface SearchParams {
@@ -224,14 +225,25 @@ const ProductsListPage = async (props: {
   const callToAction = getListPage("sections/call-to-action.md");
 
   return (
-    <div className="login-bg min-h-screen mobile-products-spacing">
-      {/* <PageHeader title={"Products"} /> */}
-      <Suspense fallback={<LoadingProducts />}>
-        <ShowProducts searchParams={searchParams} />
-      </Suspense>
+    <>
+      <SeoMeta 
+        title="Products - VLNS Home Foods"
+        meta_title="Shop Authentic Andhra Pradesh Products | VLNS Home Foods"
+        description="Browse our complete collection of authentic Andhra Pradesh products. Traditional sweets, spicy pickles, crispy snacks, and homemade delicacies. Order online for doorstep delivery across India."
+        keywords="Andhra Pradesh products, traditional Indian sweets, homemade pickles, crispy snacks, Indian food products, VLNS Home Foods products, Guntur food, authentic Indian cuisine, traditional recipes"
+        image="/images/og-products.png"
+        type="website"
+        siteName="VLNS Home Foods"
+      />
+      <div className="login-bg min-h-screen mobile-products-spacing">
+        {/* <PageHeader title={"Products"} /> */}
+        <Suspense fallback={<LoadingProducts />}>
+          <ShowProducts searchParams={searchParams} />
+        </Suspense>
 
-      <CallToAction data={callToAction} />
-    </div>
+        <CallToAction data={callToAction} />
+      </div>
+    </>
   );
 };
 
